@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:layout_gravity="top" android:background="@drawable/profile_bk" android:layout_width="match_parent" android:layout_height="fill_parent">
+
+<RelativeLayout
+    android:id="@+id/l1"
+    android:minHeight="695dp"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:shadowColor="@color/accent_material_dark"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:text="My Personal Page"
+        android:textColor="@color/white"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/text21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title"
+        android:layout_gravity="left"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:text="My Posted Cars :"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <ListView
+        android:id="@+id/lv_personal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text21"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:minHeight="550dp" />
+    <!--        <LinearLayout android:gravity="bottom" android:layout_gravity="center" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="70dp" android:layout_marginTop="5dp" android:layout_marginBottom="5dp" android:layout_weight="0" android:layout_centerHorizontal="true" android:layout_alignParentBottom="true" android:layout_below="@id/lv_personal" android:id="@+id/linas">-->
+    <!--            <Button android:textColor="#ffffffff" android:layout_gravity="center" android:id="@+id/btn_newAd" android:background="@drawable/buttonshape" android:layout_width="120dp" android:layout_height="70dp" android:layout_margin="5dp" android:text="Create New Ad"/>-->
+    <!--            <Button android:textColor="#ffffffff" android:layout_gravity="center" android:id="@+id/btn_allAd" android:background="@drawable/buttonshape" android:layout_width="120dp" android:layout_height="70dp" android:layout_margin="5dp" android:text="Go To All Ad"/>-->
+    <!--            <Button android:textColor="#ffffffff" android:layout_gravity="center" android:id="@+id/btn_ViewProfile" android:background="@drawable/buttonshape" android:layout_width="120dp" android:layout_height="70dp" android:layout_margin="5dp" android:text="View Profile"/>-->
+    <!--        </LinearLayout>-->
+    <!--        <me.majiajie.pagerbottomtabstrip.PageNavigationView-->
+    <!--            android:id="@+id/tab"-->
+    <!--            android:elevation="8dp"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="56dp"-->
+    <!--            android:layout_alignParentBottom="true"-->
+    <!--            />-->
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_navigation_menu" />
+</RelativeLayout>
+</ScrollView>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:background="@drawable/profile_bk" android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout android:gravity="top|center_vertical|center_horizontal|center" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+        <TextView android:textSize="40sp" android:layout_gravity="center" android:id="@+id/tv_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Add New Ad " android:textColor="@color/white"/>
+        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_cat" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="Category" android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <Spinner
+            style="@style/SpinnerTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_gravity="left"
+            android:textColorHint="#A5A2A2"
+            android:layout_height="55dp"
+            android:spinnerMode="dialog"
+            android:background="@color/white"
+            android:id="@+id/spinner" >
+
+        </Spinner>
+        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_mod" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="Model" android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_year" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="Year" android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_km" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="Kilometer" android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_yad" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="Hand" android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_price" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="Price" android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_des" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="Description" android:textSize="18sp" android:ems="10" android:inputType="textMultiLine"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <ImageView android:id="@+id/imagev" android:layout_width="120dp" android:layout_height="120dp" android:layout_marginTop="15dp" android:layout_marginBottom="10dp" android:src="@mipmap/ic_launcher"/>
+<!--        <LinearLayout android:gravity="center" android:layout_gravity="center" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">-->
+<!--            <Button android:textColor="#ffffffff" android:id="@+id/btn_back" android:background="@drawable/buttonshape" android:layout_width="120dp" android:layout_height="60dp" android:layout_margin="5dp" android:text="Back" android:onClick="deleteAD"/>-->
+<!--            <Button android:textColor="#ffffffff" android:id="@+id/btn_addImage" android:background="@drawable/buttonshape" android:layout_width="120dp" android:layout_height="60dp" android:layout_margin="5dp" android:text="Add Image" android:onClick="addImage"/>-->
+<!--            <Button android:textColor="#ffffffff" android:id="@+id/btn_share" android:background="@drawable/buttonshape" android:layout_width="120dp" android:layout_height="60dp" android:layout_margin="5dp" android:text="Save" android:onClick="Share"/>-->
+<!--        </LinearLayout>-->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_margin="10dp"  android:padding="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:textColor="#ffffffff"
+                android:id="@+id/btn_share"
+                android:layout_width="100dp"
+                android:layout_height= "100dp"
+                android:background="@drawable/circlea"
+                android:drawableTop="@drawable/saveinstagram"
+                android:paddingTop="20dp"
+                android:onClick="Share"
+                android:text="Save"
+               />
+
+            <Button
+                android:textColor="#ffffffff" android:id="@+id/btn_addImage"
+                android:layout_width="100dp"
+                android:layout_height= "100dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/circlea"
+                android:drawableTop="@drawable/image"
+                android:paddingTop="20dp"
+                android:text="Add"
+                android:onClick="addImage"
+              />
+
+            <Button
+                android:textColor="#ffffffff"
+                android:id="@+id/btn_back"
+                android:layout_width="100dp"
+                android:layout_height= "100dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/circlea"
+                android:drawableTop="@drawable/arrow"
+                android:paddingTop="20dp"
+                android:text="Back"
+                 android:onClick="deleteAD"
+                />
+
+        </LinearLayout>
+
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentBottom="true"
+            app:menu="@menu/bottom_navigation_menu" />
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/roibl/AndroidStudioProjects/MyApplication49/app/src/main/res/drawable-v24/buttonshape.xml" value="0.1785" />
+        <entry key="..\:/Users/roibl/AndroidStudioProjects/MyApplication49/app/src/main/res/drawable/back_to_home_button.xml" value="0.179" />
+        <entry key="..\:/Users/roibl/AndroidStudioProjects/MyApplication49/app/src/main/res/drawable/profile_bk.xml" value="0.179" />
+        <entry key="..\:/Users/roibl/AndroidStudioProjects/MyApplication49/app/src/main/res/layout/a.xml" value="0.14221014492753623" />
+        <entry key="..\:/Users/roibl/AndroidStudioProjects/MyApplication49/app/src/main/res/layout/activity_all_ad.xml" value="0.203125" />
+        <entry key="..\:/Users/roibl/AndroidStudioProjects/MyApplication49/app/src/main/res/layout/activity_edit_ad.xml" value="0.2171875" />
+        <entry key="..\:/Users/roibl/AndroidStudioProjects/MyApplication49/app/src/main/res/layout/activity_edit_profile_user.xml" value="0.14221014492753623" />
+        <entry key="..\:/Users/roibl/AndroidStudioProjects/MyApplication49/app/src/main/res/layout/activity_main.xml" value="0.203125" />
+        <entry key="..\:/Users/roibl/AndroidStudioProjects/MyApplication49/app/src/main/res/layout/activity_main2.xml" value="0.203125" />
+        <entry key="..\:/Users/roibl/AndroidStudioProjects/MyApplication49/app/src/main/res/layout/activity_new_ad.xml" value="0.25" />
+        <entry key="..\:/Users/roibl/AndroidStudioProjects/MyApplication49/app/src/main/res/layout/activity_personal_page.xml" value="0.2171875" />
+        <entry key="..\:/Users/roibl/AndroidStudioProjects/MyApplication49/app/src/main/res/layout/activity_register.xml" value="0.2171875" />
+        <entry key="..\:/Users/roibl/AndroidStudioProjects/MyApplication49/app/src/main/res/layout/activity_view_ad.xml" value="0.25" />
+        <entry key="..\:/Users/roibl/AndroidStudioProjects/MyApplication49/app/src/main/res/layout/car_layout.xml" value="0.2171875" />
+        <entry key="..\:/Users/roibl/AndroidStudioProjects/MyApplication49/app/src/main/res/layout/content_profile.xml" value="0.14221014492753623" />
+        <entry key="..\:/Users/roibl/AndroidStudioProjects/MyApplication49/app/src/main/res/layout/image_layout.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.375" />
+      </ProjectState>
+    </option>
+  </component>
+</project>

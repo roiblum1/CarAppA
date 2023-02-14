@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:id="@+id/cv" android:layout_width="match_parent" android:layout_height="wrap_content" android:animateLayoutChanges="true" app:cardBackgroundColor="@color/white" app:cardCornerRadius="20dp" app:cardElevation="4dp" app:cardUseCompatPadding="true">
+    <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content" android:animateLayoutChanges="true">
+        <RelativeLayout android:orientation="horizontal" android:padding="6dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <ImageView android:layout_gravity="center" android:id="@+id/iv_User" android:paddingLeft="14dp" android:paddingRight="14dp" android:layout_width="100dp" android:layout_height="100dp" android:layout_alignParentLeft="true" android:layout_centerVertical="true" android:layout_alignParentStart="true" app:srcCompat="@drawable/nopic"/>
+            <LinearLayout android:gravity="center" android:orientation="vertical" android:id="@+id/linearLayout" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="4dp" android:layout_marginTop="17dp" android:layout_toRightOf="@+id/iv_User" android:layout_marginStart="4dp" android:layout_toEndOf="@+id/iv_User">
+                <TextView android:textSize="24sp" android:textStyle="bold" android:textColor="@android:color/black" android:id="@+id/tv_Name" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="2dp" android:text="Model :"/>
+                <TextView android:textSize="18sp" android:id="@+id/tv_Email" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Price :"/>
+            </LinearLayout>
+            <TextView android:textSize="20sp" android:textStyle="bold" android:id="@+id/statusTextView" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="6dp" android:text="Active" android:layout_alignParentRight="true" android:layout_centerVertical="true" android:layout_marginEnd="6dp" android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,153 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true"
+    android:id="@+id/cv"
+    android:alpha="0.85"
+    android:animateLayoutChanges="true"
+    app:contentPadding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <TextView
+                android:id="@+id/tv_titleO"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="90"
+                android:fontFamily="@font/calibri"
+                android:text="Model : "
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:background="@drawable/light_orange_rounded_shape"
+                android:fontFamily="@font/calibri"
+                android:padding="6dp"
+                android:text="Save"
+                android:id="@+id/Star"
+                android:textAlignment="center"
+                android:textColor="#ffc32d"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/year_km"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:fontFamily="@font/calibri"
+            android:text="Year : 2000 • KM : 1000"
+            android:textColor="#a4a7b5"
+            android:textSize="14sp" />
+
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginBottom="8dp"-->
+        <!--            android:orientation="horizontal">-->
+
+        <!--            <ImageView-->
+        <!--                android:layout_width="16dp"-->
+        <!--                android:layout_height="16sp"-->
+        <!--                android:layout_marginRight="4dp"-->
+        <!--                android:src="@drawable/seat_icon" />-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginRight="6dp"-->
+        <!--                android:fontFamily="@font/calibri"-->
+        <!--                android:text="5"-->
+        <!--                android:textColor="#000000"-->
+        <!--                android:textSize="14sp" />-->
+
+        <!--            <ImageView-->
+        <!--                android:layout_width="16dp"-->
+        <!--                android:layout_height="16sp"-->
+        <!--                android:layout_marginRight="4dp"-->
+        <!--                android:src="@drawable/gate_icon" />-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginRight="6dp"-->
+        <!--                android:fontFamily="@font/calibri"-->
+        <!--                android:text="4"-->
+        <!--                android:textColor="#000000"-->
+        <!--                android:textSize="14sp" />-->
+
+        <!--            <ImageView-->
+        <!--                android:layout_width="16dp"-->
+        <!--                android:layout_height="16sp"-->
+        <!--                android:layout_marginRight="4dp"-->
+        <!--                android:src="@drawable/bag_icon" />-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginRight="6dp"-->
+        <!--                android:fontFamily="@font/calibri"-->
+        <!--                android:text="3"-->
+        <!--                android:textColor="#000000"-->
+        <!--                android:textSize="14sp" />-->
+
+        <!--        </LinearLayout>-->
+
+        <ImageView
+            android:layout_width="160dp"
+            android:id="@+id/iv_car"
+            android:layout_height="160dp"
+            android:layout_marginBottom="3dp"
+            android:layout_gravity="center"
+            android:src="@drawable/nopic" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="100">
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/calibri"
+                android:text="$210"
+                android:textColor="#3f9dff"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/blue_rounded_shape"
+                android:fontFamily="@font/calibri"
+                android:padding="8dp"
+                android:text="View Ad"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
