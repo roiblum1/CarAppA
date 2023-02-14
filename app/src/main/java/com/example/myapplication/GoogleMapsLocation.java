@@ -19,6 +19,7 @@ public class GoogleMapsLocation
     Marker mCurrLocationMarker;
     FusedLocationProviderClient mFusedLocationClient;
     String Working;
+    String getWorking;
 
 
 }
