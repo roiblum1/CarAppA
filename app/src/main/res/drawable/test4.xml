@@ -1,0 +1,4 @@
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/heart_icon">
+    <target android:name="heartPath" android:animation="@anim/heart_scale"/>
+</animated-vector>

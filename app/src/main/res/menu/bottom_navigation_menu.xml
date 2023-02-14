@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/personal_page"
+        android:icon="@drawable/ic_home"
+        android:title="Personal Page" />
+
+    <item
+        android:id="@+id/NewAD"
+        android:icon="@drawable/pluscon"
+        android:title="Create New Ad" />
+    <item
+        android:id="@+id/AllAD"
+        android:icon="@drawable/alladcon"
+        android:title="Go To All Ad" />
+    <item
+        android:id="@+id/View_Profile"
+        android:icon="@drawable/usercon"
+        android:title="My Profile" />
+
+
+</menu>
