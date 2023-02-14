@@ -11,6 +11,7 @@ import com.google.android.gms.maps.model.Marker;
 public class GoogleMapsLocation
 {
 
+    String A;
     GoogleMap mGoogleMap;
     SupportMapFragment mapFrag;
     LocationRequest mLocationRequest;
