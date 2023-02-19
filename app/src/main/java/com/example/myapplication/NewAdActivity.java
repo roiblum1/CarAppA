@@ -16,6 +16,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,6 +36,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -81,7 +83,7 @@ public class NewAdActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_ad);
         builder = new AlertDialog.Builder(this);
-
+        bottomNavigation();
         et_cat= findViewById(R.id.et_cat);
         et_des = findViewById(R.id.et_des);
         et_km = findViewById(R.id.et_km);
@@ -314,5 +316,66 @@ public class NewAdActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    protected void bottomNavigation ( )
+    {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        ArrayList<Car> carArrayList = new ArrayList<Car>();
+        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail().toString();
+        FirebaseFirestore db2 = FirebaseFirestore.getInstance();
+        db2.collection("Cars").whereEqualTo("userEmail", email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful())
+                {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d("TAG2", document.getId() + " => " + document.getData());
+                        String carID = document.get("carID").toString();
+                        String category = document.get("category").toString();
+                        String description = document.get("description").toString();
+                        String km = document.get("km").toString();
+                        String manufacturer = document.get("manufacturer").toString();
+                        String model = document.get("model").toString();
+                        String owner = document.get("owner").toString();
+                        String price = document.get("price").toString();
+                        boolean relevant = (boolean) document.get("relevant");
+                        String userID = document.get("userEmail").toString();
+                        String year = document.get("year").toString();
+                        Car car = new Car( category,  manufacturer,  model,  year,  owner,  km,  price,  description,  carID,  userID,  relevant);
+                        carArrayList.add(car);
+                    }
+
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Faild TO fa", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.NewAD:
+                        Intent intent = new Intent(getApplicationContext() , NewAdActivity.class);
+                        intent.putExtra("num",carArrayList.size());
+                        startActivity(intent);
+                        return true;
+                    case R.id.AllAD:
+                        startActivity(new Intent(getApplicationContext(), AllAdActivity.class));
+                        return true;
+                    case R.id.personal_page:
+                        startActivity(new Intent(getApplicationContext(), PersonalPage.class));
+                        return true;
+                    case R.id.View_Profile:
+                        Intent intent2 = new Intent(getApplicationContext() , MainActivity2.class);
+                        intent2.putExtra("num",carArrayList.size());
+                        startActivity(intent2);
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 }

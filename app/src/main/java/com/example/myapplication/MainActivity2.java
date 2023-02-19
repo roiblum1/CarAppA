@@ -71,6 +71,7 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
         currentuser = FirebaseAuth.getInstance().getCurrentUser();
         this.latitude = 0.0;
         this.longitude = 0.0;
+        bottomNavigation();
         textView = (TextView) findViewById(R.id.textView);
         imageView = (ImageView) findViewById(R.id.imageView);
         buttonBack = (Button) findViewById(R.id.buttonBack);
@@ -184,6 +185,66 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
         else {
             //Toast.makeText(viewAd.this, "Permission already granted", Toast.LENGTH_SHORT).show();
         }
+    }
+    protected void bottomNavigation ( )
+    {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        ArrayList<Car> carArrayList = new ArrayList<Car>();
+        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail().toString();
+        FirebaseFirestore db2 = FirebaseFirestore.getInstance();
+        db2.collection("Cars").whereEqualTo("userEmail", email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful())
+                {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d("TAG2", document.getId() + " => " + document.getData());
+                        String carID = document.get("carID").toString();
+                        String category = document.get("category").toString();
+                        String description = document.get("description").toString();
+                        String km = document.get("km").toString();
+                        String manufacturer = document.get("manufacturer").toString();
+                        String model = document.get("model").toString();
+                        String owner = document.get("owner").toString();
+                        String price = document.get("price").toString();
+                        boolean relevant = (boolean) document.get("relevant");
+                        String userID = document.get("userEmail").toString();
+                        String year = document.get("year").toString();
+                        Car car = new Car( category,  manufacturer,  model,  year,  owner,  km,  price,  description,  carID,  userID,  relevant);
+                        carArrayList.add(car);
+                    }
+
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Faild TO fa", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.NewAD:
+                        Intent intent = new Intent(getApplicationContext() , NewAdActivity.class);
+                        intent.putExtra("num",carArrayList.size());
+                        startActivity(intent);
+                        return true;
+                    case R.id.AllAD:
+                        startActivity(new Intent(getApplicationContext(), AllAdActivity.class));
+                        return true;
+                    case R.id.personal_page:
+                        startActivity(new Intent(getApplicationContext(), PersonalPage.class));
+                        return true;
+                    case R.id.View_Profile:
+                        Intent intent2 = new Intent(getApplicationContext() , MainActivity2.class);
+                        intent2.putExtra("num",carArrayList.size());
+                        startActivity(intent2);
+                        return true;
+                }
+                return false;
+            }
+        });
     }
     
 }
