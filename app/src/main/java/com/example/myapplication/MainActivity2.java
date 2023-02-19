@@ -11,6 +11,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -221,6 +222,7 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
                 }
             }
         });
+        bottomNavigationView.setSelectedItemId(R.id.View_Profile);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -245,6 +247,8 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
                 return false;
             }
         });
+
+
     }
     
 }

@@ -237,6 +237,7 @@ public class AllAdActivity extends AppCompatActivity implements AdapterView.OnIt
                 }
             }
         });
+        bottomNavigationView.setSelectedItemId(R.id.AllAD);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

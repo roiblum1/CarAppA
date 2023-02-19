@@ -30,7 +30,7 @@
         <ListView
             android:id="@+id/lv_all"
             android:layout_width="match_parent"
-            android:layout_height="473dp"
+            android:layout_height="420dp"
             android:layout_below="@id/recycler_view"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp" />
@@ -39,6 +39,7 @@
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_below="@id/lv_all"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="10dp"
             app:menu="@menu/bottom_navigation_menu" />

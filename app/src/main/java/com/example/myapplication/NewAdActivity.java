@@ -353,6 +353,7 @@ public class NewAdActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         });
+        bottomNavigationView.setSelectedItemId(R.id.NewAD);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
