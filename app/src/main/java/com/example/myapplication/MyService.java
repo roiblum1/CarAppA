@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.app.Service;
 import android.content.Intent;
+import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.provider.Settings;
@@ -22,7 +23,7 @@ public class MyService extends Service {
     public void onCreate() {
         Toast.makeText(this, "Service Created", Toast.LENGTH_LONG).show();
 
-        myPlayer = MediaPlayer.create(this, Settings.System.DEFAULT_RINGTONE_URI);
+        myPlayer = MediaPlayer.create(this, R.raw.song);
         myPlayer.setLooping(true); // Set looping
         myPlayer.start();
     }
