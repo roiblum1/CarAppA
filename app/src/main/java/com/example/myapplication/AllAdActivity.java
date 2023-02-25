@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -262,6 +263,45 @@ public class AllAdActivity extends AppCompatActivity implements AdapterView.OnIt
                 return false;
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menua, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.LoginPage:
+                startActivity(new Intent(this, MainActivity.class));
+                return true;
+            case R.id.Register:
+                startActivity(new Intent(this, Register.class));
+                return true;
+            case R.id.AllAD:
+                if (FirebaseAuth.getInstance().getCurrentUser()!=null)
+                    startActivity(new Intent(this, AllAdActivity.class));
+                return true;
+            case R.id.personal_page:
+                if (FirebaseAuth.getInstance().getCurrentUser()!=null)
+                    startActivity(new Intent(this, PersonalPage.class));
+                return true;
+            case R.id.View_Profile:
+                if (FirebaseAuth.getInstance().getCurrentUser()!=null)
+                    startActivity(new Intent(this, MainActivity2.class));
+                return true;
+            case R.id.SrartMusic:
+                startService(new Intent(this, MyService.class));
+                return true;
+            case R.id.StopMusic:
+                stopService(new Intent(this, MyService.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
 
