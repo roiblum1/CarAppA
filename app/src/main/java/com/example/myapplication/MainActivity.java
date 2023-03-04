@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                     editor.putString(MainActivity.Pass, MainActivity.this.et_pass.getText().toString());
                     editor.putString(MainActivity.Email, MainActivity.this.et_mail.getText().toString());
                     editor.commit();
-                    //startService(new Intent(MainActivity.this, MyService.class));
+                    startService(new Intent(MainActivity.this, MyService.class));
                     notify4();
                     MainActivity.this.progressDialog.dismiss();
                     Toast.makeText(MainActivity.this, "Login Succesful", Toast.LENGTH_SHORT).show();
