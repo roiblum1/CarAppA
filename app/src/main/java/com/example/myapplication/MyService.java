@@ -21,7 +21,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 public class MyService extends Service {
-
+    public int length;
     MediaPlayer myPlayer;
 
     @Nullable
@@ -32,7 +32,7 @@ public class MyService extends Service {
 
     @Override
     public void onCreate() {
-        Toast.makeText(this, "Service Created", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Service Created", Toast.LENGTH_LONG).show();
         myPlayer = MediaPlayer.create(this, R.raw.song);
         myPlayer.setLooping(true); // Set looping
         myPlayer.start();
@@ -45,7 +45,7 @@ public class MyService extends Service {
     }
     @Override
     public void onDestroy() {
-        Toast.makeText(this, "Service Stopped", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Service Stopped", Toast.LENGTH_LONG).show();
         myPlayer.stop();
     }
 
@@ -55,5 +55,22 @@ public class MyService extends Service {
             stopSelf();
         }
         return flags;
+    }
+
+    public boolean isPlaying ()
+    {
+        return myPlayer.isPlaying();
+    }
+
+    public void pause ()
+    {
+        myPlayer.pause();
+        length = myPlayer.getCurrentPosition();
+    }
+
+    public void resume ()
+    {
+        myPlayer.start();
+        myPlayer.seekTo(length);
     }
 }

@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -151,6 +152,15 @@ public class MainActivity extends BaseActivity {
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel1);
 
+            Intent activityIntent = new Intent(this, MainActivity2.class);
+            PendingIntent contentIntent = PendingIntent.getActivity(this,
+                    0, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT| PendingIntent.FLAG_IMMUTABLE);
+
+            Intent broadcastIntent = new Intent(this, NotificationReceiver.class);
+            broadcastIntent.putExtra("toastMessage", "Welcome back Brother");
+            PendingIntent actionIntent = PendingIntent.getBroadcast(this,
+                    0, broadcastIntent,PendingIntent.FLAG_UPDATE_CURRENT| PendingIntent.FLAG_IMMUTABLE );
+
 
             Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
                     .setSmallIcon(R.drawable.heart)
@@ -158,6 +168,10 @@ public class MainActivity extends BaseActivity {
                     .setContentText("Welcome ! Music has been started")
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                    .setColor(Color.BLUE)
+                    .setContentIntent(contentIntent)
+                    .setAutoCancel(false)
+                    .addAction(R.drawable.logo4, "Start / Stop", actionIntent)
                     .build();
 
             manager.notify(1, notification);
