@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
@@ -34,6 +36,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
+
+    //Login Activity Contains
+    //notify 4 make an notification tha background music is started
+    //logIn this action make a progress bar dialog and make login in firebase and save in shared preference also start background music and move you to personal page through the Splash screen activity
+    //menu that not need much explanation
+
     public static final String Email = "emailKey";
     public static final String MyPREFERENCES = "MyPrefs";
     public static final String Pass = "passKey";
@@ -50,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         this.tv_create = (TextView) findViewById(R.id.tv_create);
         this.et_mail = (EditText) findViewById(R.id.et_mail);
         this.et_pass = (EditText) findViewById(R.id.et_pass);
@@ -92,10 +102,10 @@ public class MainActivity extends AppCompatActivity {
                     editor.putString(MainActivity.Pass, MainActivity.this.et_pass.getText().toString());
                     editor.putString(MainActivity.Email, MainActivity.this.et_mail.getText().toString());
                     editor.commit();
-                    startService(new Intent(MainActivity.this, MyService.class));
                     notify4();
                     MainActivity.this.progressDialog.dismiss();
                     Toast.makeText(MainActivity.this, "Login Succesful", Toast.LENGTH_SHORT).show();
+                    startService(new Intent(MainActivity.this, MyService.class));
                     MainActivity.this.intent();
                     return;
                 }
@@ -197,11 +207,21 @@ public class MainActivity extends AppCompatActivity {
             case R.id.StopMusic:
                 stopService(new Intent(this, MyService.class));
                 return true;
+            case android.R.id.home:
+                this.finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+
+    public void action ()
+    {
+        ActionBar actionBar = getSupportActionBar();
+        // showing the back button in action bar
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
 
 
 

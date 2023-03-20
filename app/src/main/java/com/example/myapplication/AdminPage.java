@@ -1,12 +1,14 @@
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
@@ -27,12 +29,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminPage extends AppCompatActivity {
+    //Admin Page for the admin, here you can see and mange all the accounts that are in the fireBase
     ListView lv_admin;
     List<Member> memberList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_page);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         lv_admin = (ListView) findViewById(R.id.lv_admin);
         lv_admin.setAnimation(AnimationUtils.loadAnimation(AdminPage.this, R.anim.fade_transition));
         lv_admin.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -75,7 +80,7 @@ public class AdminPage extends AppCompatActivity {
                     });
                     finish();
                 });
-                builder.setNegativeButton("Cancle", (DialogInterface.OnClickListener) (dialog, which) -> {
+                builder.setNegativeButton("Cancel", (DialogInterface.OnClickListener) (dialog, which) -> {
                     // If user click no then dialog box is canceled.
                     dialog.cancel();
                 });
@@ -158,5 +163,15 @@ public class AdminPage extends AppCompatActivity {
                 Toast.makeText(AdminPage.this, "File Delete From ", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

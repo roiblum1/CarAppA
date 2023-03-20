@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -84,6 +85,8 @@ public class NewAdActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_new_ad);
         builder = new AlertDialog.Builder(this);
         bottomNavigation();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         et_cat= findViewById(R.id.et_cat);
         et_des = findViewById(R.id.et_des);
         et_km = findViewById(R.id.et_km);
@@ -142,6 +145,9 @@ public class NewAdActivity extends AppCompatActivity implements View.OnClickList
                 return true;
             case R.id.personal_page:
                 startActivity(new Intent(this, PersonalPage.class));
+                return true;
+            case android.R.id.home:
+                this.finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

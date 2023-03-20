@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -91,6 +92,8 @@ public class viewAd extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView((int) R.layout.activity_view_ad);
         Intent intent = getIntent();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         this.f100db = FirebaseFirestore.getInstance();
         FirebaseStorage instance = FirebaseStorage.getInstance();
         this.storage = instance;
@@ -187,6 +190,9 @@ public class viewAd extends AppCompatActivity implements View.OnClickListener {
             case R.id.personal_page:
                 startActivity(new Intent(this, PersonalPage.class));
                 return true;
+            case android.R.id.home:
+                this.finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -259,4 +265,5 @@ public class viewAd extends AppCompatActivity implements View.OnClickListener {
             }
         });
     }
+
 }

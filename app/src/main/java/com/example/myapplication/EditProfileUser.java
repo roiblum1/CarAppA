@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -80,7 +81,8 @@ public class EditProfileUser extends AppCompatActivity implements View.OnClickLi
         this.latitude = 0.0;
         this.btn_location = (Button) findViewById(R.id.btn_location);
         this.builder = new AlertDialog.Builder(this);
-
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         currentuser = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
@@ -390,5 +392,14 @@ public class EditProfileUser extends AppCompatActivity implements View.OnClickLi
         this.mLocationRequest.setFastestInterval(5000);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

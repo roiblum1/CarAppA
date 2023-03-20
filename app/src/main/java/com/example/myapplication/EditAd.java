@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +12,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -57,7 +59,8 @@ public class EditAd extends AppCompatActivity {
         setContentView(R.layout.activity_edit_ad);
         Intent intent = getIntent();
         this.builder = new AlertDialog.Builder(this);
-
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         String carID = intent.getStringExtra("carID");
         String userID = intent.getStringExtra("userID");
         String category = intent.getStringExtra("category");
@@ -300,5 +303,15 @@ public class EditAd extends AppCompatActivity {
             Toast.makeText(this, ex.toString(), Toast.LENGTH_SHORT).show();
             return null;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
