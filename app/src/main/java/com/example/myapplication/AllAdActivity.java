@@ -98,6 +98,7 @@ public class AllAdActivity extends BaseActivity implements AdapterView.OnItemCli
         );
         db = FirebaseFirestore.getInstance();
         retriveAllCar();
+
     }
 
 
@@ -264,5 +265,6 @@ public class AllAdActivity extends BaseActivity implements AdapterView.OnItemCli
             }
         });
     }
+
 }
 
