@@ -178,7 +178,7 @@ public class NewAdActivity extends BaseActivity implements View.OnClickListener,
         }
         else if (view == btn_back )
         {
-            deleteImage();
+            deleteImageCar(currentuser.getUid()+(num+1));
             startActivity(new Intent(this,PersonalPage.class));
         }
     }
@@ -244,19 +244,6 @@ public class NewAdActivity extends BaseActivity implements View.OnClickListener,
             public void onFailure(@NonNull Exception e)
             {
                 Toast.makeText(NewAdActivity.this, "Fail to Upload to server", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    public void deleteImage ()
-    {
-        StorageReference storageRef = storage.getReference();
-
-        StorageReference desertRef = storageRef.child("images/");
-        desertRef.child(currentuser.getUid()+(num+1)).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                //Toast.makeText(NewAdActivity.this, "File Delete From ", Toast.LENGTH_SHORT).show();
             }
         });
     }

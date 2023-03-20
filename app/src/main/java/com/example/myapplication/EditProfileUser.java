@@ -119,7 +119,7 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
                 build();
             else
             {
-                deleteImage();
+                deleteImageUser(currentuser.getUid().toString());
                 build();
             }
         }
@@ -316,19 +316,6 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
         });
     }
 
-
-    public void deleteImage ()
-    {
-        StorageReference storageRef = storage.getReference();
-
-        StorageReference desertRef = storageRef.child("images/Avatars/");
-        desertRef.child(currentuser.getUid().toString()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                showToast("Failed to delete from storage");
-            }
-        });
-    }
 
     public void build() {
         this.builder.setMessage((CharSequence) "Where do you want to take the picture from ?").setCancelable(false).setPositiveButton((CharSequence) "Gallery", (DialogInterface.OnClickListener) new DialogInterface.OnClickListener() {

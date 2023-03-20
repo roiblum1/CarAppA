@@ -148,7 +148,7 @@ public class EditAd extends BaseActivity {
             build();
         else
         {
-            deleteImage();
+            deleteImageCar(car.getCarID().toString());
             build();
         }
     }
