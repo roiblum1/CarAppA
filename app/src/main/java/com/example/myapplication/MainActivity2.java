@@ -44,7 +44,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class MainActivity2 extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity2 extends BaseActivity implements View.OnClickListener {
     public TextView textView;
     public ImageView imageView;
     public Button buttonBack;
@@ -66,12 +66,10 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
     private static final String Internat = Manifest.permission.INTERNET;
     public TextView text_location;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         currentuser = FirebaseAuth.getInstance().getCurrentUser();
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
         db = FirebaseFirestore.getInstance();
         currentuser = FirebaseAuth.getInstance().getCurrentUser();
         this.latitude = 0.0;
@@ -253,46 +251,5 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menua, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id){
-            case R.id.LoginPage:
-                startActivity(new Intent(this, MainActivity.class));
-                return true;
-            case R.id.Register:
-                startActivity(new Intent(this, Register.class));
-                return true;
-            case R.id.AllAD:
-                if (FirebaseAuth.getInstance().getCurrentUser()!=null)
-                    startActivity(new Intent(this, AllAdActivity.class));
-                return true;
-            case R.id.personal_page:
-                if (FirebaseAuth.getInstance().getCurrentUser()!=null)
-                    startActivity(new Intent(this, PersonalPage.class));
-                return true;
-            case R.id.View_Profile:
-                if (FirebaseAuth.getInstance().getCurrentUser()!=null)
-                    startActivity(new Intent(this, MainActivity2.class));
-                return true;
-            case R.id.SrartMusic:
-                startService(new Intent(this, MyService.class));
-                return true;
-            case R.id.StopMusic:
-                stopService(new Intent(this, MyService.class));
-                return true;
-            case android.R.id.home:
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
     
 }

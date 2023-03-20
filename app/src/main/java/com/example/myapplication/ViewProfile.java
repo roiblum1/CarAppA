@@ -31,7 +31,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class ViewProfile extends AppCompatActivity
+public class ViewProfile extends BaseActivity
 {
     private TextView textView;
     private ImageView imageView;
@@ -43,14 +43,12 @@ public class ViewProfile extends AppCompatActivity
     private Button btnAddContact;
     private Button buttonBack;
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_profile);
         Intent intent = getIntent();
         String EmailSeller = intent.getStringExtra("SellerEmail");
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
         textView = (TextView) findViewById(R.id.textView);
         imageView = (ImageView) findViewById(R.id.imageView);
         etName = (TextInputEditText) findViewById(R.id.et_name);
@@ -158,13 +156,4 @@ public class ViewProfile extends AppCompatActivity
         });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

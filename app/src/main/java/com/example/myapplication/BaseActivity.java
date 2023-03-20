@@ -6,12 +6,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,10 +33,52 @@ public abstract class BaseActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getContentView());
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         onViewReady(savedInstanceState, getIntent());
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menua, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.LoginPage:
+                startActivity(new Intent(this, MainActivity.class));
+                return true;
+            case R.id.Register:
+                startActivity(new Intent(this, Register.class));
+                return true;
+            case R.id.AllAD:
+                if (FirebaseAuth.getInstance().getCurrentUser()!=null)
+                    startActivity(new Intent(this, AllAdActivity.class));
+                return true;
+            case R.id.personal_page:
+                if (FirebaseAuth.getInstance().getCurrentUser()!=null)
+                    startActivity(new Intent(this, PersonalPage.class));
+                return true;
+            case R.id.View_Profile:
+                if (FirebaseAuth.getInstance().getCurrentUser()!=null)
+                    startActivity(new Intent(this, MainActivity2.class));
+                return true;
+            case R.id.SrartMusic:
+                startService(new Intent(this, MyService.class));
+                return true;
+            case R.id.StopMusic:
+                stopService(new Intent(this, MyService.class));
+                return true;
+            case android.R.id.home:
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     @CallSuper
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         //To be used by child activities
@@ -103,5 +147,4 @@ public abstract class BaseActivity extends AppCompatActivity
             }
         });
     }
-    protected abstract int getContentView();
 }

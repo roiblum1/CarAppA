@@ -41,7 +41,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 
-public class viewAd extends AppCompatActivity implements View.OnClickListener {
+public class viewAd extends BaseActivity implements View.OnClickListener {
     private static final String Internat = "android.permission.INTERNET";
     private static final String READ = "android.permission.READ_CONTACTS";
     private static final int REQUEST_CODE_ASK_PERMISSIONS = 1;
@@ -92,8 +92,6 @@ public class viewAd extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView((int) R.layout.activity_view_ad);
         Intent intent = getIntent();
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
         this.f100db = FirebaseFirestore.getInstance();
         FirebaseStorage instance = FirebaseStorage.getInstance();
         this.storage = instance;
@@ -175,28 +173,24 @@ public class viewAd extends AppCompatActivity implements View.OnClickListener {
         checkPermission(Internat, 1);
         downloadImage();
     }
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.logout:
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(this, MainActivity.class));
-                return true;
-            case R.id.personal_page:
-                startActivity(new Intent(this, PersonalPage.class));
-                return true;
-            case android.R.id.home:
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+//
+//
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.logout:
+//                FirebaseAuth.getInstance().signOut();
+//                startActivity(new Intent(this, MainActivity.class));
+//                return true;
+//            case R.id.personal_page:
+//                startActivity(new Intent(this, PersonalPage.class));
+//                return true;
+//            case android.R.id.home:
+//                this.finish();
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 
     private void retriveMemberName() {
         String email = this.sellerUser;

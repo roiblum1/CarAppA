@@ -59,7 +59,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class NewAdActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class NewAdActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     EditText et_cat, et_man,et_mod,et_year,et_km,et_yad,et_price,et_des;
     Button btn_share,btn_addImage,btn_ViewImage,btn_back;
     FirebaseDatabase database;
@@ -80,13 +80,11 @@ public class NewAdActivity extends AppCompatActivity implements View.OnClickList
     String[] CarsLogo = {"Nissan", "Mustang", "Toyota", "Volvo", "BMW", "Honda", "Mercedes", "Jeep", "Infinity", "Subaru"};
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_ad);
         builder = new AlertDialog.Builder(this);
         bottomNavigation();
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
         et_cat= findViewById(R.id.et_cat);
         et_des = findViewById(R.id.et_des);
         et_km = findViewById(R.id.et_km);
@@ -132,27 +130,7 @@ public class NewAdActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.logout:
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(this, MainActivity.class));
-                return true;
-            case R.id.personal_page:
-                startActivity(new Intent(this, PersonalPage.class));
-                return true;
-            case android.R.id.home:
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     @Override
     public void onClick(View view)

@@ -37,7 +37,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class AllAdActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class AllAdActivity extends BaseActivity implements AdapterView.OnItemClickListener{
     private static final String TAGMENU = "mytag";
     Button btn_back;
     String Favorite;
@@ -46,11 +46,9 @@ public class AllAdActivity extends AppCompatActivity implements AdapterView.OnIt
     ListView lv_all;
     FirebaseFirestore db;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_all_ad);
         lv_all = findViewById(R.id.lv_all);
         lv_all.setOnItemClickListener(this);
@@ -63,7 +61,6 @@ public class AllAdActivity extends AppCompatActivity implements AdapterView.OnIt
         TopNavigationAdapter adapter2= new TopNavigationAdapter(stringList);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-
         mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -78,7 +75,7 @@ public class AllAdActivity extends AppCompatActivity implements AdapterView.OnIt
                         for (int i = 0; i < carList.size(); i++) {
                             if (Favorite!=null && str == "Favorites")
                             {
-                                Toast.makeText(AllAdActivity.this, Favorite, Toast.LENGTH_SHORT).show();
+                                //showToast(Favorite);
                                 if (isInString(carList.get(i).getCarID().toString(),Favorite))
                                     cars2.add(carList.get(i));
                             }
@@ -237,7 +234,7 @@ public class AllAdActivity extends AppCompatActivity implements AdapterView.OnIt
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Faild TO fa", Toast.LENGTH_SHORT).show();
+                    showToast("Failed to read data");
                 }
             }
         });
@@ -266,48 +263,6 @@ public class AllAdActivity extends AppCompatActivity implements AdapterView.OnIt
                 return false;
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menua, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id){
-            case R.id.LoginPage:
-                startActivity(new Intent(this, MainActivity.class));
-                return true;
-            case R.id.Register:
-                startActivity(new Intent(this, Register.class));
-                return true;
-            case R.id.AllAD:
-                if (FirebaseAuth.getInstance().getCurrentUser()!=null)
-                    startActivity(new Intent(this, AllAdActivity.class));
-                return true;
-            case R.id.personal_page:
-                if (FirebaseAuth.getInstance().getCurrentUser()!=null)
-                    startActivity(new Intent(this, PersonalPage.class));
-                return true;
-            case R.id.View_Profile:
-                if (FirebaseAuth.getInstance().getCurrentUser()!=null)
-                    startActivity(new Intent(this, MainActivity2.class));
-                return true;
-            case R.id.SrartMusic:
-                startService(new Intent(this, MyService.class));
-                return true;
-            case R.id.StopMusic:
-                stopService(new Intent(this, MyService.class));
-                return true;
-            case android.R.id.home:
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 }
 

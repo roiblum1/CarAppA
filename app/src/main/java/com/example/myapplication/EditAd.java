@@ -35,7 +35,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 
-public class EditAd extends AppCompatActivity {
+public class EditAd extends BaseActivity {
     EditText et_carID,et_cat,et_man,et_mod,et_year,et_km,et_yad,et_price,et_userEmail,et_relevant,et_des;
     String carID,userID,category,description,km,manufacturer,model,price,owner,year,relevant;
     FirebaseFirestore db;
@@ -54,13 +54,11 @@ public class EditAd extends AppCompatActivity {
 
     public int num;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_ad);
         Intent intent = getIntent();
         this.builder = new AlertDialog.Builder(this);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
         String carID = intent.getStringExtra("carID");
         String userID = intent.getStringExtra("userID");
         String category = intent.getStringExtra("category");
@@ -167,7 +165,7 @@ public class EditAd extends AppCompatActivity {
                 }
             }
         });
-        Toast.makeText(this, "deleted", Toast.LENGTH_SHORT).show();
+        showToast("deleted");
         startActivity(new Intent(this , PersonalPage.class));
     }
 
@@ -189,7 +187,7 @@ public class EditAd extends AppCompatActivity {
                 }
             }
         });
-        Toast.makeText(this, "saved", Toast.LENGTH_SHORT).show();
+        showToast("saved");
         startActivity(new Intent(this , PersonalPage.class));
     }
 
@@ -261,7 +259,7 @@ public class EditAd extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e)
             {
-                Toast.makeText(EditAd.this, "Fail to Upload to server", Toast.LENGTH_SHORT).show();
+                showToast("Failed to Upload to server");
             }
         });
     }
@@ -274,7 +272,7 @@ public class EditAd extends AppCompatActivity {
         desertRef.child(car.getCarID().toString()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(EditAd.this, "File Delete From ", Toast.LENGTH_SHORT).show();
+                showToast("Failed to delete from storage");
             }
         });
     }
@@ -300,18 +298,10 @@ public class EditAd extends AppCompatActivity {
         try {
             return Uri.parse(MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", (String) null));
         } catch (Exception ex) {
-            Toast.makeText(this, ex.toString(), Toast.LENGTH_SHORT).show();
+            showToast(ex.toString());
             return null;
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 }

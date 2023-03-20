@@ -42,7 +42,7 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.util.Iterator;
 
-public class EditProfileUser extends AppCompatActivity implements View.OnClickListener {
+public class EditProfileUser extends BaseActivity implements View.OnClickListener {
      TextView textView;
      ImageView imageView;
      Button btnChangeAvatar;
@@ -74,15 +74,13 @@ public class EditProfileUser extends AppCompatActivity implements View.OnClickLi
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile_user);
         this.longitude = 0.0;
         this.latitude = 0.0;
         this.btn_location = (Button) findViewById(R.id.btn_location);
         this.builder = new AlertDialog.Builder(this);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
 
         currentuser = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
@@ -181,7 +179,7 @@ public class EditProfileUser extends AppCompatActivity implements View.OnClickLi
                 }
                 else
                 {
-                    Toast.makeText(EditProfileUser.this,"Failed To Read Data",Toast.LENGTH_LONG).show();
+                    showToast("Failed To Read Data");
                 }
             }
         });
@@ -199,7 +197,7 @@ public class EditProfileUser extends AppCompatActivity implements View.OnClickLi
                 }
             }
         });
-        Toast.makeText(this, "saved", Toast.LENGTH_SHORT).show();
+        showToast("saved");
         startActivity(new Intent(this , PersonalPage.class));
     }
 
@@ -293,7 +291,7 @@ public class EditProfileUser extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onFailure(@NonNull Exception e)
             {
-                Toast.makeText(EditProfileUser.this, "Fail to Upload to server", Toast.LENGTH_SHORT).show();
+                showToast("Fail to Upload to server");
             }
         });
     }
@@ -327,7 +325,7 @@ public class EditProfileUser extends AppCompatActivity implements View.OnClickLi
         desertRef.child(currentuser.getUid().toString()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(EditProfileUser.this, "File Delete From ", Toast.LENGTH_SHORT).show();
+                showToast("Failed to delete from storage");
             }
         });
     }
@@ -352,7 +350,7 @@ public class EditProfileUser extends AppCompatActivity implements View.OnClickLi
         try {
             return Uri.parse(MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", (String) null));
         } catch (Exception ex) {
-            Toast.makeText(this, ex.toString(), Toast.LENGTH_SHORT).show();
+            showToast(ex.toString());
             return null;
         }
     }
@@ -390,16 +388,6 @@ public class EditProfileUser extends AppCompatActivity implements View.OnClickLi
         create.setPriority(100);
         this.mLocationRequest.setInterval(0);
         this.mLocationRequest.setFastestInterval(5000);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 }

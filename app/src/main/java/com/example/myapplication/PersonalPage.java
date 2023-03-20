@@ -5,10 +5,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.app.Notification;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -55,7 +57,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonalPage extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class PersonalPage extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     Button btn_allAd;
     Button btn_newAd;
     Button btn_ViewProfile;
@@ -76,12 +78,10 @@ public class PersonalPage extends AppCompatActivity implements View.OnClickListe
     static final String TAG2 = "Read Data2 Activity";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_page);
         bottomNavigation();
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
         l1 = (RelativeLayout) findViewById(R.id.l1);
         lv_personal = findViewById(R.id.lv_personal);
         lv_personal.setOnItemClickListener(this);
@@ -161,7 +161,7 @@ public class PersonalPage extends AppCompatActivity implements View.OnClickListe
             {
                 if (task.isSuccessful())
                 {
-                    Toast.makeText(PersonalPage.this, "win TO fa", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(PersonalPage.this, "win TO fa", Toast.LENGTH_SHORT).show();
 
                     carList = new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
@@ -185,7 +185,7 @@ public class PersonalPage extends AppCompatActivity implements View.OnClickListe
                 }
                 else
                 {
-                    Toast.makeText(PersonalPage.this, "Faild TO fa", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PersonalPage.this, "Failed to read data", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -303,7 +303,7 @@ public class PersonalPage extends AppCompatActivity implements View.OnClickListe
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Faild TO fa", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Failed to read data", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -335,47 +335,6 @@ public class PersonalPage extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menua, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id){
-            case R.id.LoginPage:
-                startActivity(new Intent(this, MainActivity.class));
-                return true;
-            case R.id.Register:
-                startActivity(new Intent(this, Register.class));
-                return true;
-            case R.id.AllAD:
-                if (FirebaseAuth.getInstance().getCurrentUser()!=null)
-                    startActivity(new Intent(this, AllAdActivity.class));
-                return true;
-            case R.id.personal_page:
-                if (FirebaseAuth.getInstance().getCurrentUser()!=null)
-                    startActivity(new Intent(this, PersonalPage.class));
-                return true;
-            case R.id.View_Profile:
-                if (FirebaseAuth.getInstance().getCurrentUser()!=null)
-                    startActivity(new Intent(this, MainActivity2.class));
-                return true;
-            case R.id.SrartMusic:
-                startService(new Intent(this, MyService.class));
-                return true;
-            case R.id.StopMusic:
-                stopService(new Intent(this, MyService.class));
-                return true;
-            case android.R.id.home:
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
 
 }
