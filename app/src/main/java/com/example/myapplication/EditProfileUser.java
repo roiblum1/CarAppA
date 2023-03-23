@@ -72,7 +72,6 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
 
-//TODO : Delete images also and intent to lognin
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,6 +128,7 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
             deleteUser();
             deleteUserCars();
             delteUser();
+            startActivity(new Intent(EditProfileUser.this,MainActivity.class));
         }
 
         else if (buttonBack == v)
@@ -211,7 +211,11 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
                 for (QueryDocumentSnapshot document : task.getResult())
                 {
                     if (document.get("Email").toString().equals(currentuser.getEmail()))
+                    {
+                        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
+                        deleteImageUser(uid);
                         document.getReference().delete();
+                    }
                 }
             }
         });
@@ -225,7 +229,11 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
                 for (QueryDocumentSnapshot document : task.getResult())
                 {
                     if (document.get("userEmail").toString().equals(currentuser.getEmail()))
+                    {
+                        String carID = document.get("carID").toString();
+                        deleteImageCar(carID);
                         document.getReference().delete();
+                    }
                 }
             }
         });

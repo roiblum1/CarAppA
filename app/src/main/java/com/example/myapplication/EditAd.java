@@ -162,15 +162,35 @@ public class EditAd extends BaseActivity {
                 for (QueryDocumentSnapshot document : task.getResult())
                 {
                     if (document.get("carID").toString().equals(car.getCarID()))
+                    {
+                        String carID = document.get("carID").toString();
+                        deleteImageCar(carID);
                         document.getReference().delete();
+                    }
                 }
             }
         });
+        //changeDataUser(FirebaseFirestore.getInstance());
         showToast("deleted");
         startActivity(new Intent(this , PersonalPage.class));
     }
 
-
+    public void changeDataUser (FirebaseFirestore db)
+    {
+        db.collection("user").whereEqualTo("UID",FirebaseAuth.getInstance().getCurrentUser().getUid().toString() ).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for (QueryDocumentSnapshot document : task.getResult())
+                {
+                    int num = (int)document.get("AdPosted");
+                    num--;
+                    db.collection("user").document(document.getReference().getPath().substring(5)).update("AdPosted", num);
+                }
+            }
+        });
+        showToast("saved");
+        startActivity(new Intent(this , PersonalPage.class));
+    }
     public void changeData (String dest , String data ,FirebaseFirestore db, String carID)
     {
         db.collection("Cars").whereEqualTo("carID",carID ).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

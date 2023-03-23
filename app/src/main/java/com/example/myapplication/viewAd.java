@@ -129,9 +129,9 @@ public class viewAd extends BaseActivity implements View.OnClickListener {
         this.cont = button;
         button.setOnClickListener(this);
         this.btn_viewUserProfile.setOnClickListener(this);
-        Button button2 = (Button) findViewById(R.id.btn_back);
-        this.btn_back = button2;
-        button2.setOnClickListener(this);
+//        Button button2 = (Button) findViewById(R.id.btn_back);
+//        this.btn_back = button2;
+//        button2.setOnClickListener(this);
         this.et_cat.setText(category2);
         this.et_man.setText(manufacturer2);
         this.et_mod.setText(model2);
@@ -238,9 +238,10 @@ public class viewAd extends BaseActivity implements View.OnClickListener {
             Intent intent = new Intent(this, ViewProfile.class);
             intent.putExtra("SellerEmail", this.et_userEmail.getText().toString());
             startActivity(intent);
-        } else if (v == this.btn_back) {
-            finish();
         }
+//        else if (v == this.btn_back) {
+//            finish();
+//        }
     }
 
     public void checkPermission(String permission, int requestCode) {

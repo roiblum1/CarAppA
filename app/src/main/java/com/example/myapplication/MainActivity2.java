@@ -43,7 +43,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-//TODO: Change ADposted,  see LOcation dont work, make buttons vertically
+
 public class MainActivity2 extends BaseActivity implements View.OnClickListener {
     public TextView textView;
     public ImageView imageView;
@@ -87,7 +87,11 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
         text_location.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (v == MainActivity2.this.text_location && MainActivity2.this.latitude != 0.0 && MainActivity2.this.longitude != 0.0) {
-                    MainActivity2.this.startActivity(new Intent("android.intent.action.VIEW", Uri.parse("http://maps.google.com/maps?daddr=" + MainActivity2.this.latitude + "," + MainActivity2.this.longitude)));
+                   // MainActivity2.this.startActivity(new Intent("android.intent.action.VIEW", Uri.parse("http://maps.google.com/maps?daddr=" + MainActivity2.this.latitude + "," + MainActivity2.this.longitude)));
+                    String url = "https://www.google.com/maps/search/" + Double.toString(longitude) + ",+" + Double.toString(latitude) + "/@" + Double.toString(longitude) + "," +  Double.toString(latitude);
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    startActivity(i);
                 }
             }
         });
@@ -95,9 +99,11 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
         etPhone.setTextColor(getResources().getColor(R.color.white));
         etUserEmail.setTextColor(getResources().getColor(R.color.white));
         et_numOfCars.setTextColor(getResources().getColor(R.color.white));
+
         etName.setEnabled(false);
         etUserEmail.setEnabled(false);
         etPhone.setEnabled(false);
+        et_numOfCars.setEnabled(false);
 
         buttonBack.setOnClickListener(this);
         buttonEdit.setOnClickListener(this);
@@ -141,6 +147,7 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
                         Log.d(TAG, document.getId() + " => " + document.getData());
                         String Name = document.get("Name").toString();
                         String Email = document.get("Email").toString();
+                        String adPOsed = document.get("AdPosted").toString();
                         String Phone = document.get("Phone").toString();
                         String lat = document.get("latitude").toString();
                         String lon = document.get("longitude").toString();
@@ -149,6 +156,7 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
                         MainActivity2.this.etName.setText(Name);
                         MainActivity2.this.etUserEmail.setText(Email);
                         MainActivity2.this.etPhone.setText(Phone);
+                        MainActivity2.this.et_numOfCars.setText(adPOsed);
                     }
                 }
                 else

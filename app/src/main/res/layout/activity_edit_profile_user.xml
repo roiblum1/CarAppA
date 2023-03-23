@@ -13,9 +13,100 @@
         <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_phone" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="User Phone :" android:textSize="18sp" android:ems="10" android:inputType="textMultiLine"/>
         </com.google.android.material.textfield.TextInputLayout>
-        <Button android:layout_gravity="center" android:id="@+id/btn_location" android:background="@drawable/profile_back_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="5dp" android:layout_marginTop="20dp" android:text="Update Location" android:backgroundTint="@color/profileBackground"/>
-        <Button android:layout_gravity="center" android:id="@+id/buttonBack" android:background="@drawable/profile_back_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:layout_marginBottom="5dp" android:text="Save" android:backgroundTint="@color/profileBackground" />
-        <Button android:layout_gravity="center" android:id="@+id/btnDelete" android:background="@drawable/profile_back_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="5dp" android:text="Delete Profile" android:backgroundTint="@color/profileBackground"/>
+<!--        <Button android:layout_gravity="center" android:id="@+id/btn_location" android:background="@drawable/profile_back_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="5dp" android:layout_marginTop="20dp" android:text="Update Location" android:backgroundTint="@color/profileBackground"/>-->
+<!--        <Button android:layout_gravity="center" android:id="@+id/buttonBack" android:background="@drawable/profile_back_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:layout_marginBottom="5dp" android:text="Save" android:backgroundTint="@color/profileBackground" />-->
+<!--        <Button android:layout_gravity="center" android:id="@+id/btnDelete" android:background="@drawable/profile_back_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="5dp" android:text="Delete Profile" android:backgroundTint="@color/profileBackground"/>-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_gravity="center"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            >
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:id="@+id/btnDelete"
+                android:background="@drawable/white_rounded_shape"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:text="Delete Profile"
+                android:textColor="#ffffffff"
+                />
+
+            <Button
+                android:textColor="#ffffffff"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:id="@+id/buttonBack"
+                android:background="@drawable/white_rounded_shape"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:text="Save Changes"
+                />
+
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:id="@+id/btn_location"
+                android:background="@drawable/white_rounded_shape"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:text="Update Location"
+                android:textColor="#ffffffff"
+                />
+
+        </LinearLayout>
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:orientation="horizontal"-->
+<!--            >-->
+<!--            <Button-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="60dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:id="@+id/btnDelete"-->
+<!--                android:background="@drawable/white_rounded_shape"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:layout_marginBottom="5dp"-->
+<!--                android:text="Delete Profile"-->
+<!--                />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/buttonBack"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="60dp"-->
+<!--                android:layout_marginLeft="10dp"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:layout_marginRight="10dp"-->
+<!--                android:layout_marginBottom="5dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@drawable/white_rounded_shape"-->
+<!--                android:text="Save" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/btn_location"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="60dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@drawable/white_rounded_shape"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:layout_marginBottom="5dp"-->
+<!--                android:text="Update Location"-->
+<!--                />-->
+<!--        </LinearLayout>-->
         <TextView android:textColor="@color/white" android:layout_gravity="center" android:id="@+id/textView2" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="10dp" android:layout_marginTop="100dp" android:layout_marginBottom="20dp" android:text="The location will be update to the current location if the button will be clicked" android:textAlignment="center"/>
     </LinearLayout>
 </ScrollView>

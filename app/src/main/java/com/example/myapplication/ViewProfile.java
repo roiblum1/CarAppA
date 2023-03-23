@@ -30,24 +30,29 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-//TODO : Btn Location dont work and should make title black and buttons vertical
+
 public class ViewProfile extends BaseActivity
 {
     private TextView textView;
     private ImageView imageView;
+
+    public String latitude;
+    public String longitude;
     private TextInputEditText etName;
     private TextInputEditText etUserEmail;
     private TextInputEditText etPhone;
     private EditText etUID;
     private Button btnLocation;
     private Button btnAddContact;
-    private Button buttonBack;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_profile);
         Intent intent = getIntent();
+        latitude ="0.0";
+        longitude ="0.0";
         String EmailSeller = intent.getStringExtra("SellerEmail");
         textView = (TextView) findViewById(R.id.textView);
         imageView = (ImageView) findViewById(R.id.imageView);
@@ -57,7 +62,6 @@ public class ViewProfile extends BaseActivity
         etUID = (EditText) findViewById(R.id.et_UID);
         btnLocation = (Button) findViewById(R.id.btn_location);
         btnAddContact = (Button) findViewById(R.id.btn_addContact);
-        buttonBack = (Button) findViewById(R.id.buttonBack);
 
         etName.setTextColor(getResources().getColor(R.color.white));
         etPhone.setTextColor(getResources().getColor(R.color.white));
@@ -93,16 +97,17 @@ public class ViewProfile extends BaseActivity
             @Override
             public void onClick(View v)
             {
-
+                //startActivity(new Intent(ViewProfile.this,ViewLocation.class));
+                showToast(latitude +','+ longitude);
+                if (latitude!="0.0") {
+                    String url = "https://www.google.com/maps/search/" + longitude + ",+" + latitude + "/@" + longitude + "," + latitude;
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    startActivity(i);
+                }
             }
         });
 
-        buttonBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ViewProfile.this,PersonalPage.class));
-            }
-        });
 
         etName.setEnabled(false);
         etUserEmail.setEnabled(false);
@@ -126,6 +131,9 @@ public class ViewProfile extends BaseActivity
                         String PhoneSeller = document.get("Phone").toString();
                         String Name = document.get("Name").toString();
                         String uid = document.get("UID").toString();
+                        latitude = document.get("latitude").toString();
+                        longitude = document.get("longitude").toString();
+
                         if (uid != null)
                         {
                             downloadImage(uid,imageView);

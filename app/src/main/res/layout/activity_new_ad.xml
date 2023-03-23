@@ -43,47 +43,56 @@
 <!--        </LinearLayout>-->
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:layout_margin="10dp"  android:padding="10dp"
-            android:orientation="horizontal">
+            android:layout_margin="10dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            >
 
             <Button
-                android:textColor="#ffffffff"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:id="@+id/btn_share"
-                android:layout_width="100dp"
-                android:layout_height= "100dp"
-                android:background="@drawable/circlea"
-                android:drawableTop="@drawable/saveinstagram"
-                android:paddingTop="20dp"
+                android:background="@drawable/white_rounded_shape"
+                android:drawableTop="@drawable/save_24"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
                 android:onClick="Share"
                 android:text="Save"
-               />
-
-            <Button
-                android:textColor="#ffffffff" android:id="@+id/btn_addImage"
-                android:layout_width="100dp"
-                android:layout_height= "100dp"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/circlea"
-                android:drawableTop="@drawable/image"
-                android:paddingTop="20dp"
-                android:text="Add"
-                android:onClick="addImage"
-              />
+                android:textColor="#ffffffff"
+                />
 
             <Button
                 android:textColor="#ffffffff"
-                android:id="@+id/btn_back"
-                android:layout_width="100dp"
-                android:layout_height= "100dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/btn_addImage"
+                android:background="@drawable/white_rounded_shape"
+                android:drawableTop="@drawable/image"
+                android:layout_marginTop="20dp"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/circlea"
-                android:drawableTop="@drawable/arrow"
-                android:paddingTop="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:onClick="addImage"
+                android:text="Add"
+                />
+
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/btn_back"
+                android:background="@drawable/white_rounded_shape"
+                android:drawableTop="@drawable/baseline_arrow_back_24"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:onClick="deleteAD"
                 android:text="Back"
-                 android:onClick="deleteAD"
+                android:textColor="#ffffffff"
                 />
 
         </LinearLayout>
