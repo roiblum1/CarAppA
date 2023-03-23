@@ -43,7 +43,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-
+//TODO: Change ADposted,  see LOcation dont work, make buttons vertically
 public class MainActivity2 extends BaseActivity implements View.OnClickListener {
     public TextView textView;
     public ImageView imageView;

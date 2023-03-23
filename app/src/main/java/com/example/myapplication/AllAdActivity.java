@@ -36,7 +36,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+//TODO add title for each category and add search option
 public class AllAdActivity extends BaseActivity implements AdapterView.OnItemClickListener{
     private static final String TAGMENU = "mytag";
     Button btn_back;

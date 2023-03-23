@@ -72,7 +72,7 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
 
-
+//TODO : Delete images also and intent to lognin
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

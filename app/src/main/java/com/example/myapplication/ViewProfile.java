@@ -30,7 +30,7 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-
+//TODO : Btn Location dont work and should make title black and buttons vertical
 public class ViewProfile extends BaseActivity
 {
     private TextView textView;
@@ -91,7 +91,8 @@ public class ViewProfile extends BaseActivity
 
         btnLocation.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
 
             }
         });

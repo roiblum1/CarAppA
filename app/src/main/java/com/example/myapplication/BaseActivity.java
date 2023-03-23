@@ -158,7 +158,7 @@ public abstract class BaseActivity extends AppCompatActivity
         desertRef.child(UID).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(getApplicationContext(), "File Delete From ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "File deleted from storage", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -172,7 +172,7 @@ public abstract class BaseActivity extends AppCompatActivity
         desertRef.child(carID).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                showToast("Failed to delete from storage");
+                showToast("File deleted from storage");
             }
         });
     }

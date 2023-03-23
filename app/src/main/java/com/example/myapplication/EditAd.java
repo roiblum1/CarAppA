@@ -53,6 +53,7 @@ public class EditAd extends BaseActivity {
     FirebaseDatabase database;
 
     public int num;
+// TODO: delete the image when deleting car and -1 to owner account.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
