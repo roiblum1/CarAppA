@@ -170,7 +170,7 @@ public class MainActivity extends BaseActivity {
                     .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                     .setColor(Color.BLUE)
                     .setContentIntent(contentIntent)
-                    .setAutoCancel(false)
+                    .setAutoCancel(true)
                     .addAction(R.drawable.logo4, "Start / Stop", actionIntent)
                     .build();
 

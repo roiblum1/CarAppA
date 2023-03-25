@@ -114,41 +114,6 @@ public abstract class BaseActivity extends AppCompatActivity
         });
     }
 
-    public void getAdPosterd ()
-    {
-        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail().toString();
-        db = FirebaseFirestore.getInstance();
-        db.collection("Cars").whereEqualTo("userEmail", email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful())
-                {
-                    carList = new ArrayList<>();
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d("TAG2", document.getId() + " => " + document.getData());
-                        String carID = document.get("carID").toString();
-                        String category = document.get("category").toString();
-                        String description = document.get("description").toString();
-                        String km = document.get("km").toString();
-                        String manufacturer = document.get("manufacturer").toString();
-                        String model = document.get("model").toString();
-                        String owner = document.get("owner").toString();
-                        String price = document.get("price").toString();
-                        boolean relevant = (boolean) document.get("relevant");
-                        String userID = document.get("userEmail").toString();
-                        String year = document.get("year").toString();
-                        Car car = new Car( category,  manufacturer,  model,  year,  owner,  km,  price,  description,  carID,  userID,  relevant);
-                        carList.add(car);
-                    }
-                }
-                else
-                {
-                    Toast.makeText(getApplicationContext(), "Faild TO fa", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
     public void deleteImageUser (String UID)
     {
         FirebaseStorage storage = FirebaseStorage.getInstance();

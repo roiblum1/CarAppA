@@ -55,6 +55,8 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
     public Button buttonEdit;
     public double latitude;
     public double longitude;
+
+    public int numer;
     FirebaseUser currentuser;
     FirebaseFirestore db;
     static final String TAG = "Read Data Activity";
@@ -118,6 +120,9 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
         checkPermission(Internat,REQUEST_CODE_ASK_PERMISSIONS);
         downloadImage(imageView);
 
+        getPostedCar();
+
+        showToast(Integer.toString(numer));
     }
 
 
@@ -156,7 +161,7 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
                         MainActivity2.this.etName.setText(Name);
                         MainActivity2.this.etUserEmail.setText(Email);
                         MainActivity2.this.etPhone.setText(Phone);
-                        MainActivity2.this.et_numOfCars.setText(adPOsed);
+                        //MainActivity2.this.et_numOfCars.setText(adPOsed);
                     }
                 }
                 else
@@ -257,6 +262,24 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
                 return false;
             }
         });
+    }
+
+    public void getPostedCar ()
+    {
+        FirebaseFirestore db2 = FirebaseFirestore.getInstance();
+        numer = 0;
+        db2.collection("Cars").whereEqualTo("userEmail",FirebaseAuth.getInstance().getCurrentUser().getEmail().toString()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for (QueryDocumentSnapshot document : task.getResult())
+                {
+                    Log.d("Hey",document.getData().toString());
+                    numer++;
+                }
+                et_numOfCars.setText(Integer.toString(numer));
+            }
+        });
+        Log.d("Hey",Integer.toString(numer));
     }
 
     

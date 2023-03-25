@@ -65,7 +65,7 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
     public Boolean aBoolean;
     static final String TAG = "Read Data Activity";
 
-
+    public int numer;
     public double latitude;
     LocationTrack locationTrack;
     public double longitude;
@@ -80,6 +80,8 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
         this.latitude = 0.0;
         this.btn_location = (Button) findViewById(R.id.btn_location);
         this.builder = new AlertDialog.Builder(this);
+
+        getPostedCar();
 
         currentuser = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
@@ -102,8 +104,10 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
         btnChangeAvatar.setOnClickListener(this);
         btnDelete.setOnClickListener(this);
         buttonBack.setOnClickListener(this);
+        btn_location.setOnClickListener(this);
 
         retriveMemberName();
+
 
         createFusedLocationProviderClient();
         createLocationRequest();
@@ -137,6 +141,7 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
             changeData("Email", etUserEmail.getText().toString() ,db);
             changeData("Name", etName.getText().toString() ,db);
             double d = this.latitude;
+            showToast(Double.toString(latitude));
             if (d != 0.0) {
                 changeData("latitude", Double.toString(d), this.db);
             }
@@ -150,9 +155,11 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
         {
             LocationTrack locationTrack2 = new LocationTrack(this);
             this.locationTrack = locationTrack2;
-            if (locationTrack2.canGetLocation()) {
+            if (locationTrack2.canGetLocation())
+            {
                 this.longitude = this.locationTrack.getLongitude();
                 this.latitude = this.locationTrack.getLatitude();
+                Toast.makeText(EditProfileUser.this, Double.toString(longitude), Toast.LENGTH_SHORT).show();
                 return;
             }
             this.locationTrack.showSettingsAlert();
@@ -383,6 +390,22 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
         create.setPriority(100);
         this.mLocationRequest.setInterval(0);
         this.mLocationRequest.setFastestInterval(5000);
+    }
+
+
+    public void getPostedCar ()
+    {
+        FirebaseFirestore db2 = FirebaseFirestore.getInstance();
+        numer = 0;
+        db2.collection("Cars").whereEqualTo("userEmail",FirebaseAuth.getInstance().getCurrentUser().getEmail().toString()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for (QueryDocumentSnapshot document : task.getResult())
+                {
+                    numer++;
+                }
+            }
+        });
     }
 
 }
