@@ -73,6 +73,9 @@ public abstract class BaseActivity extends AppCompatActivity
             case R.id.StopMusic:
                 stopService(new Intent(this, MyService.class));
                 return true;
+            case R.id.About_Us:
+                startActivity(new Intent(this, About_us.class));
+                return true;
             case android.R.id.home:
                 this.finish();
                 return true;

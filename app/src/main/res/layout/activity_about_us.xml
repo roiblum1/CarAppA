@@ -293,6 +293,15 @@
             </androidx.cardview.widget.CardView>
 
 
+            <Button
+                android:id="@+id/btn1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Move to Register Page"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                />
         </LinearLayout>
     </ScrollView>
 

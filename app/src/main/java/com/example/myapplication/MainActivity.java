@@ -89,7 +89,7 @@ public class MainActivity extends BaseActivity {
                     logIn(this.et_mail.getText().toString(), this.et_pass.getText().toString());
             }
         } else if (v == this.tv_create) {
-            startActivity(new Intent(this, Register.class));
+            startActivity(new Intent(this, About_us.class));
         }
     }
 
