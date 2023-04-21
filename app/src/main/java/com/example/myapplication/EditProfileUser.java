@@ -1,9 +1,11 @@
 package com.example.myapplication;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,6 +24,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -76,6 +80,7 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile_user);
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         this.longitude = 0.0;
         this.latitude = 0.0;
         this.btn_location = (Button) findViewById(R.id.btn_location);
@@ -153,16 +158,15 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
         }
         else if (this.btn_location == v)
         {
-            LocationTrack locationTrack2 = new LocationTrack(this);
-            this.locationTrack = locationTrack2;
-            if (locationTrack2.canGetLocation())
-            {
-                this.longitude = this.locationTrack.getLongitude();
-                this.latitude = this.locationTrack.getLatitude();
-                Toast.makeText(EditProfileUser.this, Double.toString(longitude), Toast.LENGTH_SHORT).show();
-                return;
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                mFusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
+                    if (location != null) {
+                         latitude = location.getLatitude();
+                         longitude = location.getLongitude();
+                        // Do something with the latitude and longitude values
+                    }
+                });
             }
-            this.locationTrack.showSettingsAlert();
         }
     }
     private void retriveMemberName()//retrive member name

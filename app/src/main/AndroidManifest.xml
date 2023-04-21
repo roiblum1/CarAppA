@@ -18,6 +18,7 @@
     <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
@@ -28,7 +29,17 @@
         android:roundIcon="@drawable/logo4"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
-        tools:targetApi="31">
+        android:hardwareAccelerated="false"
+        tools:targetApi="31"
+        android:largeHeap="true">
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCrfXtokssz-Z-_IjIZboXpRPN0MzAQGCw" />
+
         <activity
             android:name=".About_us"
             android:exported="false" />
@@ -91,6 +102,7 @@
             android:enabled="true" />
 
         <receiver android:name=".NotificationReceiver" />
+
     </application>
 
 </manifest>

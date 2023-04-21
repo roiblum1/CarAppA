@@ -1,7 +1,9 @@
 package com.example.myapplication;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,7 +48,7 @@ public class Register extends BaseActivity {
     public double longitude;
     /* access modifiers changed from: private */
     public FirebaseAuth mAuth;
-    private FusedLocationProviderClient mFusedLocationClient;
+    private FusedLocationProviderClient fusedLocationClient;
     private LocationRequest mLocationRequest;
     String mail;
     String name;
@@ -60,6 +62,7 @@ public class Register extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView((int) R.layout.activity_register);
         Premission();
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         this.longitude = 0.0d;
         this.latitude = 0.0d;
         new Intent();
@@ -73,8 +76,7 @@ public class Register extends BaseActivity {
         this.tv_login = (TextView) findViewById(R.id.tv_login);
         this.btn_signup.setOnClickListener(this::onClick);
         this.tv_login.setOnClickListener(this::onClick);
-        createFusedLocationProviderClient();
-        createLocationRequest();
+
     }
 
     public void onClick(View v) {
@@ -85,14 +87,16 @@ public class Register extends BaseActivity {
         this.phone = obj;
         if (v == this.tv_login) {
             startActivity(new Intent(this, MainActivity.class));
-        } else if (v == this.btn_signup && validateInput(this.name, this.pass, this.mail, obj)) {
-            LocationTrack locationTrack2 = new LocationTrack(this);
-            this.locationTrack = locationTrack2;
-            if (locationTrack2.canGetLocation()) {
-                this.longitude = this.locationTrack.getLongitude();
-                this.latitude = this.locationTrack.getLatitude();
-            } else {
-                this.locationTrack.showSettingsAlert();
+        }
+        else if (v == this.btn_signup && validateInput(this.name, this.pass, this.mail, obj)) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
+                    if (location != null) {
+                         latitude = location.getLatitude();
+                         longitude = location.getLongitude();
+                        // Do something with the latitude and longitude values
+                    }
+                });
             }
             signUp(this.mail, this.pass);
         }
@@ -134,17 +138,7 @@ public class Register extends BaseActivity {
         });
     }
 
-    private void createFusedLocationProviderClient() {
-        this.mFusedLocationClient = LocationServices.getFusedLocationProviderClient((Activity) this);
-    }
 
-    private void createLocationRequest() {
-        LocationRequest create = LocationRequest.create();
-        this.mLocationRequest = create;
-        create.setPriority(100);
-        this.mLocationRequest.setInterval(0);
-        this.mLocationRequest.setFastestInterval(5000);
-    }
 
     public void Premission() {
         checkPermission("android.permission.ACCESS_FINE_LOCATION", 1);

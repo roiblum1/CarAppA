@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.ContentProviderOperation;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -44,12 +46,13 @@ public class ViewProfile extends BaseActivity
     private EditText etUID;
     private Button btnLocation;
     private Button btnAddContact;
-
+    AlertDialog.Builder builder;
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_profile);
+        builder = new AlertDialog.Builder(this);
         Intent intent = getIntent();
         latitude ="0.0";
         longitude ="0.0";
@@ -97,13 +100,26 @@ public class ViewProfile extends BaseActivity
             @Override
             public void onClick(View v)
             {
-                //startActivity(new Intent(ViewProfile.this,ViewLocation.class));
-                showToast(latitude +','+ longitude);
-                if (latitude!="0.0") {
-                    String url = "https://www.google.com/maps/search/" + longitude + ",+" + latitude + "/@" + longitude + "," + latitude;
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse(url));
-                    startActivity(i);
+                if (v == ViewProfile.this.btnLocation && ViewProfile.this.latitude != "0.0" && ViewProfile.this.longitude != "0.0") {
+                    builder.setTitle("Open Location");
+                    builder.setMessage("Where do you want to show the location ? ");
+                    builder.setPositiveButton("Google Maps", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            openLocationInMaps(Double.parseDouble(latitude), Double.parseDouble(longitude));
+                        }
+                    });
+                    builder.setNegativeButton("In App", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(ViewProfile.this, ViewLocation.class);
+                            intent.putExtra("longitude",longitude);
+                            intent.putExtra("latitude",latitude);
+                            startActivity(intent);
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
             }
         });
@@ -164,5 +180,20 @@ public class ViewProfile extends BaseActivity
             }
         });
     }
+    private void openLocationInMaps(double latitude, double longitude) {
+        // Create a URI with the coordinates
+        String uri = String.format("geo:%f,%f", latitude, longitude);
 
+        // Create an intent to launch the Google Maps app
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        intent.setPackage("com.google.android.apps.maps");
+
+        // Verify that the Google Maps app is installed and launch it
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            // If the Google Maps app is not installed, display an error message
+            Toast.makeText(this, "Google Maps not installed", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

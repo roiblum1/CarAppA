@@ -8,7 +8,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -67,10 +69,12 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
     private static final String Read_External = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final String Internat = Manifest.permission.INTERNET;
     public TextView text_location;
+    AlertDialog.Builder builder;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        builder = new AlertDialog.Builder(this);
         currentuser = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
         currentuser = FirebaseAuth.getInstance().getCurrentUser();
@@ -89,11 +93,25 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
         text_location.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (v == MainActivity2.this.text_location && MainActivity2.this.latitude != 0.0 && MainActivity2.this.longitude != 0.0) {
-                   // MainActivity2.this.startActivity(new Intent("android.intent.action.VIEW", Uri.parse("http://maps.google.com/maps?daddr=" + MainActivity2.this.latitude + "," + MainActivity2.this.longitude)));
-                    String url = "https://www.google.com/maps/search/" + Double.toString(longitude) + ",+" + Double.toString(latitude) + "/@" + Double.toString(longitude) + "," +  Double.toString(latitude);
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse(url));
-                    startActivity(i);
+                    builder.setTitle("Open Location");
+                    builder.setMessage("Where do you want to show the location ? ");
+                    builder.setPositiveButton("Google Maps", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            openLocationInMaps(latitude, longitude);
+                        }
+                    });
+                    builder.setNegativeButton("In App", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(MainActivity2.this, ViewLocation.class);
+                            intent.putExtra("longitude",Double.toString(longitude));
+                            intent.putExtra("latitude",Double.toString(latitude));
+                            startActivity(intent);
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
             }
         });
@@ -282,5 +300,25 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
         Log.d("Hey",Integer.toString(numer));
     }
 
-    
+    private void openLocationInMaps(double latitude, double longitude) {
+        // Create a URI with the coordinates
+        String uri = String.format("geo:%f,%f", latitude, longitude);
+
+        // Create an intent to launch the Google Maps app
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        intent.setPackage("com.google.android.apps.maps");
+
+        // Verify that the Google Maps app is installed and launch it
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            // If the Google Maps app is not installed, display an error message
+            Toast.makeText(this, "Google Maps not installed", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void BuildDialog ()
+    {
+
+    }
 }
