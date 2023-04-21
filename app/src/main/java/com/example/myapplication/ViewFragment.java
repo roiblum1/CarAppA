@@ -1,7 +1,9 @@
 package com.example.myapplication;
 
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -13,7 +15,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 public class ViewFragment extends Fragment {
     View view;
@@ -46,6 +59,7 @@ public class ViewFragment extends Fragment {
         String Name = bundle.getString("Name");
         String Email = bundle.getString("Email");
         String Phone = bundle.getString("Phone");
+        String UID = bundle.getString("UID");
         Member member = new Member(Name, Email, Phone);
 
         etName.setText(member.getMemberName());
@@ -69,9 +83,78 @@ public class ViewFragment extends Fragment {
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                deleteImage(UID);
+                deleteUser(Email);
+                deleteUserCars(Email);
             }
         });
+
+        downloadImage(UID,imageView);
         return view;
     }
+
+
+    public void downloadImage (String Uid,ImageView imageView) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://yad2v-202a2.appspot.com/images/Avatars/");
+        storageRef.child(Uid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Got the download URL for 'users/me/profile.png'
+                Picasso.get().load(uri.toString()).into(imageView);
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                imageView.setImageResource(R.drawable.nopic);
+            }
+        });
+    }
+
+
+    public void deleteUserCars(String email)
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Cars").whereEqualTo("userEmail",email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for (QueryDocumentSnapshot document : task.getResult())
+                {
+                    if (document.get("userEmail").toString().equals(email))
+                        document.getReference().delete();
+                }
+            }
+        });
+    }
+
+    public void deleteUser(String email)
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("user").whereEqualTo("Email",email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for (QueryDocumentSnapshot document : task.getResult())
+                {
+                    if (document.get("Email").toString().equals(email))
+                        document.getReference().delete();
+                }
+            }
+        });
+    }
+
+    public void deleteImage (String UID)
+    {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+
+        StorageReference desertRef = storageRef.child("images/Avatars/");
+        desertRef.child(UID).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(view.getContext(), "File Delete From ", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }

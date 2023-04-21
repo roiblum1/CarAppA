@@ -16,8 +16,10 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,7 +41,7 @@ public class AdminPage extends AppCompatActivity implements SelectFragment.OnLis
     private Button secondFragment;
     private FrameLayout frameLayout;
     public Member member;
-
+    public Switch aSwitch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +70,7 @@ public class AdminPage extends AppCompatActivity implements SelectFragment.OnLis
                 bundle.putString("Name", member.getMemberName());
                 bundle.putString("Email", member.getMemberEmail());
                 bundle.putString("Phone", member.getMemberPhone());
+                bundle.putString("UID", member.getUserUID());
                 // Create the destination fragment and set the arguments
                 ViewFragment fragment = new ViewFragment();
                 fragment.setArguments(bundle);
@@ -86,7 +89,6 @@ public class AdminPage extends AppCompatActivity implements SelectFragment.OnLis
     public void loadFragment(Fragment fragment) {
         Bundle bundle = new Bundle();
         bundle.putString("data_key", "This is some data");
-
         androidx.fragment.app.FragmentManager fragmentManager = getSupportFragmentManager();
         androidx.fragment.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment);
@@ -101,6 +103,7 @@ public class AdminPage extends AppCompatActivity implements SelectFragment.OnLis
             member.setMemberName(selectedMember.getMemberName());
             member.setMemberEmail(selectedMember.getMemberEmail());
             member.setMemberPhone(selectedMember.getMemberPhone());
+            member.setUserUID(selectedMember.getUserUID());
         }
     }
 }

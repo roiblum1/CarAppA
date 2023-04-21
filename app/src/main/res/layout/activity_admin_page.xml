@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/profile_bk"
     android:padding="16dp"
     tools:context=".AdminPage">
     <!-- display two Button's and a FrameLayout to replace the Fragment's  -->
@@ -18,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:textSize="20sp"
-            android:background="#925"
+            android:background="@drawable/white_rounded_shape"
             android:textColor="@color/white"
             android:text="Select"/>
 
@@ -29,7 +30,7 @@
             android:text="View"
             android:layout_marginLeft="5dp"
             android:textSize="20sp"
-            android:background="#925"
+            android:background="@drawable/white_rounded_shape"
             android:textColor="@color/white"
             android:layout_toRightOf="@id/firstFragment"/>
 
