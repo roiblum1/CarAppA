@@ -104,5 +104,3 @@ public class AdminPage extends AppCompatActivity implements SelectFragment.OnLis
         }
     }
 }
-    }
-}
