@@ -8,4 +8,5 @@
     <item android:id="@+id/SrartMusic" android:title="Start Music"/>
     <item android:id="@+id/StopMusic" android:title="Stop Music"/>
     <item android:id="@+id/About_Us" android:title="About_Us"/>
+    <item android:id="@+id/Logout" android:title="Logout"/>
 </menu>

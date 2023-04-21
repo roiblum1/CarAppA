@@ -29,6 +29,7 @@ import java.util.ArrayList;
 public abstract class BaseActivity extends AppCompatActivity
 {
     FirebaseFirestore db;
+    FirebaseAuth auth;
     ArrayList<Car> carList = new ArrayList<Car>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,9 @@ public abstract class BaseActivity extends AppCompatActivity
             case android.R.id.home:
                 this.finish();
                 return true;
+            case R.id.logout:
+                this.auth = FirebaseAuth.getInstance();
+                this.auth.signOut();
             default:
                 return super.onOptionsItemSelected(item);
         }
