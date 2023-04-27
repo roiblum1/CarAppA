@@ -49,17 +49,6 @@ public class About_us extends BaseActivity  {
         Image5 = (ImageView) findViewById(R.id.Image5);
         btn1 = (Button) findViewById(R.id.btn1);
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
-                if (location != null) {
-                    double latitude = location.getLatitude();
-                    double longitude = location.getLongitude();
-                    showToast(Double.toString(latitude));
-                    // Do something with the latitude and longitude values
-                }
-            });
-        }
 
         cv1.setAnimation(AnimationUtils.loadAnimation(this,R.anim.fade_in));
         cv2.setAnimation(AnimationUtils.loadAnimation(this,R.anim.fade_in));

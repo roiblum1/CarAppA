@@ -47,7 +47,6 @@ public class MainActivity extends BaseActivity {
     public static final String Email = "emailKey";
     public static final String MyPREFERENCES = "MyPrefs";
     public static final String Pass = "passKey";
-
     public static final String CHANNEL_1_ID = "channel1";
     Button btn_login;
     EditText et_mail;
@@ -105,11 +104,11 @@ public class MainActivity extends BaseActivity {
                     editor.putString(MainActivity.Pass, MainActivity.this.et_pass.getText().toString());
                     editor.putString(MainActivity.Email, MainActivity.this.et_mail.getText().toString());
                     editor.commit();
-                    sendOnChannel1();
+                    NotificationForSendOnChannel1();
                     MainActivity.this.progressDialog.dismiss();
                     showToast("Login successful");
                     startService(new Intent(MainActivity.this, MyService.class));
-                    MainActivity.this.intent();
+                    MainActivity.this.intentToSplashScreen();
                     return;
                 }
                 MainActivity.this.progressDialog.dismiss();
@@ -118,29 +117,26 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-    public void intent() {
+    public void intentToSplashScreen() {
         startActivity(new Intent(this, SplashScreen.class));
     }
 
     public boolean validateInput(String email, String password) {
         if (email.isEmpty()) {
-            this.et_mail.setError("Email field is empty.");
-            if (password.isEmpty()) {
-                this.et_pass.setError("Password is empty.");
-            }
-            return false;
-        } else if (!password.isEmpty()) {
-            return true;
-        } else {
-            this.et_pass.setError("Password is empty.");
-            if (email.isEmpty()) {
-                this.et_pass.setError("Email field is empty.");
-            }
+            et_mail.setError("Email field is empty.");
             return false;
         }
+
+        if (password.isEmpty()) {
+            et_pass.setError("Password is empty.");
+            return false;
+        }
+
+        return true;
     }
 
-    public void sendOnChannel1() {
+
+    public void NotificationForSendOnChannel1() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel1 = new NotificationChannel(
                     CHANNEL_1_ID,
