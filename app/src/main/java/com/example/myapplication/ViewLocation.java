@@ -116,6 +116,7 @@ public class ViewLocation extends BaseActivity implements OnMapReadyCallback {
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         updateLocationUI();
         // [END_EXCLUDE]
+        //2
     }
 
     private void updateLocationUI() {
