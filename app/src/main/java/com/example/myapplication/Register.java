@@ -38,7 +38,7 @@ public class Register extends BaseActivity {
     Button btn_signup;
 
     /* renamed from: db */
-    FirebaseFirestore f98db;
+    FirebaseFirestore db;
     EditText et_mail;
     EditText et_name;
     EditText et_pass;
@@ -58,7 +58,7 @@ public class Register extends BaseActivity {
 
     /* access modifiers changed from: protected */
     public void onCreate(Bundle savedInstanceState) {
-        this.f98db = FirebaseFirestore.getInstance();
+        this.db = FirebaseFirestore.getInstance();
         super.onCreate(savedInstanceState);
         setContentView((int) R.layout.activity_register);
         Premission();
@@ -127,7 +127,7 @@ public class Register extends BaseActivity {
         user.put("UID", this.mAuth.getCurrentUser().getUid());
         user.put("Favorites","");
         user.put("AdPosted",0);
-        this.f98db.collection("user").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        this.db.collection("user").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             public void onSuccess(DocumentReference documentReference) {
                 Toast.makeText(Register.this, "Successful", Toast.LENGTH_SHORT).show();
             }

@@ -18,7 +18,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 
 public class About_us extends BaseActivity  {
-    Button btn1;
+    Button btn_register_page;
     private CardView cv1;
     private ImageView Image1;
     private CardView cv2;
@@ -36,7 +36,7 @@ public class About_us extends BaseActivity  {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
-        btn1 = (Button) findViewById(R.id.btn1);
+        btn_register_page = (Button) findViewById(R.id.btn_register_page);
         cv1 = (CardView) findViewById(R.id.cv1);
         Image1 = (ImageView) findViewById(R.id.Image1);
         cv2 = (CardView) findViewById(R.id.cv2);
@@ -47,7 +47,7 @@ public class About_us extends BaseActivity  {
         Image4 = (ImageView) findViewById(R.id.Image4);
         cv5 = (CardView) findViewById(R.id.cv5);
         Image5 = (ImageView) findViewById(R.id.Image5);
-        btn1 = (Button) findViewById(R.id.btn1);
+        btn_register_page = (Button) findViewById(R.id.btn_register_page);
 
 
         cv1.setAnimation(AnimationUtils.loadAnimation(this,R.anim.fade_in));
@@ -55,7 +55,7 @@ public class About_us extends BaseActivity  {
         cv3.setAnimation(AnimationUtils.loadAnimation(this,R.anim.fade_in));
         cv4.setAnimation(AnimationUtils.loadAnimation(this,R.anim.fade_in));
         cv5.setAnimation(AnimationUtils.loadAnimation(this,R.anim.fade_in));
-        btn1.setOnClickListener(new View.OnClickListener() {
+        btn_register_page.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(About_us.this,Register.class));
