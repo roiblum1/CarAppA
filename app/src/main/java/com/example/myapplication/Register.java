@@ -46,7 +46,7 @@ public class Register extends BaseActivity {
     public double latitude;
     LocationTrack locationTrack;
     public double longitude;
-    /* access modifiers changed from: private */
+
     public FirebaseAuth mAuth;
     private FusedLocationProviderClient fusedLocationClient;
     private LocationRequest mLocationRequest;
