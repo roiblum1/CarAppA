@@ -111,7 +111,7 @@ public class ViewLocation extends BaseActivity implements OnMapReadyCallback {
         LatLng sydney = new LatLng(latitude, longitude);
         googleMap.addMarker(new MarkerOptions()
                 .position(sydney)
-                .title("Marker"));
+                .title("latitude : "+Double.toString(latitude) +" , " + "longitude : "+Double.toString(longitude)));
         // [START_EXCLUDE silent]
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         updateLocationUI();

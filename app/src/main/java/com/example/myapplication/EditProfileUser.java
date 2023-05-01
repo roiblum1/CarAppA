@@ -163,6 +163,7 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
                     if (location != null) {
                          latitude = location.getLatitude();
                          longitude = location.getLongitude();
+                         showToast("Location has been updated");
                         // Do something with the latitude and longitude values
                     }
                 });

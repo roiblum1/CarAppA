@@ -83,10 +83,12 @@ public abstract class BaseActivity extends AppCompatActivity
             case R.id.logout:
                 this.auth = FirebaseAuth.getInstance();
                 this.auth.signOut();
+                startActivity(new Intent(this, MainActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+    //TODO:
     @CallSuper
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         //To be used by child activities
