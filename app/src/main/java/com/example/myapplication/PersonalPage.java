@@ -1,76 +1,32 @@
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 
-import android.app.Notification;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
-public class PersonalPage extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
-    Button btn_allAd;
-    Button btn_newAd;
-    Button btn_ViewProfile;
-    FirebaseUser currentuser;
-    ImageView iv_car;
-    RelativeLayout l1;
-    ListView lv_personal;
-    Task<QuerySnapshot> memberNameRef;
-    DatabaseReference carRef;
-    String s;
-    TextView tv_price;
+public class PersonalPage extends BaseActivity implements AdapterView.OnItemClickListener {
+    FirebaseUser currentUser;
+    ListView listView_Personal;
     TextView tv_title;
-    TextView tv_titleO;
     ArrayList<Car> carList;
     CarAdapter carAdapter;
     FirebaseFirestore db;
@@ -82,12 +38,8 @@ public class PersonalPage extends BaseActivity implements View.OnClickListener, 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_page);
         bottomNavigation();
-        l1 = (RelativeLayout) findViewById(R.id.l1);
-        lv_personal = findViewById(R.id.lv_personal);
-        lv_personal.setOnItemClickListener(this);
-        tv_price = (TextView) findViewById(R.id.tv_price);
-        tv_titleO = (TextView) findViewById(R.id.tv_titleO);
-        iv_car = (ImageView) findViewById(R.id.iv_car);
+        listView_Personal = findViewById(R.id.lv_personal);
+        listView_Personal.setOnItemClickListener(this);
 //        btn_allAd = (Button) findViewById(R.id.btn_allAd);
 //        btn_newAd = (Button) findViewById(R.id.btn_newAd);
 //        btn_ViewProfile = findViewById(R.id.btn_ViewProfile);
@@ -97,27 +49,33 @@ public class PersonalPage extends BaseActivity implements View.OnClickListener, 
 //        btn_newAd.setOnClickListener(this);
 //        btn_allAd.setOnClickListener(this);
 //        btn_ViewProfile.setOnClickListener(this);
-        currentuser = FirebaseAuth.getInstance().getCurrentUser();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
     }
-    private void retriveMemberName()//retrive member name
+    protected void onStart() {
+        super.onStart();
+        retrieveMemberDetails();
+        retrieveCars();
+    }
+
+    private void retrieveMemberDetails()
     {
-        String email = currentuser.getEmail();
+        String email = currentUser.getEmail();
         db.collection("user").whereEqualTo("Email", email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task)
             {
                 if (task.isSuccessful()){
 
-                    for (QueryDocumentSnapshot document : task.getResult()) {
+                    for (QueryDocumentSnapshot document : task.getResult())
+                    {
                         Log.d(TAG, document.getId() + " => " + document.getData());
                         String Name = document.get("Name").toString();
                         Toast.makeText(PersonalPage.this, "Hello " +Name, Toast.LENGTH_SHORT).show();
                     }
-
-
-
-                }else {
+                }
+                else
+                {
 
                     Toast.makeText(PersonalPage.this,"Failed To Read Data",Toast.LENGTH_LONG).show();
 
@@ -126,35 +84,9 @@ public class PersonalPage extends BaseActivity implements View.OnClickListener, 
         });
     }
 
-    private void retriveCar ()//retrive current user car
+    private void retrieveCars()
     {
-//        carRef = FirebaseDatabase.getInstance().getReference("cars");
-//        carRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-//            {
-//                carList = new ArrayList<>();
-//                for(DataSnapshot data: dataSnapshot.getChildren())
-//                {
-//                Car c = data.getValue(Car.class);
-//                if(currentuser.getUid().equals(c.getUserID()))
-//                {
-//                    carList.add(c);
-//                }
-//                }
-//                carAdapter = new CarAdapter(PersonalPage.this,0,0,carList);
-//                lv_personal.setAdapter(carAdapter);
-//
-//            }
-//
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-
-        String email = currentuser.getEmail();
+        String email = currentUser.getEmail();
         db.collection("Cars").whereEqualTo("userEmail", email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task)
@@ -162,7 +94,6 @@ public class PersonalPage extends BaseActivity implements View.OnClickListener, 
                 if (task.isSuccessful())
                 {
                     //Toast.makeText(PersonalPage.this, "win TO fa", Toast.LENGTH_SHORT).show();
-
                     carList = new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d(TAG2, document.getId() + " => " + document.getData());
@@ -181,7 +112,7 @@ public class PersonalPage extends BaseActivity implements View.OnClickListener, 
                         carList.add(car);
                     }
                     carAdapter = new CarAdapter(PersonalPage.this,0,0,carList);
-                    lv_personal.setAdapter(carAdapter);
+                    listView_Personal.setAdapter(carAdapter);
                 }
                 else
                 {
@@ -189,44 +120,12 @@ public class PersonalPage extends BaseActivity implements View.OnClickListener, 
                 }
             }
         });
-
     }
-
-
-    protected void onStart() {
-        super.onStart();
-        retriveMemberName();
-        retriveCar();
-    }
-
-    public void onClick(View v) {
-        if (v == this.btn_newAd) {
-            Intent intent = new Intent(this , NewAdActivity.class);
-            intent.putExtra("num",carList.size());
-            startActivity(intent);
-        }
-        else
-        if(v==btn_allAd)
-        {
-            startActivity(new Intent(this, AllAdActivity.class));
-        }
-        else if (v  == btn_ViewProfile)
-        {
-            Intent intent = new Intent(this , MainActivity2.class);
-            intent.putExtra("num",carList.size());
-            startActivity(intent);
-
-        }
-    }
-
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
-
         Car c = carAdapter.getItem(position);
-//        c.setRelevant(false);
-        // retriveCarRelevant(c);
         Intent intent = new Intent(this, EditAd.class);
         intent.putExtra("carID",c.getCarID());
         intent.putExtra("userID", c.getUserID());
@@ -244,33 +143,29 @@ public class PersonalPage extends BaseActivity implements View.OnClickListener, 
 //        view.setBackgroundColor(0x0000FF00);
 //        carAdapter.notifyDataSetChanged();
 
-
-
     }
-    private void retriveCarRelevant (Car c)//retrive current user car
-    {
-        String email = currentuser.getEmail();
-        db.collection("Cars").whereEqualTo("userEmail", email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task)
-            {
-                carList = new ArrayList<>();
-                for (QueryDocumentSnapshot document : task.getResult())
-                {
-                    if (c.getCarID().equals(document.get("carID").toString()))
-                    {
-                        if (document.get("relevant").toString().equals("true"))
-                            db.collection("Cars").document(document.getReference().getPath().substring(5)).update("relevant", false);
-                        else
-                            db.collection("Cars").document(document.getReference().getPath().substring(5)).update("relevant", true);
-
-                    }
-                }
-            }
-        });
-
-
-    }
+//    private void retriveCarRelevant (Car c)//retrive current user car
+//    {
+//        String email = currentUser.getEmail();
+//        db.collection("Cars").whereEqualTo("userEmail", email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task)
+//            {
+//                carList = new ArrayList<>();
+//                for (QueryDocumentSnapshot document : task.getResult())
+//                {
+//                    if (c.getCarID().equals(document.get("carID").toString()))
+//                    {
+//                        if (document.get("relevant").toString().equals("true"))
+//                            db.collection("Cars").document(document.getReference().getPath().substring(5)).update("relevant", false);
+//                        else
+//                            db.collection("Cars").document(document.getReference().getPath().substring(5)).update("relevant", true);
+//
+//                    }
+//                }
+//            }
+//        });
+//    }
 
     protected void bottomNavigation ( )
     {

@@ -114,6 +114,7 @@ public class ViewLocation extends BaseActivity implements OnMapReadyCallback {
                 .title("Marker"));
         // [START_EXCLUDE silent]
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        googleMap.setMinZoomPreference(googleMap.getMinZoomLevel()*8);
         updateLocationUI();
         // [END_EXCLUDE]
         //2

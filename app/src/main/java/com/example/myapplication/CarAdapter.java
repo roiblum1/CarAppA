@@ -2,18 +2,14 @@ package com.example.myapplication;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,19 +30,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CarAdapter extends ArrayAdapter<Car> {
     List<Car> carList ;
     Context context;
     CardView cv;
-    private DisplayMetrics metrics_;
     public String Favorites;
 
 
@@ -69,7 +58,7 @@ public class CarAdapter extends ArrayAdapter<Car> {
         ImageView ivCar = view.findViewById(R.id.iv_car);
         cv = view.findViewById(R.id.cv);
         Car c = carList.get(position);
-        retriveMemberName();
+        retrieveFavorites();
         Star.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,7 +115,7 @@ public class CarAdapter extends ArrayAdapter<Car> {
         });
     }
 
-    private void retriveMemberName()//retrive member name
+    private void retrieveFavorites()//retrive member name
     {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String email = FirebaseAuth.getInstance().getCurrentUser().getEmail().toString();
