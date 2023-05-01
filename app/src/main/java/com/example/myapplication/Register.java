@@ -110,6 +110,7 @@ public class Register extends BaseActivity {
                     Toast.makeText(Register.this, "Sign Up Successful", Toast.LENGTH_SHORT).show();
                     Register.this.createMember();
                     Register.this.finish();
+                    startActivity(new Intent(Register.this,MainActivity.class));
                     return;
                 }
                 Toast.makeText(Register.this, "Sign Up failed.", Toast.LENGTH_SHORT).show();
