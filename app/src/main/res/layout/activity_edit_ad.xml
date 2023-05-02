@@ -53,7 +53,7 @@
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"
-                android:id="@+id/btn_share"
+                android:id="@+id/btnDelete"
                 android:background="@drawable/white_rounded_shape"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="5dp"

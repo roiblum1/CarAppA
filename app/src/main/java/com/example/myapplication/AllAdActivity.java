@@ -1,34 +1,22 @@
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -38,8 +26,6 @@ import java.util.Arrays;
 import java.util.List;
 //TODO add title for each category and add search option
 public class AllAdActivity extends BaseActivity implements AdapterView.OnItemClickListener{
-    private static final String TAGMENU = "mytag";
-    Button btn_back;
     String Favorite;
     ArrayList<Car> carList;
     CarAdapter carAdapter;
@@ -97,11 +83,11 @@ public class AllAdActivity extends BaseActivity implements AdapterView.OnItemCli
                 })
         );
         db = FirebaseFirestore.getInstance();
-        retriveAllCar();
+        retrieveAllCar();
     }
 
 
-    private void retriveAllCar ()//retrive all cars
+    private void retrieveAllCar()
     {
         db.collection("Cars").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
         {
@@ -132,32 +118,9 @@ public class AllAdActivity extends BaseActivity implements AdapterView.OnItemCli
     }
 
 
-    private void retriveCarRelevant (Car c)//retrive current user car
+
+    public void getFavorite ()
     {
-        db.collection("Cars").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task)
-            {
-                carList = new ArrayList<>();
-                for (QueryDocumentSnapshot document : task.getResult())
-                {
-                    if (c.getCarID().equals(document.get("carID").toString()))
-                    {
-                        if (document.get("relevant").toString().equals("true"))
-                            db.collection("Cars").document(document.getReference().getPath().substring(5)).update("relevant", false);
-                        else
-                            db.collection("Cars").document(document.getReference().getPath().substring(5)).update("relevant", true);
-
-                    }
-                }
-            }
-        });
-
-
-
-    }
-
-    public void getFavorite (){
         db.collection("user").whereEqualTo("Email", FirebaseAuth.getInstance().getCurrentUser().getEmail().toString()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -255,7 +218,7 @@ public class AllAdActivity extends BaseActivity implements AdapterView.OnItemCli
                         startActivity(new Intent(getApplicationContext(), PersonalPage.class));
                         return true;
                     case R.id.View_Profile:
-                        Intent intent2 = new Intent(getApplicationContext() , MainActivity2.class);
+                        Intent intent2 = new Intent(getApplicationContext() , ViewYourProfile.class);
                         intent2.putExtra("num",carArrayList.size());
                         startActivity(intent2);
                         return true;

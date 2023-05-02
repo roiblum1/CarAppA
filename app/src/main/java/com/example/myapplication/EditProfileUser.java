@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,19 +10,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -35,7 +29,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -44,38 +37,43 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
-import java.util.Iterator;
 
 public class EditProfileUser extends BaseActivity implements View.OnClickListener {
-     TextView textView;
-     ImageView imageView;
-     Button btnChangeAvatar;
-     EditText etName;
-     EditText etUserEmail;
-     EditText etPhone;
-     Button buttonBack;
-     Button btnDelete;
-    private static final int CAMERA_REQUEST = 1888;
-    private static final int SELECT_PICTURE = 200;
-    Button btn_location;
-    AlertDialog.Builder builder;
-    StorageReference storageReference;
-    FirebaseStorage storage ;
-    Uri selectedImageUri;
-    FirebaseUser currentuser;
-    FirebaseDatabase database;
-    FirebaseFirestore db;
-    public int num;
-    public Boolean aBoolean;
-    static final String TAG = "Read Data Activity";
+    // EditTexts
+    EditText etName, etUserEmail, etPhone;
 
-    public int numer;
-    public double latitude;
+    // TextView and ImageView
+    TextView textView;
+    ImageView imageView;
+
+    // Buttons
+    Button btnChangeAvatar, buttonSave, btnDelete, btn_location;
+
+    // Firebase related
+    FirebaseUser CurrentUser;
+    FirebaseFirestore db;
+    FirebaseStorage storage ;
+    StorageReference storageReference;
+
+    // Other variables
+    static final String TAG = "Read Data Activity";
+    public int AdNum;
+    public Boolean aBoolean;
+    Uri selectedImageUri;
+
+    // Location related
     LocationTrack locationTrack;
-    public double longitude;
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
+    public double latitude,longitude;
 
+
+    // Alert dialog builder
+    AlertDialog.Builder builder;
+
+    // Constants
+    private static final int CAMERA_REQUEST = 1888;
+    private static final int SELECT_PICTURE = 200;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,14 +86,14 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
 
         getPostedCar();
 
-        currentuser = FirebaseAuth.getInstance().getCurrentUser();
+        CurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         db = FirebaseFirestore.getInstance();
-        currentuser = FirebaseAuth.getInstance().getCurrentUser();
-        database = FirebaseDatabase.getInstance();
+        CurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+
 
         textView = (TextView) findViewById(R.id.textView);
         imageView = (ImageView) findViewById(R.id.imageView);
@@ -103,19 +101,15 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
         etName = (EditText) findViewById(R.id.et_name);
         etUserEmail = (EditText) findViewById(R.id.et_userEmail);
         etPhone = (EditText) findViewById(R.id.et_phone);
-        buttonBack = (Button) findViewById(R.id.buttonBack);
+        buttonSave = (Button) findViewById(R.id.buttonBack);
         btnDelete = (Button) findViewById(R.id.btnDelete);
 
         btnChangeAvatar.setOnClickListener(this);
         btnDelete.setOnClickListener(this);
-        buttonBack.setOnClickListener(this);
+        buttonSave.setOnClickListener(this);
         btn_location.setOnClickListener(this);
 
-        retriveMemberName();
-
-
-        createFusedLocationProviderClient();
-        createLocationRequest();
+        retrieveMember();
         downloadImage(imageView);
     }
 
@@ -127,7 +121,7 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
                 build();
             else
             {
-                deleteImageUser(currentuser.getUid().toString());
+                deleteImageUser(CurrentUser.getUid().toString());
                 build();
             }
         }
@@ -136,11 +130,11 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
         {
             deleteUser();
             deleteUserCars();
-            delteUser();
+            deleteUserAuth();
             startActivity(new Intent(EditProfileUser.this,MainActivity.class));
         }
 
-        else if (buttonBack == v)
+        else if (buttonSave == v)
         {
             changeData("Phone", etPhone.getText().toString() ,db);
             changeData("Email", etUserEmail.getText().toString() ,db);
@@ -170,9 +164,9 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
             }
         }
     }
-    private void retriveMemberName()//retrive member name
+    private void retrieveMember()
     {
-        String email = currentuser.getEmail();
+        String email = CurrentUser.getEmail();
         db.collection("user").whereEqualTo("Email", email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task)
@@ -200,7 +194,7 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
 
     public void changeData (String dest , String data ,FirebaseFirestore db)
     {
-        db.collection("user").whereEqualTo("Email",currentuser.getEmail() ).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("user").whereEqualTo("Email", CurrentUser.getEmail() ).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 for (QueryDocumentSnapshot document : task.getResult())
@@ -217,12 +211,12 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
 
     public void deleteUser()
     {
-        db.collection("user").whereEqualTo("Email",currentuser.getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("user").whereEqualTo("Email", CurrentUser.getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 for (QueryDocumentSnapshot document : task.getResult())
                 {
-                    if (document.get("Email").toString().equals(currentuser.getEmail()))
+                    if (document.get("Email").toString().equals(CurrentUser.getEmail()))
                     {
                         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
                         deleteImageUser(uid);
@@ -235,12 +229,12 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
 
     public void deleteUserCars()
     {
-        db.collection("Cars").whereEqualTo("userEmail",currentuser.getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("Cars").whereEqualTo("userEmail", CurrentUser.getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 for (QueryDocumentSnapshot document : task.getResult())
                 {
-                    if (document.get("userEmail").toString().equals(currentuser.getEmail()))
+                    if (document.get("userEmail").toString().equals(CurrentUser.getEmail()))
                     {
                         String carID = document.get("carID").toString();
                         deleteImageCar(carID);
@@ -251,9 +245,10 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
         });
     }
 
-    public void delteUser()
+    public void deleteUserAuth()
     {
-        currentuser.delete();
+        CurrentUser.delete();
+        FirebaseAuth.getInstance().getCurrentUser().delete();
     }
 
 
@@ -303,7 +298,7 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
 
     public void uploadImage (Uri image)
     {
-        StorageReference imageRef = storageReference.child("images/Avatars/"+currentuser.getUid());
+        StorageReference imageRef = storageReference.child("images/Avatars/"+ CurrentUser.getUid());
         UploadTask uploadTask = imageRef.putFile(image);
 
         uploadTask.addOnFailureListener(new OnFailureListener()
@@ -320,7 +315,7 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
     public void downloadImage (ImageView imageView) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl("gs://yad2v-202a2.appspot.com/images/Avatars/");
-        storageRef.child(currentuser.getUid().toString()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageRef.child(CurrentUser.getUid().toString()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 // Got the download URL for 'users/me/profile.png'
@@ -385,29 +380,16 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
         alert.show();
     }
 
-    private void createFusedLocationProviderClient() {
-        this.mFusedLocationClient = LocationServices.getFusedLocationProviderClient((Activity) this);
-    }
-
-    private void createLocationRequest() {
-        LocationRequest create = LocationRequest.create();
-        this.mLocationRequest = create;
-        create.setPriority(100);
-        this.mLocationRequest.setInterval(0);
-        this.mLocationRequest.setFastestInterval(5000);
-    }
-
-
     public void getPostedCar ()
     {
         FirebaseFirestore db2 = FirebaseFirestore.getInstance();
-        numer = 0;
+        AdNum = 0;
         db2.collection("Cars").whereEqualTo("userEmail",FirebaseAuth.getInstance().getCurrentUser().getEmail().toString()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 for (QueryDocumentSnapshot document : task.getResult())
                 {
-                    numer++;
+                    AdNum++;
                 }
             }
         });

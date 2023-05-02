@@ -1,23 +1,17 @@
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -38,50 +32,38 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
-public class MainActivity2 extends BaseActivity implements View.OnClickListener {
-    public TextView textView;
+public class ViewYourProfile extends BaseActivity implements View.OnClickListener {
+    public TextView title, text_location;
     public ImageView imageView;
-    public Button buttonBack;
-    public EditText etName;
-    public EditText etUserEmail;
-    public EditText etPhone;
-    public EditText et_numOfCars;
-    public Button buttonEdit;
-    public double latitude;
-    public double longitude;
-
-    public int numer;
-    FirebaseUser currentuser;
+    public Button buttonBack,buttonEdit;
+    public EditText etName,etUserEmail,etPhone,et_numOfCars;
+    public double latitude,longitude;
+    public int AdNum;
+    FirebaseUser CurrentUser;
     FirebaseFirestore db;
     static final String TAG = "Read Data Activity";
     public int num;
-    public int carNum;
     private final static int REQUEST_CODE_ASK_PERMISSIONS = 1;
     private static final String WRIte_External = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private static final String Read_External = Manifest.permission.READ_EXTERNAL_STORAGE;
-    private static final String Internat = Manifest.permission.INTERNET;
-    public TextView text_location;
+    private static final String Internet = Manifest.permission.INTERNET;
     AlertDialog.Builder builder;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         builder = new AlertDialog.Builder(this);
-        currentuser = FirebaseAuth.getInstance().getCurrentUser();
+        CurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
-        currentuser = FirebaseAuth.getInstance().getCurrentUser();
+        CurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         this.latitude = 0.0;
         this.longitude = 0.0;
         bottomNavigation();
-        textView = (TextView) findViewById(R.id.textView);
+        title = (TextView) findViewById(R.id.textView);
         imageView = (ImageView) findViewById(R.id.imageView);
         buttonBack = (Button) findViewById(R.id.buttonBack);
         etName = (EditText) findViewById(R.id.et_name);
@@ -92,7 +74,7 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
         text_location = findViewById(R.id.text_location);
         text_location.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (v == MainActivity2.this.text_location && MainActivity2.this.latitude != 0.0 && MainActivity2.this.longitude != 0.0) {
+                if (v == ViewYourProfile.this.text_location && ViewYourProfile.this.latitude != 0.0 && ViewYourProfile.this.longitude != 0.0) {
                     builder.setTitle("Open Location");
                     builder.setMessage("Where do you want to show the location ? ");
                     builder.setPositiveButton("Google Maps", new DialogInterface.OnClickListener() {
@@ -104,7 +86,7 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
                     builder.setNegativeButton("In App", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(MainActivity2.this, ViewLocation.class);
+                            Intent intent = new Intent(ViewYourProfile.this, ViewLocation.class);
                             intent.putExtra("longitude",Double.toString(longitude));
                             intent.putExtra("latitude",Double.toString(latitude));
                             startActivity(intent);
@@ -128,19 +110,19 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
         buttonBack.setOnClickListener(this);
         buttonEdit.setOnClickListener(this);
 
-        retriveMemberName();
+        retrieveMember();
         Intent intent = getIntent();
         num = intent.getIntExtra("num",0);
         et_numOfCars.setText("" +num);
 
         checkPermission(WRIte_External,REQUEST_CODE_ASK_PERMISSIONS);
         checkPermission(Read_External,REQUEST_CODE_ASK_PERMISSIONS);
-        checkPermission(Internat,REQUEST_CODE_ASK_PERMISSIONS);
+        checkPermission(Internet,REQUEST_CODE_ASK_PERMISSIONS);
         downloadImage(imageView);
 
         getPostedCar();
 
-        showToast(Integer.toString(numer));
+        //showToast(Integer.toString(numer));
     }
 
 
@@ -157,9 +139,9 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
     }
 
 
-    private void retriveMemberName()//retrive member name
+    private void retrieveMember()
     {
-        String email = currentuser.getEmail();
+        String email = CurrentUser.getEmail();
         db.collection("user").whereEqualTo("Email", email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task)
@@ -174,18 +156,18 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
                         String Phone = document.get("Phone").toString();
                         String lat = document.get("latitude").toString();
                         String lon = document.get("longitude").toString();
-                        MainActivity2.this.latitude = Double.parseDouble(lat);
-                        MainActivity2.this.longitude = Double.parseDouble(lon);
-                        MainActivity2.this.etName.setText(Name);
-                        MainActivity2.this.etUserEmail.setText(Email);
-                        MainActivity2.this.etPhone.setText(Phone);
-                        //MainActivity2.this.et_numOfCars.setText(adPOsed);
+                        ViewYourProfile.this.latitude = Double.parseDouble(lat);
+                        ViewYourProfile.this.longitude = Double.parseDouble(lon);
+                        ViewYourProfile.this.etName.setText(Name);
+                        ViewYourProfile.this.etUserEmail.setText(Email);
+                        ViewYourProfile.this.etPhone.setText(Phone);
+                        //ViewYourProfile.this.et_numOfCars.setText(adPOsed);
                     }
                 }
                 else
                 {
 
-                    Toast.makeText(MainActivity2.this,"Failed To Read Data",Toast.LENGTH_LONG).show();
+                    Toast.makeText(ViewYourProfile.this,"Failed To Read Data",Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -195,7 +177,7 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
     public void downloadImage (ImageView imageView) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl("gs://yad2v-202a2.appspot.com/images/Avatars/");
-        storageRef.child(currentuser.getUid().toString()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageRef.child(CurrentUser.getUid().toString()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 // Got the download URL for 'users/me/profile.png'
@@ -213,8 +195,8 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
     public void checkPermission(String permission, int requestCode)
     {
         // Checking if permission is not granted
-        if (ContextCompat.checkSelfPermission(MainActivity2.this, permission) == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(MainActivity2.this, new String[] { permission }, requestCode);
+        if (ContextCompat.checkSelfPermission(ViewYourProfile.this, permission) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(ViewYourProfile.this, new String[] { permission }, requestCode);
         }
         else {
             //Toast.makeText(viewAd.this, "Permission already granted", Toast.LENGTH_SHORT).show();
@@ -272,7 +254,7 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
                         startActivity(new Intent(getApplicationContext(), PersonalPage.class));
                         return true;
                     case R.id.View_Profile:
-                        Intent intent2 = new Intent(getApplicationContext() , MainActivity2.class);
+                        Intent intent2 = new Intent(getApplicationContext() , ViewYourProfile.class);
                         intent2.putExtra("num",carArrayList.size());
                         startActivity(intent2);
                         return true;
@@ -285,22 +267,23 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
     public void getPostedCar ()
     {
         FirebaseFirestore db2 = FirebaseFirestore.getInstance();
-        numer = 0;
+        AdNum = 0;
         db2.collection("Cars").whereEqualTo("userEmail",FirebaseAuth.getInstance().getCurrentUser().getEmail().toString()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 for (QueryDocumentSnapshot document : task.getResult())
                 {
                     Log.d("Hey",document.getData().toString());
-                    numer++;
+                    AdNum++;
                 }
-                et_numOfCars.setText(Integer.toString(numer));
+                et_numOfCars.setText(Integer.toString(AdNum));
             }
         });
-        Log.d("Hey",Integer.toString(numer));
+        Log.d("Hey",Integer.toString(AdNum));
     }
 
-    private void openLocationInMaps(double latitude, double longitude) {
+    private void openLocationInMaps(double latitude, double longitude)
+    {
         // Create a URI with the coordinates
         String uri = String.format("geo:%f,%f", latitude, longitude);
 
@@ -317,8 +300,4 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    public void BuildDialog ()
-    {
-
-    }
 }

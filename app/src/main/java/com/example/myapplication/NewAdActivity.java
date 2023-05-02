@@ -1,35 +1,25 @@
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -40,8 +30,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.NotNull;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -52,17 +40,13 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 public class NewAdActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     EditText et_cat, et_man,et_mod,et_year,et_km,et_yad,et_price,et_des;
     Button btn_share,btn_addImage,btn_ViewImage,btn_back;
-    FirebaseDatabase database;
     FirebaseUser currentuser;
     Uri selectedImageUri;
     FirebaseFirestore db;
@@ -113,7 +97,7 @@ public class NewAdActivity extends BaseActivity implements View.OnClickListener,
         storageReference = storage.getReference();
         db = FirebaseFirestore.getInstance();
         currentuser = FirebaseAuth.getInstance().getCurrentUser();
-        database = FirebaseDatabase.getInstance();
+
 
         Intent intent = getIntent();
         num = intent.getIntExtra("num",0);
@@ -173,7 +157,6 @@ public class NewAdActivity extends BaseActivity implements View.OnClickListener,
         }
         else if (btn_addImage==view)
         {
-
             build();
         }
         else if (view == btn_back )
@@ -341,7 +324,7 @@ public class NewAdActivity extends BaseActivity implements View.OnClickListener,
                         startActivity(new Intent(getApplicationContext(), PersonalPage.class));
                         return true;
                     case R.id.View_Profile:
-                        Intent intent2 = new Intent(getApplicationContext() , MainActivity2.class);
+                        Intent intent2 = new Intent(getApplicationContext() , ViewYourProfile.class);
                         intent2.putExtra("num",carArrayList.size());
                         startActivity(intent2);
                         return true;

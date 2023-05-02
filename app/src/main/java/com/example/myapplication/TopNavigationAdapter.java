@@ -41,8 +41,8 @@ public class TopNavigationAdapter extends RecyclerView.Adapter<TopNavigationAdap
         }
     }
 
-    public TopNavigationAdapter(List<String> moviesList) {
-        this.manufactures = moviesList;
+    public TopNavigationAdapter(List<String> manufacturesList) {
+        this.manufactures = manufacturesList;
     }
     @NonNull
     @Override

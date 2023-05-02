@@ -219,7 +219,7 @@ public class PersonalPage extends BaseActivity implements AdapterView.OnItemClic
                         startActivity(new Intent(getApplicationContext(), PersonalPage.class));
                         return true;
                     case R.id.View_Profile:
-                        Intent intent2 = new Intent(getApplicationContext() , MainActivity2.class);
+                        Intent intent2 = new Intent(getApplicationContext() , ViewYourProfile.class);
                         intent2.putExtra("num",carArrayList.size());
                         startActivity(intent2);
                         return true;

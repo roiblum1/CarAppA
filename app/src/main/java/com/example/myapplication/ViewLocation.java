@@ -63,7 +63,7 @@ public class ViewLocation extends BaseActivity implements OnMapReadyCallback {
     // A default location (Sydney, Australia) and default zoom to use when location permission is
     // not granted.
     private final LatLng defaultLocation = new LatLng(-33.8523341, 151.2106085);
-    private static final int DEFAULT_ZOOM = 15;
+    private static final int DEFAULT_ZOOM = 100;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean locationPermissionGranted;
 
@@ -109,12 +109,14 @@ public class ViewLocation extends BaseActivity implements OnMapReadyCallback {
         // and move the map's camera to the same location.
         // [END_EXCLUDE]
         LatLng sydney = new LatLng(latitude, longitude);
+        float zoomLevel = 17.0f;
         googleMap.addMarker(new MarkerOptions()
                 .position(sydney)
                 .title("latitude : "+Double.toString(latitude) +" , " + "longitude : "+Double.toString(longitude)));
         // [START_EXCLUDE silent]
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        googleMap.setMinZoomPreference(googleMap.getMinZoomLevel()*8);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, zoomLevel));
+        googleMap.setMinZoomPreference(googleMap.getMinZoomLevel()*800);
+
         updateLocationUI();
         // [END_EXCLUDE]
         //2

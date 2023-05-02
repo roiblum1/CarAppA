@@ -35,18 +35,13 @@ import java.util.ArrayList;
 
 public class ViewProfile extends BaseActivity
 {
-    private TextView textView;
+    private TextView textView;private EditText etUID;
     private ImageView imageView;
-
-    public String latitude;
-    public String longitude;
-    private TextInputEditText etName;
-    private TextInputEditText etUserEmail;
-    private TextInputEditText etPhone;
-    private EditText etUID;
-    private Button btnLocation;
-    private Button btnAddContact;
+    public String latitude, longitude;
+    private TextInputEditText etName, etUserEmail, etPhone;
+    private Button btnLocation, btnAddContact;
     AlertDialog.Builder builder;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {

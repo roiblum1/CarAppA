@@ -67,7 +67,7 @@
             android:name=".EditProfileUser"
             android:exported="false" />
         <activity
-            android:name=".MainActivity2"
+            android:name=".ViewYourProfile"
             android:exported="false" />
         <activity
             android:name=".viewAd"

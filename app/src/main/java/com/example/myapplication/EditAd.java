@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -37,11 +38,9 @@ import java.io.ByteArrayOutputStream;
 
 public class EditAd extends BaseActivity {
     EditText et_carID,et_cat,et_man,et_mod,et_year,et_km,et_yad,et_price,et_userEmail,et_relevant,et_des;
-    String carID,userID,category,description,km,manufacturer,model,price,owner,year,relevant;
     FirebaseFirestore db;
     FirebaseUser currentuser;
     ImageView imageView;
-    public String carID2;
     public Boolean aBoolean;
     Car car;
     AlertDialog.Builder builder;
@@ -50,10 +49,10 @@ public class EditAd extends BaseActivity {
     StorageReference storageReference;
     FirebaseStorage storage ;
     Uri selectedImageUri;
-    FirebaseDatabase database;
 
-    public int num;
-// TODO: delete the image when deleting car and -1 to owner account.
+    Button btnDelete,btnAddImage,btnSave;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,12 +71,15 @@ public class EditAd extends BaseActivity {
         String year = intent.getStringExtra("year");
         Boolean relevant = intent.getBooleanExtra("relevant", true);
 
+        btnDelete = (Button) findViewById(R.id.btnDelete);
+        btnAddImage = (Button) findViewById(R.id.btn_addImage);
+        btnSave = (Button) findViewById(R.id.btn_Save);
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         db = FirebaseFirestore.getInstance();
         currentuser = FirebaseAuth.getInstance().getCurrentUser();
-        database = FirebaseDatabase.getInstance();
+
 
         imageView = findViewById(R.id.image21);
 
@@ -120,7 +122,6 @@ public class EditAd extends BaseActivity {
         et_userEmail.setTextColor(getResources().getColor(R.color.white));
         et_relevant.setTextColor(getResources().getColor(R.color.white));
         et_des.setTextColor(getResources().getColor(R.color.white));
-
         downloadImage();
 
     }
@@ -129,8 +130,7 @@ public class EditAd extends BaseActivity {
     {
     }
 
-    public void saveC(View view)
-    {
+    public void saveC(View view) {
         changeData("category", et_cat.getText().toString() ,db ,car.getCarID());
         changeData("description", et_des.getText().toString() ,db ,car.getCarID());
         changeData("km", et_km.getText().toString() ,db ,car.getCarID());
@@ -142,9 +142,8 @@ public class EditAd extends BaseActivity {
         changeData("relevant", et_relevant.getText().toString() ,db ,car.getCarID());
         startActivity(new Intent(this, PersonalPage.class));
     }
-
-    public void addImage(View view)
-    {
+    //an function that is OnClick of btnSave button and it will Save all Of the changes.
+    public void addImage(View view) {
         if (aBoolean == false)
             build();
         else
@@ -153,9 +152,11 @@ public class EditAd extends BaseActivity {
             build();
         }
     }
+    //an function that is OnClick of btnAddImage button and
+    // it will check if there is an image already and then it will delete it from the FireBase Storage else
+    //and only then call to build function.
 
-    public void deleteAD(View view)
-    {
+    public void deleteAD(View view) {
         db.collection("Cars").whereEqualTo("carID",car.getCarID() ).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -174,23 +175,8 @@ public class EditAd extends BaseActivity {
         showToast("deleted");
         startActivity(new Intent(this , PersonalPage.class));
     }
+    //an function that is Onclick to btnDelete button and it will delete the Ad
 
-    public void changeDataUser (FirebaseFirestore db)
-    {
-        db.collection("user").whereEqualTo("UID",FirebaseAuth.getInstance().getCurrentUser().getUid().toString() ).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                for (QueryDocumentSnapshot document : task.getResult())
-                {
-                    int num = (int)document.get("AdPosted");
-                    num--;
-                    db.collection("user").document(document.getReference().getPath().substring(5)).update("AdPosted", num);
-                }
-            }
-        });
-        showToast("saved");
-        startActivity(new Intent(this , PersonalPage.class));
-    }
     public void changeData (String dest , String data ,FirebaseFirestore db, String carID)
     {
         db.collection("Cars").whereEqualTo("carID",carID ).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -211,6 +197,7 @@ public class EditAd extends BaseActivity {
         showToast("saved");
         startActivity(new Intent(this , PersonalPage.class));
     }
+    //an function to change a specific data from the FireStore Ad document.
 
     public void downloadImage () {
 
@@ -232,34 +219,42 @@ public class EditAd extends BaseActivity {
             }
         });
     }
-
+    //an function to download the image of the ad from FireBase Storage and insert it into ImageView and turn the aBoolean to true
+    //that only if there is an image, else it will put an other image an aBoolean will stay false.
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK)
-        {
-
-            // compare the resultCode with the
-            // SELECT_PICTURE constant
-            if (requestCode == SELECT_PICTURE)
-            {
-                // Get the url of the image from data
-                selectedImageUri = data.getData();
-                if (null != selectedImageUri)
-                {
-                    // update the preview image in the layout
-                    imageView.setImageURI(selectedImageUri);
-                    uploadImage(selectedImageUri);
-                }
+        if (resultCode == -1) {
+            switch (requestCode) {
+                case 200:
+                    if (requestCode == 200) {
+                        Uri data2 = data.getData();
+                        this.selectedImageUri = data2;
+                        if (data2 != null) {
+                            this.imageView.setImageURI(data2);
+                            uploadImage(this.selectedImageUri);
+                            return;
+                        }
+                        return;
+                    }
+                    return;
+                case CAMERA_REQUEST /*1888*/:
+                    Bitmap photo = (Bitmap) data.getExtras().get("data");
+                    Uri tempUri = getImageUri(getApplicationContext(), photo);
+                    this.selectedImageUri = tempUri;
+                    uploadImage(tempUri);
+                    this.imageView.setImageBitmap(photo);
+                    return;
+                default:
+                    return;
             }
         }
     }
-
-    void imageChooser()
-    {
-
+    //on activity result function, in case of camara will convert the result to Uri using the function getImageUri
+    //and in case of Gallery will upload the image. and in both cases the imageView image will changed to the new one.
+    void imageChooser() {
         // create an instance of the
         // intent of the type image
         Intent i = new Intent();
@@ -268,10 +263,9 @@ public class EditAd extends BaseActivity {
         startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
 
     }
+    //an function to choose an image from the Gallery with OnActivityResult
 
-
-    public void uploadImage (Uri image)
-    {
+    public void uploadImage (Uri image) {
         StorageReference imageRef = storageReference.child("images/"+car.getCarID().toString());
         UploadTask uploadTask = imageRef.putFile(image);
 
@@ -284,21 +278,7 @@ public class EditAd extends BaseActivity {
             }
         });
     }
-
-    public void deleteImage ()
-    {
-        StorageReference storageRef = storage.getReference();
-
-        StorageReference desertRef = storageRef.child("images/");
-        desertRef.child(car.getCarID().toString()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                showToast("Failed to delete from storage");
-            }
-        });
-    }
-
-
+    //an function to upload an Uri Image to Firebase Storage.
     public void build() {
         this.builder.setMessage((CharSequence) "Where do you want to take the picture from ?").setCancelable(false).setPositiveButton((CharSequence) "Gallery", (DialogInterface.OnClickListener) new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -306,13 +286,14 @@ public class EditAd extends BaseActivity {
             }
         }).setNegativeButton((CharSequence) "Camara", (DialogInterface.OnClickListener) new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                EditAd.this.startActivityForResult(new Intent("android.media.action.IMAGE_CAPTURE"),CAMERA_REQUEST );
+                EditAd.this.startActivityForResult(new Intent("android.media.action.IMAGE_CAPTURE"),CAMERA_REQUEST);
             }
         });
         AlertDialog alert = this.builder.create();
         alert.setTitle("Select");
         alert.show();
     }
+    //an function to build the camara or gallery dialog.
 
     private Uri getImageUri(Context inContext, Bitmap inImage) {
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, new ByteArrayOutputStream());
@@ -323,6 +304,7 @@ public class EditAd extends BaseActivity {
             return null;
         }
     }
+    //an function that converts an bitmap image to Uri.
 
 
 }

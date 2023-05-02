@@ -1,21 +1,14 @@
 package com.example.myapplication;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import android.Manifest;
+
 import android.content.ContentProviderOperation;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.ContactsContract;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,74 +18,39 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 
 public class viewAd extends BaseActivity implements View.OnClickListener {
-    private static final String Internat = "android.permission.INTERNET";
+    private static final String Internet = "android.permission.INTERNET";
     private static final String READ = "android.permission.READ_CONTACTS";
-    private static final int REQUEST_CODE_ASK_PERMISSIONS = 1;
     private static final String Read_External = "android.permission.READ_EXTERNAL_STORAGE";
     static final String TAG = "Read Data Activity";
     private static final String WRITE = "android.permission.WRITE_CONTACTS";
     private static final String WRIte_External = "android.permission.WRITE_EXTERNAL_STORAGE";
-    Button btn_back;
-    Button btn_viewUserProfile;
+    Button btn_viewUserProfile,contact;
     Car car;
-    String carID;
-    String category;
-    Button cont;
-
-    /* renamed from: db */
-    FirebaseFirestore f100db;
-    String description;
-    EditText et_carID;
-    EditText et_cat;
-    EditText et_des;
-    EditText et_km;
-    EditText et_man;
-    EditText et_mod;
-    EditText et_price;
-    EditText et_relevant;
-    EditText et_userEmail;
-    EditText et_yad;
-    EditText et_year;
+    FirebaseFirestore dataBase;
+    EditText et_cat, et_des, et_km, et_man, et_mod, et_price, et_relevant, et_userEmail, et_yad, et_year;
     ImageView image2;
-    StorageReference imageReference;
-
-    /* renamed from: km */
-    String f101km;
-    String manufacturer;
-    String model;
-    String owner;
-    String price;
-    String relevant;
     Member seller;
     String sellerUser;
     FirebaseStorage storage;
     StorageReference storageReference;
-    String userID;
-    String year;
 
-    /* access modifiers changed from: protected */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView((int) R.layout.activity_view_ad);
         Intent intent = getIntent();
-        this.f100db = FirebaseFirestore.getInstance();
+        this.dataBase = FirebaseFirestore.getInstance();
         FirebaseStorage instance = FirebaseStorage.getInstance();
         this.storage = instance;
         this.storageReference = instance.getReference();
@@ -126,7 +84,7 @@ public class viewAd extends BaseActivity implements View.OnClickListener {
         this.et_des = (EditText) findViewById(R.id.et_des);
         this.btn_viewUserProfile = (Button) findViewById(R.id.btn_viewUserProfile);
         Button button = (Button) findViewById(R.id.cont);
-        this.cont = button;
+        this.contact = button;
         button.setOnClickListener(this);
         this.btn_viewUserProfile.setOnClickListener(this);
 //        Button button2 = (Button) findViewById(R.id.btn_back);
@@ -165,37 +123,19 @@ public class viewAd extends BaseActivity implements View.OnClickListener {
         this.sellerUser = this.et_userEmail.getText().toString();
         this.seller = new Member();
         this.car = new Car(et_cat.getText().toString(),et_man.getText().toString(),et_mod.getText().toString(),et_year.getText().toString(),et_yad.getText().toString(),et_km.getText().toString(),et_price.getText().toString(),et_des.getText().toString(),carID2,et_userEmail.getText().toString(),Boolean.parseBoolean(et_relevant.getText().toString()));
-        retriveMemberName();
+        retrieveSeller();
         checkPermission(WRITE, 1);
         checkPermission(READ, 1);
         checkPermission(WRIte_External, 1);
         checkPermission(Read_External, 1);
-        checkPermission(Internat, 1);
+        checkPermission(Internet, 1);
         downloadImage();
     }
-//
-//
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.logout:
-//                FirebaseAuth.getInstance().signOut();
-//                startActivity(new Intent(this, MainActivity.class));
-//                return true;
-//            case R.id.personal_page:
-//                startActivity(new Intent(this, PersonalPage.class));
-//                return true;
-//            case android.R.id.home:
-//                this.finish();
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
 
-    private void retriveMemberName() {
+    private void retrieveSeller() {
         String email = this.sellerUser;
         this.seller.setMemberEmail(email);
-        this.f100db.collection("user").whereEqualTo("Email", (Object) email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        this.dataBase.collection("user").whereEqualTo("Email", (Object) email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             public void onComplete(Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     Iterator<QueryDocumentSnapshot> it = task.getResult().iterator();
@@ -213,7 +153,7 @@ public class viewAd extends BaseActivity implements View.OnClickListener {
     }
 
     public void onClick(View v) {
-        if (this.cont == v) {
+        if (this.contact == v) {
             String DisplayName = this.seller.getMemberName();
             String MobileNumber = this.seller.getMemberPhone();
             String emailID = this.seller.getMemberEmail();
@@ -234,7 +174,8 @@ public class viewAd extends BaseActivity implements View.OnClickListener {
                 e.printStackTrace();
                 Toast.makeText(this, "Failed to add seller to Contacts", Toast.LENGTH_SHORT).show();
             }
-        } else if (v == this.btn_viewUserProfile) {
+        }
+        else if (v == this.btn_viewUserProfile) {
             Intent intent = new Intent(this, ViewProfile.class);
             intent.putExtra("SellerEmail", this.et_userEmail.getText().toString());
             startActivity(intent);

@@ -2,7 +2,6 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -12,15 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -66,7 +60,7 @@ public abstract class BaseActivity extends AppCompatActivity
                 return true;
             case R.id.View_Profile:
                 if (FirebaseAuth.getInstance().getCurrentUser()!=null)
-                    startActivity(new Intent(this, MainActivity2.class));
+                    startActivity(new Intent(this, ViewYourProfile.class));
                 return true;
             case R.id.SrartMusic:
                 startService(new Intent(this, MyService.class));
@@ -113,7 +107,7 @@ public abstract class BaseActivity extends AppCompatActivity
                         startActivity(new Intent(getApplicationContext(), AllAdActivity.class));
                         return true;
                     case R.id.View_Profile:
-                        Intent intent2 = new Intent(getApplicationContext() , MainActivity2.class);
+                        Intent intent2 = new Intent(getApplicationContext() , ViewYourProfile.class);
                         intent2.putExtra("num",carList.size());
                         startActivity(intent2);
                         return true;
