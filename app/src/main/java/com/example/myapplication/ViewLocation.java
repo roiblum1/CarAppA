@@ -117,12 +117,12 @@ public class ViewLocation extends BaseActivity implements OnMapReadyCallback {
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, zoomLevel));
         googleMap.setMinZoomPreference(googleMap.getMinZoomLevel()*800);
 
-        updateLocationUI();
+        updateLocationUI(googleMap);
         // [END_EXCLUDE]
         //2
     }
 
-    private void updateLocationUI() {
+    private void updateLocationUI(GoogleMap map) {
         if (map == null) {
             return;
         }
