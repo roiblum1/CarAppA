@@ -36,6 +36,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+
 import java.io.ByteArrayOutputStream;
 
 public class EditProfileUser extends BaseActivity implements View.OnClickListener {
@@ -52,7 +53,7 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
     // Firebase related
     FirebaseUser CurrentUser;
     FirebaseFirestore db;
-    FirebaseStorage storage ;
+    FirebaseStorage storage;
     StorageReference storageReference;
 
     // Other variables
@@ -65,7 +66,7 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
     LocationTrack locationTrack;
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
-    public double latitude,longitude;
+    public double latitude, longitude;
 
 
     // Alert dialog builder
@@ -74,6 +75,7 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
     // Constants
     private static final int CAMERA_REQUEST = 1888;
     private static final int SELECT_PICTURE = 200;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,30 +117,22 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        if (v == btnChangeAvatar)
-        {
+        if (v == btnChangeAvatar) {
             if (aBoolean == false)
                 build();
-            else
-            {
+            else {
                 deleteImageUser(CurrentUser.getUid().toString());
                 build();
             }
-        }
-
-        else if ( v == btnDelete)
-        {
+        } else if (v == btnDelete) {
             deleteUser();
             deleteUserCars();
             deleteUserAuth();
-            startActivity(new Intent(EditProfileUser.this,MainActivity.class));
-        }
-
-        else if (buttonSave == v)
-        {
-            changeData("Phone", etPhone.getText().toString() ,db);
-            changeData("Email", etUserEmail.getText().toString() ,db);
-            changeData("Name", etName.getText().toString() ,db);
+            startActivity(new Intent(EditProfileUser.this, MainActivity.class));
+        } else if (buttonSave == v) {
+            changeData("Phone", etPhone.getText().toString(), db);
+            changeData("Email", etUserEmail.getText().toString(), db);
+            changeData("Name", etName.getText().toString(), db);
             double d = this.latitude;
             showToast(Double.toString(latitude));
             if (d != 0.0) {
@@ -149,29 +143,26 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
                 changeData("longitude", Double.toString(d2), this.db);
             }
             finish();
-        }
-        else if (this.btn_location == v)
-        {
+        } else if (this.btn_location == v) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 mFusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
                     if (location != null) {
-                         latitude = location.getLatitude();
-                         longitude = location.getLongitude();
-                         showToast("Location has been updated");
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
+                        showToast("Location has been updated");
                         // Do something with the latitude and longitude values
                     }
                 });
             }
         }
     }
-    private void retrieveMember()
-    {
+
+    private void retrieveMember() {
         String email = CurrentUser.getEmail();
         db.collection("user").whereEqualTo("Email", email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task)
-            {
-                if (task.isSuccessful()){
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
 
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d(TAG, document.getId() + " => " + document.getData());
@@ -182,9 +173,7 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
                         etUserEmail.setText(Email);
                         etPhone.setText(Phone);
                     }
-                }
-                else
-                {
+                } else {
                     showToast("Failed To Read Data");
                 }
             }
@@ -192,32 +181,26 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
     }
 
 
-    public void changeData (String dest , String data ,FirebaseFirestore db)
-    {
-        db.collection("user").whereEqualTo("Email", CurrentUser.getEmail() ).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+    public void changeData(String dest, String data, FirebaseFirestore db) {
+        db.collection("user").whereEqualTo("Email", CurrentUser.getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                for (QueryDocumentSnapshot document : task.getResult())
-                {
+                for (QueryDocumentSnapshot document : task.getResult()) {
                     db.collection("user").document(document.getReference().getPath().substring(5)).update(dest, data);
                 }
             }
         });
         showToast("saved");
-        startActivity(new Intent(this , PersonalPage.class));
+        startActivity(new Intent(this, PersonalPage.class));
     }
 
 
-
-    public void deleteUser()
-    {
+    public void deleteUser() {
         db.collection("user").whereEqualTo("Email", CurrentUser.getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                for (QueryDocumentSnapshot document : task.getResult())
-                {
-                    if (document.get("Email").toString().equals(CurrentUser.getEmail()))
-                    {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    if (document.get("Email").toString().equals(CurrentUser.getEmail())) {
                         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
                         deleteImageUser(uid);
                         document.getReference().delete();
@@ -227,15 +210,12 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
         });
     }
 
-    public void deleteUserCars()
-    {
+    public void deleteUserCars() {
         db.collection("Cars").whereEqualTo("userEmail", CurrentUser.getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                for (QueryDocumentSnapshot document : task.getResult())
-                {
-                    if (document.get("userEmail").toString().equals(CurrentUser.getEmail()))
-                    {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    if (document.get("userEmail").toString().equals(CurrentUser.getEmail())) {
                         String carID = document.get("carID").toString();
                         deleteImageCar(carID);
                         document.getReference().delete();
@@ -245,12 +225,10 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
         });
     }
 
-    public void deleteUserAuth()
-    {
+    public void deleteUserAuth() {
         CurrentUser.delete();
         FirebaseAuth.getInstance().getCurrentUser().delete();
     }
-
 
 
     @Override
@@ -283,8 +261,7 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
         }
     }
 
-    void imageChooser()
-    {
+    void imageChooser() {
 
         // create an instance of the
         // intent of the type image
@@ -296,23 +273,20 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
     }
 
 
-    public void uploadImage (Uri image)
-    {
-        StorageReference imageRef = storageReference.child("images/Avatars/"+ CurrentUser.getUid());
+    public void uploadImage(Uri image) {
+        StorageReference imageRef = storageReference.child("images/Avatars/" + CurrentUser.getUid());
         UploadTask uploadTask = imageRef.putFile(image);
 
-        uploadTask.addOnFailureListener(new OnFailureListener()
-        {
+        uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onFailure(@NonNull Exception e)
-            {
+            public void onFailure(@NonNull Exception e) {
                 showToast("Fail to Upload to server");
             }
         });
     }
 
 
-    public void downloadImage (ImageView imageView) {
+    public void downloadImage(ImageView imageView) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl("gs://yad2v-202a2.appspot.com/images/Avatars/");
         storageRef.child(CurrentUser.getUid().toString()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -380,15 +354,13 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
         alert.show();
     }
 
-    public void getPostedCar ()
-    {
+    public void getPostedCar() {
         FirebaseFirestore db2 = FirebaseFirestore.getInstance();
         AdNum = 0;
-        db2.collection("Cars").whereEqualTo("userEmail",FirebaseAuth.getInstance().getCurrentUser().getEmail().toString()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db2.collection("Cars").whereEqualTo("userEmail", FirebaseAuth.getInstance().getCurrentUser().getEmail().toString()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                for (QueryDocumentSnapshot document : task.getResult())
-                {
+                for (QueryDocumentSnapshot document : task.getResult()) {
                     AdNum++;
                 }
             }

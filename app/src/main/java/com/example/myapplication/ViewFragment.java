@@ -2,10 +2,6 @@ package com.example.myapplication;
 
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +11,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -89,12 +87,12 @@ public class ViewFragment extends Fragment {
             }
         });
 
-        downloadImage(UID,imageView);
+        downloadImage(UID, imageView);
         return view;
     }
 
 
-    public void downloadImage (String Uid,ImageView imageView) {
+    public void downloadImage(String Uid, ImageView imageView) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl("gs://yad2v-202a2.appspot.com/images/Avatars/");
         storageRef.child(Uid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -113,14 +111,12 @@ public class ViewFragment extends Fragment {
     }
 
 
-    public void deleteUserCars(String email)
-    {
+    public void deleteUserCars(String email) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Cars").whereEqualTo("userEmail",email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("Cars").whereEqualTo("userEmail", email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                for (QueryDocumentSnapshot document : task.getResult())
-                {
+                for (QueryDocumentSnapshot document : task.getResult()) {
                     if (document.get("userEmail").toString().equals(email))
                         document.getReference().delete();
                 }
@@ -128,14 +124,12 @@ public class ViewFragment extends Fragment {
         });
     }
 
-    public void deleteUser(String email)
-    {
+    public void deleteUser(String email) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("user").whereEqualTo("Email",email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("user").whereEqualTo("Email", email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                for (QueryDocumentSnapshot document : task.getResult())
-                {
+                for (QueryDocumentSnapshot document : task.getResult()) {
                     if (document.get("Email").toString().equals(email))
                         document.getReference().delete();
                 }
@@ -143,8 +137,7 @@ public class ViewFragment extends Fragment {
         });
     }
 
-    public void deleteImage (String UID)
-    {
+    public void deleteImage(String UID) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
 

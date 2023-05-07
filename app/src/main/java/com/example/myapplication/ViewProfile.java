@@ -1,9 +1,5 @@
 package com.example.myapplication;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.ContentProviderOperation;
 import android.content.DialogInterface;
@@ -11,13 +7,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -33,9 +30,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class ViewProfile extends BaseActivity
-{
-    private TextView textView;private EditText etUID;
+public class ViewProfile extends BaseActivity {
+    private TextView textView;
+    private EditText etUID;
     private ImageView imageView;
     public String latitude, longitude;
     private TextInputEditText etName, etUserEmail, etPhone;
@@ -43,14 +40,13 @@ public class ViewProfile extends BaseActivity
     AlertDialog.Builder builder;
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_profile);
         builder = new AlertDialog.Builder(this);
         Intent intent = getIntent();
-        latitude ="0.0";
-        longitude ="0.0";
+        latitude = "0.0";
+        longitude = "0.0";
         String EmailSeller = intent.getStringExtra("SellerEmail");
         textView = (TextView) findViewById(R.id.textView);
         imageView = (ImageView) findViewById(R.id.imageView);
@@ -93,8 +89,7 @@ public class ViewProfile extends BaseActivity
 
         btnLocation.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 if (v == ViewProfile.this.btnLocation && ViewProfile.this.latitude != "0.0" && ViewProfile.this.longitude != "0.0") {
                     builder.setTitle("Open Location");
                     builder.setMessage("Where do you want to show the location ? ");
@@ -108,8 +103,8 @@ public class ViewProfile extends BaseActivity
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Intent intent = new Intent(ViewProfile.this, ViewLocation.class);
-                            intent.putExtra("longitude",longitude);
-                            intent.putExtra("latitude",latitude);
+                            intent.putExtra("longitude", longitude);
+                            intent.putExtra("latitude", latitude);
                             startActivity(intent);
                         }
                     });
@@ -128,16 +123,13 @@ public class ViewProfile extends BaseActivity
     }
 
 
-    private void getSeller (String email)
-    {
+    private void getSeller(String email) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("user").whereEqualTo("Email", email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful())
-                {
-                    for (QueryDocumentSnapshot document : task.getResult())
-                    {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
                         String EmailSeller = document.get("Email").toString();
                         String PhoneSeller = document.get("Phone").toString();
                         String Name = document.get("Name").toString();
@@ -145,9 +137,8 @@ public class ViewProfile extends BaseActivity
                         latitude = document.get("latitude").toString();
                         longitude = document.get("longitude").toString();
 
-                        if (uid != null)
-                        {
-                            downloadImage(uid,imageView);
+                        if (uid != null) {
+                            downloadImage(uid, imageView);
                         }
                         etName.setText(Name);
                         etPhone.setText(PhoneSeller);
@@ -158,7 +149,7 @@ public class ViewProfile extends BaseActivity
         });
     }
 
-    public void downloadImage (String Uid,ImageView imageView) {
+    public void downloadImage(String Uid, ImageView imageView) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl("gs://yad2v-202a2.appspot.com/images/Avatars/");
         storageRef.child(Uid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -175,6 +166,7 @@ public class ViewProfile extends BaseActivity
             }
         });
     }
+
     private void openLocationInMaps(double latitude, double longitude) {
         // Create a URI with the coordinates
         String uri = String.format("geo:%f,%f", latitude, longitude);

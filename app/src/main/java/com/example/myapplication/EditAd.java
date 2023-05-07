@@ -1,10 +1,5 @@
 package com.example.myapplication;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,12 +7,13 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,7 +21,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -37,7 +32,7 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 
 public class EditAd extends BaseActivity {
-    EditText et_carID,et_cat,et_man,et_mod,et_year,et_km,et_yad,et_price,et_userEmail,et_relevant,et_des;
+    EditText et_carID, et_cat, et_man, et_mod, et_year, et_km, et_yad, et_price, et_userEmail, et_relevant, et_des;
     FirebaseFirestore db;
     FirebaseUser currentuser;
     ImageView imageView;
@@ -47,10 +42,10 @@ public class EditAd extends BaseActivity {
     private static final int CAMERA_REQUEST = 1888;
     private static final int SELECT_PICTURE = 200;
     StorageReference storageReference;
-    FirebaseStorage storage ;
+    FirebaseStorage storage;
     Uri selectedImageUri;
 
-    Button btnDelete,btnAddImage,btnSave;
+    Button btnDelete, btnAddImage, btnSave;
 
 
     @Override
@@ -83,7 +78,7 @@ public class EditAd extends BaseActivity {
 
         imageView = findViewById(R.id.image21);
 
-        car = new Car( category,  manufacturer,  model,  year,  owner,  km,  price,  description,  carID,  userID,  relevant);
+        car = new Car(category, manufacturer, model, year, owner, km, price, description, carID, userID, relevant);
         db = FirebaseFirestore.getInstance();
         currentuser = FirebaseAuth.getInstance().getCurrentUser();
 //        et_carID = findViewById(R.id.et_carID);
@@ -126,28 +121,27 @@ public class EditAd extends BaseActivity {
 
     }
 
-    public void viewImage(View view)
-    {
+    public void viewImage(View view) {
     }
 
     public void saveC(View view) {
-        changeData("category", et_cat.getText().toString() ,db ,car.getCarID());
-        changeData("description", et_des.getText().toString() ,db ,car.getCarID());
-        changeData("km", et_km.getText().toString() ,db ,car.getCarID());
-        changeData("price", et_price.getText().toString() ,db ,car.getCarID());
-        changeData("manufacturer", et_man.getText().toString() ,db ,car.getCarID());
-        changeData("model", et_mod.getText().toString() ,db ,car.getCarID());
-        changeData("owner", et_yad.getText().toString() ,db ,car.getCarID());
-        changeData("year", et_year.getText().toString() ,db ,car.getCarID());
-        changeData("relevant", et_relevant.getText().toString() ,db ,car.getCarID());
+        changeData("category", et_cat.getText().toString(), db, car.getCarID());
+        changeData("description", et_des.getText().toString(), db, car.getCarID());
+        changeData("km", et_km.getText().toString(), db, car.getCarID());
+        changeData("price", et_price.getText().toString(), db, car.getCarID());
+        changeData("manufacturer", et_man.getText().toString(), db, car.getCarID());
+        changeData("model", et_mod.getText().toString(), db, car.getCarID());
+        changeData("owner", et_yad.getText().toString(), db, car.getCarID());
+        changeData("year", et_year.getText().toString(), db, car.getCarID());
+        changeData("relevant", et_relevant.getText().toString(), db, car.getCarID());
         startActivity(new Intent(this, PersonalPage.class));
     }
+
     //an function that is OnClick of btnSave button and it will Save all Of the changes.
     public void addImage(View view) {
         if (aBoolean == false)
             build();
-        else
-        {
+        else {
             deleteImageCar(car.getCarID().toString());
             build();
         }
@@ -157,13 +151,11 @@ public class EditAd extends BaseActivity {
     //and only then call to build function.
 
     public void deleteAD(View view) {
-        db.collection("Cars").whereEqualTo("carID",car.getCarID() ).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("Cars").whereEqualTo("carID", car.getCarID()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                for (QueryDocumentSnapshot document : task.getResult())
-                {
-                    if (document.get("carID").toString().equals(car.getCarID()))
-                    {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    if (document.get("carID").toString().equals(car.getCarID())) {
                         String carID = document.get("carID").toString();
                         deleteImageCar(carID);
                         document.getReference().delete();
@@ -173,33 +165,31 @@ public class EditAd extends BaseActivity {
         });
         //changeDataUser(FirebaseFirestore.getInstance());
         showToast("deleted");
-        startActivity(new Intent(this , PersonalPage.class));
+        startActivity(new Intent(this, PersonalPage.class));
     }
     //an function that is Onclick to btnDelete button and it will delete the Ad
 
-    public void changeData (String dest , String data ,FirebaseFirestore db, String carID)
-    {
-        db.collection("Cars").whereEqualTo("carID",carID ).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+    public void changeData(String dest, String data, FirebaseFirestore db, String carID) {
+        db.collection("Cars").whereEqualTo("carID", carID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                for (QueryDocumentSnapshot document : task.getResult())
-                {
+                for (QueryDocumentSnapshot document : task.getResult()) {
                     if (dest.equals("relevant"))
                         if (data.equals("true"))
-                            db.collection("Cars").document(document.getReference().getPath().substring(5)).update("relevant",true );
+                            db.collection("Cars").document(document.getReference().getPath().substring(5)).update("relevant", true);
                         else
-                            db.collection("Cars").document(document.getReference().getPath().substring(5)).update("relevant",false );
+                            db.collection("Cars").document(document.getReference().getPath().substring(5)).update("relevant", false);
                     else
                         db.collection("Cars").document(document.getReference().getPath().substring(5)).update(dest, data);
                 }
             }
         });
         showToast("saved");
-        startActivity(new Intent(this , PersonalPage.class));
+        startActivity(new Intent(this, PersonalPage.class));
     }
     //an function to change a specific data from the FireStore Ad document.
 
-    public void downloadImage () {
+    public void downloadImage() {
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl("gs://yad2v-202a2.appspot.com/images");
@@ -223,8 +213,7 @@ public class EditAd extends BaseActivity {
     //that only if there is an image, else it will put an other image an aBoolean will stay false.
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == -1) {
             switch (requestCode) {
@@ -252,6 +241,7 @@ public class EditAd extends BaseActivity {
             }
         }
     }
+
     //on activity result function, in case of camara will convert the result to Uri using the function getImageUri
     //and in case of Gallery will upload the image. and in both cases the imageView image will changed to the new one.
     void imageChooser() {
@@ -265,19 +255,18 @@ public class EditAd extends BaseActivity {
     }
     //an function to choose an image from the Gallery with OnActivityResult
 
-    public void uploadImage (Uri image) {
-        StorageReference imageRef = storageReference.child("images/"+car.getCarID().toString());
+    public void uploadImage(Uri image) {
+        StorageReference imageRef = storageReference.child("images/" + car.getCarID().toString());
         UploadTask uploadTask = imageRef.putFile(image);
 
-        uploadTask.addOnFailureListener(new OnFailureListener()
-        {
+        uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onFailure(@NonNull Exception e)
-            {
+            public void onFailure(@NonNull Exception e) {
                 showToast("Failed to Upload to server");
             }
         });
     }
+
     //an function to upload an Uri Image to Firebase Storage.
     public void build() {
         this.builder.setMessage((CharSequence) "Where do you want to take the picture from ?").setCancelable(false).setPositiveButton((CharSequence) "Gallery", (DialogInterface.OnClickListener) new DialogInterface.OnClickListener() {
@@ -286,7 +275,7 @@ public class EditAd extends BaseActivity {
             }
         }).setNegativeButton((CharSequence) "Camara", (DialogInterface.OnClickListener) new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                EditAd.this.startActivityForResult(new Intent("android.media.action.IMAGE_CAPTURE"),CAMERA_REQUEST);
+                EditAd.this.startActivityForResult(new Intent("android.media.action.IMAGE_CAPTURE"), CAMERA_REQUEST);
             }
         });
         AlertDialog alert = this.builder.create();

@@ -1,9 +1,5 @@
 package com.example.myapplication;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,6 +18,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -45,13 +45,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NewAdActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
-    EditText et_cat, et_man,et_mod,et_year,et_km,et_yad,et_price,et_des;
-    Button btn_share,btn_addImage,btn_ViewImage,btn_back;
+    EditText et_cat, et_man, et_mod, et_year, et_km, et_yad, et_price, et_des;
+    Button btn_share, btn_addImage, btn_ViewImage, btn_back;
     FirebaseUser currentuser;
     Uri selectedImageUri;
     FirebaseFirestore db;
     StorageReference storageReference;
-    FirebaseStorage storage ;
+    FirebaseStorage storage;
     public int num;
     ImageView imageView;
     AlertDialog.Builder builder;
@@ -69,21 +69,21 @@ public class NewAdActivity extends BaseActivity implements View.OnClickListener,
         setContentView(R.layout.activity_new_ad);
         builder = new AlertDialog.Builder(this);
         bottomNavigation();
-        et_cat= findViewById(R.id.et_cat);
+        et_cat = findViewById(R.id.et_cat);
         et_des = findViewById(R.id.et_des);
         et_km = findViewById(R.id.et_km);
         spinner = findViewById(R.id.spinner);
-        et_mod =findViewById(R.id.et_mod);
-        et_price =findViewById(R.id.et_price);
-        et_yad =findViewById(R.id.et_yad);
-        et_year =findViewById(R.id.et_year);
-        btn_addImage =findViewById(R.id.btn_addImage);
-        btn_share =findViewById(R.id.btn_share);
+        et_mod = findViewById(R.id.et_mod);
+        et_price = findViewById(R.id.et_price);
+        et_yad = findViewById(R.id.et_yad);
+        et_year = findViewById(R.id.et_year);
+        btn_addImage = findViewById(R.id.btn_addImage);
+        btn_share = findViewById(R.id.btn_share);
         btn_back = findViewById(R.id.btn_back);
         //btn_ViewImage = findViewById(R.id.btn_ViewImage);
         imageView = findViewById(R.id.imagev);
 
-        ArrayAdapter<String> aa = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,CarsLogo);
+        ArrayAdapter<String> aa = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, CarsLogo);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(aa);
 
@@ -100,7 +100,7 @@ public class NewAdActivity extends BaseActivity implements View.OnClickListener,
 
 
         Intent intent = getIntent();
-        num = intent.getIntExtra("num",0);
+        num = intent.getIntExtra("num", 0);
 
         checkPermission(CAMARA, 1);
         checkPermission(WRi, 1);
@@ -114,16 +114,12 @@ public class NewAdActivity extends BaseActivity implements View.OnClickListener,
     }
 
 
-
-
     @Override
-    public void onClick(View view)
-    {
-        if(view==btn_share)
-        {
+    public void onClick(View view) {
+        if (view == btn_share) {
             String email = currentuser.getEmail();
             Map<String, Object> Car = new HashMap<>();
-            Car.put("carID", currentuser.getUid()+(num+1));
+            Car.put("carID", currentuser.getUid() + (num + 1));
             Car.put("category", et_cat.getText().toString());
             Car.put("description", et_des.getText().toString());
             Car.put("km", et_km.getText().toString());
@@ -136,33 +132,25 @@ public class NewAdActivity extends BaseActivity implements View.OnClickListener,
             Car.put("relevant", true);
             imageView = findViewById(R.id.imagev);
             AddOneAdPosted();
-            db.collection("Cars").add(Car).addOnSuccessListener(new OnSuccessListener<DocumentReference>()
-            {
-                @Override
-                public void onSuccess(DocumentReference documentReference)
-                {
-                    Toast.makeText(NewAdActivity.this, "Successful Post", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-            })
-                    .addOnFailureListener(new OnFailureListener()
-            {
-                @Override
-                public void onFailure(@NonNull @NotNull Exception e)
-                {
+            db.collection("Cars").add(Car).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Toast.makeText(NewAdActivity.this, "Successful Post", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull @NotNull Exception e) {
 
-                    Toast.makeText(NewAdActivity.this, "Failed Post", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-        else if (btn_addImage==view)
-        {
+                            Toast.makeText(NewAdActivity.this, "Failed Post", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        } else if (btn_addImage == view) {
             build();
-        }
-        else if (view == btn_back )
-        {
-            deleteImageCar(currentuser.getUid()+(num+1));
-            startActivity(new Intent(this,PersonalPage.class));
+        } else if (view == btn_back) {
+            deleteImageCar(currentuser.getUid() + (num + 1));
+            startActivity(new Intent(this, PersonalPage.class));
         }
     }
 
@@ -216,16 +204,13 @@ public class NewAdActivity extends BaseActivity implements View.OnClickListener,
     }
 
 
-    public void uploadImage (Uri image)
-    {
-        StorageReference imageRef = storageReference.child("images/"+currentuser.getUid()+(num+1));
+    public void uploadImage(Uri image) {
+        StorageReference imageRef = storageReference.child("images/" + currentuser.getUid() + (num + 1));
         UploadTask uploadTask = imageRef.putFile(image);
 
-        uploadTask.addOnFailureListener(new OnFailureListener()
-        {
+        uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onFailure(@NonNull Exception e)
-            {
+            public void onFailure(@NonNull Exception e) {
                 Toast.makeText(NewAdActivity.this, "Fail to Upload to server", Toast.LENGTH_SHORT).show();
             }
         });
@@ -246,24 +231,22 @@ public class NewAdActivity extends BaseActivity implements View.OnClickListener,
         alert.show();
     }
 
-    public void AddOneAdPosted ()
-    {
-        db.collection("user").whereEqualTo("Email",currentuser.getEmail() ).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+    public void AddOneAdPosted() {
+        db.collection("user").whereEqualTo("Email", currentuser.getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                for (QueryDocumentSnapshot document : task.getResult())
-                {
-                    db.collection("user").document(document.getReference().getPath().substring(5)).update("AdPosted",Integer.parseInt(document.get("AdPosted").toString())+1);
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    db.collection("user").document(document.getReference().getPath().substring(5)).update("AdPosted", Integer.parseInt(document.get("AdPosted").toString()) + 1);
                 }
             }
         });
         Toast.makeText(this, "saved", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(this , PersonalPage.class));
+        startActivity(new Intent(this, PersonalPage.class));
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        Toast.makeText(getApplicationContext(),CarsLogo[i] , Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), CarsLogo[i], Toast.LENGTH_LONG).show();
 
     }
 
@@ -272,8 +255,7 @@ public class NewAdActivity extends BaseActivity implements View.OnClickListener,
 
     }
 
-    protected void bottomNavigation ( )
-    {
+    protected void bottomNavigation() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         ArrayList<Car> carArrayList = new ArrayList<Car>();
         String email = FirebaseAuth.getInstance().getCurrentUser().getEmail().toString();
@@ -281,8 +263,7 @@ public class NewAdActivity extends BaseActivity implements View.OnClickListener,
         db2.collection("Cars").whereEqualTo("userEmail", email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful())
-                {
+                if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d("TAG2", document.getId() + " => " + document.getData());
                         String carID = document.get("carID").toString();
@@ -296,13 +277,11 @@ public class NewAdActivity extends BaseActivity implements View.OnClickListener,
                         boolean relevant = (boolean) document.get("relevant");
                         String userID = document.get("userEmail").toString();
                         String year = document.get("year").toString();
-                        Car car = new Car( category,  manufacturer,  model,  year,  owner,  km,  price,  description,  carID,  userID,  relevant);
+                        Car car = new Car(category, manufacturer, model, year, owner, km, price, description, carID, userID, relevant);
                         carArrayList.add(car);
                     }
 
-                }
-                else
-                {
+                } else {
                     Toast.makeText(getApplicationContext(), "Faild TO fa", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -313,8 +292,8 @@ public class NewAdActivity extends BaseActivity implements View.OnClickListener,
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.NewAD:
-                        Intent intent = new Intent(getApplicationContext() , NewAdActivity.class);
-                        intent.putExtra("num",carArrayList.size());
+                        Intent intent = new Intent(getApplicationContext(), NewAdActivity.class);
+                        intent.putExtra("num", carArrayList.size());
                         startActivity(intent);
                         return true;
                     case R.id.AllAD:
@@ -324,8 +303,8 @@ public class NewAdActivity extends BaseActivity implements View.OnClickListener,
                         startActivity(new Intent(getApplicationContext(), PersonalPage.class));
                         return true;
                     case R.id.View_Profile:
-                        Intent intent2 = new Intent(getApplicationContext() , ViewYourProfile.class);
-                        intent2.putExtra("num",carArrayList.size());
+                        Intent intent2 = new Intent(getApplicationContext(), ViewYourProfile.class);
+                        intent2.putExtra("num", carArrayList.size());
                         startActivity(intent2);
                         return true;
                 }

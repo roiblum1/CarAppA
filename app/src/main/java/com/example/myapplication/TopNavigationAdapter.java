@@ -1,6 +1,5 @@
 package com.example.myapplication;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -14,8 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class TopNavigationAdapter extends RecyclerView.Adapter<TopNavigationAdapter.MyViewHolder>
-{
+public class TopNavigationAdapter extends RecyclerView.Adapter<TopNavigationAdapter.MyViewHolder> {
     private Context context;
     private List<String> manufactures;
 
@@ -28,6 +26,7 @@ public class TopNavigationAdapter extends RecyclerView.Adapter<TopNavigationAdap
     }
 
     GestureDetector mGestureDetector;
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView NameMan;
         ImageView imageMan;
@@ -44,6 +43,7 @@ public class TopNavigationAdapter extends RecyclerView.Adapter<TopNavigationAdap
     public TopNavigationAdapter(List<String> manufacturesList) {
         this.manufactures = manufacturesList;
     }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -57,27 +57,27 @@ public class TopNavigationAdapter extends RecyclerView.Adapter<TopNavigationAdap
         String str = manufactures.get(position);
         holder.NameMan.setText(str);
 
-        if (str=="BMW")
+        if (str == "BMW")
             holder.imageMan.setImageResource(R.drawable.bmw);
-        else if (str=="Volvo")
+        else if (str == "Volvo")
             holder.imageMan.setImageResource(R.drawable.volvo);
-        else if (str=="Nissan")
+        else if (str == "Nissan")
             holder.imageMan.setImageResource(R.drawable.nissan);
-        else if (str=="Subaru")
+        else if (str == "Subaru")
             holder.imageMan.setImageResource(R.drawable.subaru);
-        else if (str=="volkswagen")
+        else if (str == "volkswagen")
             holder.imageMan.setImageResource(R.drawable.volkswagen);
-        else if (str=="Toyota")
+        else if (str == "Toyota")
             holder.imageMan.setImageResource(R.drawable.toyota);
-        else if (str=="Infinity")
+        else if (str == "Infinity")
             holder.imageMan.setImageResource(R.drawable.infiniti);
-        else if (str=="Jeep")
+        else if (str == "Jeep")
             holder.imageMan.setImageResource(R.drawable.jeep);
-        else if (str=="Mustang")
+        else if (str == "Mustang")
             holder.imageMan.setImageResource(R.drawable.mustang);
-        else if (str=="Mercedes")
+        else if (str == "Mercedes")
             holder.imageMan.setImageResource(R.drawable.mercedes);
-        else if (str=="Honda")
+        else if (str == "Honda")
             holder.imageMan.setImageResource(R.drawable.honda);
         else
             holder.imageMan.setImageResource(R.mipmap.ic_launcher);
@@ -88,8 +88,7 @@ public class TopNavigationAdapter extends RecyclerView.Adapter<TopNavigationAdap
         return manufactures.size();
     }
 
-    public String getName(int position)
-    {
+    public String getName(int position) {
         return manufactures.get(position);
     }
 }

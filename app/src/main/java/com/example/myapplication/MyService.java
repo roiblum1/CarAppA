@@ -1,24 +1,12 @@
 package com.example.myapplication;
 
-import static android.content.Intent.getIntent;
-
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.os.IBinder;
-import android.provider.Settings;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 public class MyService extends Service {
     public int length;
@@ -38,11 +26,13 @@ public class MyService extends Service {
         myPlayer.start();
 
     }
+
     @Override
     public void onStart(Intent intent, int startid) {
         Toast.makeText(this, "Service Started", Toast.LENGTH_LONG).show();
         myPlayer.start();
     }
+
     @Override
     public void onDestroy() {
         //Toast.makeText(this, "Service Stopped", Toast.LENGTH_LONG).show();
@@ -57,19 +47,16 @@ public class MyService extends Service {
         return flags;
     }
 
-    public boolean isPlaying ()
-    {
+    public boolean isPlaying() {
         return myPlayer.isPlaying();
     }
 
-    public void pause ()
-    {
+    public void pause() {
         myPlayer.pause();
         length = myPlayer.getCurrentPosition();
     }
 
-    public void resume ()
-    {
+    public void resume() {
         myPlayer.start();
         myPlayer.seekTo(length);
     }

@@ -1,8 +1,5 @@
 package com.example.myapplication;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.content.ContentProviderOperation;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,6 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,7 +37,7 @@ public class viewAd extends BaseActivity implements View.OnClickListener {
     static final String TAG = "Read Data Activity";
     private static final String WRITE = "android.permission.WRITE_CONTACTS";
     private static final String WRIte_External = "android.permission.WRITE_EXTERNAL_STORAGE";
-    Button btn_viewUserProfile,contact;
+    Button btn_viewUserProfile, contact;
     Car car;
     FirebaseFirestore dataBase;
     EditText et_cat, et_des, et_km, et_man, et_mod, et_price, et_relevant, et_userEmail, et_yad, et_year;
@@ -122,7 +123,7 @@ public class viewAd extends BaseActivity implements View.OnClickListener {
         this.et_des.setEnabled(false);
         this.sellerUser = this.et_userEmail.getText().toString();
         this.seller = new Member();
-        this.car = new Car(et_cat.getText().toString(),et_man.getText().toString(),et_mod.getText().toString(),et_year.getText().toString(),et_yad.getText().toString(),et_km.getText().toString(),et_price.getText().toString(),et_des.getText().toString(),carID2,et_userEmail.getText().toString(),Boolean.parseBoolean(et_relevant.getText().toString()));
+        this.car = new Car(et_cat.getText().toString(), et_man.getText().toString(), et_mod.getText().toString(), et_year.getText().toString(), et_yad.getText().toString(), et_km.getText().toString(), et_price.getText().toString(), et_des.getText().toString(), carID2, et_userEmail.getText().toString(), Boolean.parseBoolean(et_relevant.getText().toString()));
         retrieveSeller();
         checkPermission(WRITE, 1);
         checkPermission(READ, 1);
@@ -174,8 +175,7 @@ public class viewAd extends BaseActivity implements View.OnClickListener {
                 e.printStackTrace();
                 Toast.makeText(this, "Failed to add seller to Contacts", Toast.LENGTH_SHORT).show();
             }
-        }
-        else if (v == this.btn_viewUserProfile) {
+        } else if (v == this.btn_viewUserProfile) {
             Intent intent = new Intent(this, ViewProfile.class);
             intent.putExtra("SellerEmail", this.et_userEmail.getText().toString());
             startActivity(intent);

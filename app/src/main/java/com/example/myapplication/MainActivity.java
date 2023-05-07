@@ -1,7 +1,5 @@
 package com.example.myapplication;
 
-import androidx.core.app.NotificationCompat;
-
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -18,6 +16,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.core.app.NotificationCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -62,7 +62,6 @@ public class MainActivity extends BaseActivity {
             et_pass.setText(sharedpreferences.getString(Pass, null));
         mAuth = FirebaseAuth.getInstance();
         this.progressDialog = new ProgressDialog(this);
-
         getIntent();
     }
 
@@ -138,12 +137,12 @@ public class MainActivity extends BaseActivity {
 
             Intent activityIntent = new Intent(this, ViewYourProfile.class);
             PendingIntent contentIntent = PendingIntent.getActivity(this,
-                    0, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT| PendingIntent.FLAG_IMMUTABLE);
+                    0, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
             Intent broadcastIntent = new Intent(this, NotificationReceiver.class);
             broadcastIntent.putExtra("toastMessage", "Welcome back Brother");
             PendingIntent actionIntent = PendingIntent.getBroadcast(this,
-                    0, broadcastIntent,PendingIntent.FLAG_UPDATE_CURRENT| PendingIntent.FLAG_IMMUTABLE );
+                    0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
 
             Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)

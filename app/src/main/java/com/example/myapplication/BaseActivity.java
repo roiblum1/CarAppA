@@ -20,11 +20,11 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-public abstract class BaseActivity extends AppCompatActivity
-{
+public abstract class BaseActivity extends AppCompatActivity {
     FirebaseFirestore db;
     FirebaseAuth auth;
     ArrayList<Car> carList = new ArrayList<Car>();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,10 +40,11 @@ public abstract class BaseActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.menua, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.LoginPage:
                 startActivity(new Intent(this, MainActivity.class));
                 return true;
@@ -51,15 +52,15 @@ public abstract class BaseActivity extends AppCompatActivity
                 startActivity(new Intent(this, Register.class));
                 return true;
             case R.id.AllAD:
-                if (FirebaseAuth.getInstance().getCurrentUser()!=null)
+                if (FirebaseAuth.getInstance().getCurrentUser() != null)
                     startActivity(new Intent(this, AllAdActivity.class));
                 return true;
             case R.id.personal_page:
-                if (FirebaseAuth.getInstance().getCurrentUser()!=null)
+                if (FirebaseAuth.getInstance().getCurrentUser() != null)
                     startActivity(new Intent(this, PersonalPage.class));
                 return true;
             case R.id.View_Profile:
-                if (FirebaseAuth.getInstance().getCurrentUser()!=null)
+                if (FirebaseAuth.getInstance().getCurrentUser() != null)
                     startActivity(new Intent(this, ViewYourProfile.class));
                 return true;
             case R.id.SrartMusic:
@@ -82,33 +83,34 @@ public abstract class BaseActivity extends AppCompatActivity
                 return super.onOptionsItemSelected(item);
         }
     }
+
     //TODO:
     @CallSuper
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         //To be used by child activities
     }
+
     protected void showToast(String mToastMsg) {
         Toast.makeText(this, mToastMsg, Toast.LENGTH_LONG).show();
     }
 
-    protected void bottomNavigation ( )
-    {
+    protected void bottomNavigation() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.NewAD:
-                        Intent intent = new Intent(getApplicationContext() , NewAdActivity.class);
-                        intent.putExtra("num",carList.size());
+                        Intent intent = new Intent(getApplicationContext(), NewAdActivity.class);
+                        intent.putExtra("num", carList.size());
                         startActivity(intent);
                         return true;
                     case R.id.AllAD:
                         startActivity(new Intent(getApplicationContext(), AllAdActivity.class));
                         return true;
                     case R.id.View_Profile:
-                        Intent intent2 = new Intent(getApplicationContext() , ViewYourProfile.class);
-                        intent2.putExtra("num",carList.size());
+                        Intent intent2 = new Intent(getApplicationContext(), ViewYourProfile.class);
+                        intent2.putExtra("num", carList.size());
                         startActivity(intent2);
                         return true;
                 }
@@ -117,8 +119,7 @@ public abstract class BaseActivity extends AppCompatActivity
         });
     }
 
-    public void deleteImageUser (String UID)
-    {
+    public void deleteImageUser(String UID) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
 
@@ -131,8 +132,7 @@ public abstract class BaseActivity extends AppCompatActivity
         });
     }
 
-    public void deleteImageCar (String carID)
-    {
+    public void deleteImageCar(String carID) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
 

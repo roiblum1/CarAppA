@@ -11,8 +11,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.widget.Toast;
+
 import androidx.core.app.ActivityCompat;
-import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class LocationTrack extends Service implements LocationListener {
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;

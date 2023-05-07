@@ -1,23 +1,17 @@
 package com.example.myapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
-
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
+
+import androidx.cardview.widget.CardView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 
-public class About_us extends BaseActivity  {
+public class About_us extends BaseActivity {
     Button btn_register_page;
     private CardView cv1;
     private ImageView Image1;
@@ -50,15 +44,15 @@ public class About_us extends BaseActivity  {
         btn_register_page = (Button) findViewById(R.id.btn_register_page);
 
 
-        cv1.setAnimation(AnimationUtils.loadAnimation(this,R.anim.fade_in));
-        cv2.setAnimation(AnimationUtils.loadAnimation(this,R.anim.fade_in));
-        cv3.setAnimation(AnimationUtils.loadAnimation(this,R.anim.fade_in));
-        cv4.setAnimation(AnimationUtils.loadAnimation(this,R.anim.fade_in));
-        cv5.setAnimation(AnimationUtils.loadAnimation(this,R.anim.fade_in));
+        cv1.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+        cv2.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+        cv3.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+        cv4.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+        cv5.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
         btn_register_page.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(About_us.this,Register.class));
+                startActivity(new Intent(About_us.this, Register.class));
             }
         });
     }

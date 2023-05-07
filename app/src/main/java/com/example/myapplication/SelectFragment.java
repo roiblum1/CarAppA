@@ -2,10 +2,6 @@ package com.example.myapplication;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +9,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -56,7 +55,7 @@ public class SelectFragment extends Fragment {
 
 
         listView.setOnItemClickListener((parent, view1, position, id) -> {
-            Member selectedMember = (Member)memberList.get(position);
+            Member selectedMember = (Member) memberList.get(position);
             listener.onListItemSelected(selectedMember);
             Toast.makeText(view.getContext(), "Member selected !", Toast.LENGTH_SHORT).show();
         });
@@ -64,18 +63,14 @@ public class SelectFragment extends Fragment {
     }
 
 
-
-    public void getAllUsers ()
-    {
+    public void getAllUsers() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("user").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful())
-                {
+                if (task.isSuccessful()) {
                     memberList = new ArrayList<>();
-                    for (QueryDocumentSnapshot document : task.getResult())
-                    {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
                         String Name = document.get("Name").toString();
                         String Email = document.get("Email").toString();
                         String UID = document.get("UID").toString();
@@ -84,10 +79,10 @@ public class SelectFragment extends Fragment {
                         String latitude = document.get("latitude").toString();
                         String longitude = document.get("longitude").toString();
                         int AdPosted = Integer.parseInt(document.get("AdPosted").toString());
-                        Member member = new Member(UID,Email,Name,Phone,latitude,longitude,AdPosted);
+                        Member member = new Member(UID, Email, Name, Phone, latitude, longitude, AdPosted);
                         memberList.add(member);
                     }
-                    ProfileAdapter adapter = new ProfileAdapter(view.getContext(),0,0,memberList);
+                    ProfileAdapter adapter = new ProfileAdapter(view.getContext(), 0, 0, memberList);
                     listView.setAdapter(adapter);
                 }
             }

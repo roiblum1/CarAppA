@@ -33,7 +33,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class CarAdapter extends ArrayAdapter<Car> {
-    List<Car> carList ;
+    List<Car> carList;
     Context context;
     CardView cv;
     public String Favorites;
@@ -44,11 +44,11 @@ public class CarAdapter extends ArrayAdapter<Car> {
         this.context = context;
         this.carList = objects;
     }
-    public View getView(int position, @NonNull View convertView, @NonNull ViewGroup parent)
-    {
+
+    public View getView(int position, @NonNull View convertView, @NonNull ViewGroup parent) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         LayoutInflater layoutInflater = ((Activity) context).getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.car_layout,parent,false);
+        View view = layoutInflater.inflate(R.layout.car_layout, parent, false);
         CardView cv = (CardView) view.findViewById(R.id.cv);
         TextView tvTitle = view.findViewById(R.id.tv_titleO);
         TextView tvPrice = view.findViewById(R.id.tv_price);
@@ -62,41 +62,35 @@ public class CarAdapter extends ArrayAdapter<Car> {
         Star.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    if (Favorites != null)
-                    {
-                        if (!isInString(Favorites, c.getCarID()))
-                        {
-                            if (Favorites == "")
-                            {
-                                Favorites += "" + c.getCarID().toString();
-                            }
-                            else
-                            {
-                                Favorites += ", " + c.getCarID().toString();
-                            }
-                            changeData(Favorites);
+                if (Favorites != null) {
+                    if (!isInString(Favorites, c.getCarID())) {
+                        if (Favorites == "") {
+                            Favorites += "" + c.getCarID().toString();
+                        } else {
+                            Favorites += ", " + c.getCarID().toString();
                         }
+                        changeData(Favorites);
                     }
-                    else
-                        Toast.makeText(context.getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
-                    Star.setText("Saved");
-                }
+                } else
+                    Toast.makeText(context.getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
+                Star.setText("Saved");
+            }
         });
 
 
-        tvTitle.setText("Model : " +c.model);
-        tvPrice.setText("Price : " + c.price +" $");
-        year_km.setText("Year : "+c.getYear()+" • KM : "+c.getKm());
+        tvTitle.setText("Model : " + c.model);
+        tvPrice.setText("Price : " + c.price + " $");
+        year_km.setText("Year : " + c.getYear() + " • KM : " + c.getKm());
 
         downloadImage(ivCar, c);
 
-        cv.setAnimation(AnimationUtils.loadAnimation(context,R.anim.fade_in));
+        cv.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in));
 
 
         return view;
     }
 
-    public void downloadImage (ImageView ivCar , Car c) {
+    public void downloadImage(ImageView ivCar, Car c) {
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl("gs://yad2v-202a2.appspot.com/images");
@@ -131,26 +125,21 @@ public class CarAdapter extends ArrayAdapter<Car> {
         });
     }
 
-    public void changeData (String data)
-    {
+    public void changeData(String data) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser currentuser = FirebaseAuth.getInstance().getCurrentUser();
-        db.collection("user").whereEqualTo("Email",currentuser.getEmail() ).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("user").whereEqualTo("Email", currentuser.getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task)
-            {
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult())
-                    {
-                        document.getReference().update("Favorites",data);
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        document.getReference().update("Favorites", data);
                     }
-                }
-                else
-                {
+                } else {
                     Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
                 }
             }
-        }).addOnFailureListener(e->{
+        }).addOnFailureListener(e -> {
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
         });
     }
@@ -167,8 +156,8 @@ public class CarAdapter extends ArrayAdapter<Car> {
             return true;
         return false;
     }
-    public void sharedIN ()
-    {
+
+    public void sharedIN() {
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -177,10 +166,9 @@ public class CarAdapter extends ArrayAdapter<Car> {
         editor.apply();
     }
 
-    public void sharedOUT ()
-    {
+    public void sharedOUT() {
         SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        String str = sharedPreferences.getString("Favorites","");
+        String str = sharedPreferences.getString("Favorites", "");
     }
 
 

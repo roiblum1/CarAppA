@@ -1,7 +1,5 @@
 package com.example.myapplication;
 
-import androidx.annotation.NonNull;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -52,47 +52,40 @@ public class PersonalPage extends BaseActivity implements AdapterView.OnItemClic
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
     }
+
     protected void onStart() {
         super.onStart();
         retrieveMemberDetails();
         retrieveCars();
     }
 
-    private void retrieveMemberDetails()
-    {
+    private void retrieveMemberDetails() {
         String email = currentUser.getEmail();
         db.collection("user").whereEqualTo("Email", email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task)
-            {
-                if (task.isSuccessful()){
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
 
-                    for (QueryDocumentSnapshot document : task.getResult())
-                    {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d(TAG, document.getId() + " => " + document.getData());
                         String Name = document.get("Name").toString();
-                        Toast.makeText(PersonalPage.this, "Hello " +Name, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PersonalPage.this, "Hello " + Name, Toast.LENGTH_SHORT).show();
                     }
-                }
-                else
-                {
+                } else {
 
-                    Toast.makeText(PersonalPage.this,"Failed To Read Data",Toast.LENGTH_LONG).show();
+                    Toast.makeText(PersonalPage.this, "Failed To Read Data", Toast.LENGTH_LONG).show();
 
                 }
             }
         });
     }
 
-    private void retrieveCars()
-    {
+    private void retrieveCars() {
         String email = currentUser.getEmail();
         db.collection("Cars").whereEqualTo("userEmail", email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task)
-            {
-                if (task.isSuccessful())
-                {
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
                     //Toast.makeText(PersonalPage.this, "win TO fa", Toast.LENGTH_SHORT).show();
                     carList = new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
@@ -108,14 +101,12 @@ public class PersonalPage extends BaseActivity implements AdapterView.OnItemClic
                         boolean relevant = (boolean) document.get("relevant");
                         String userID = document.get("userEmail").toString();
                         String year = document.get("year").toString();
-                        Car car = new Car( category,  manufacturer,  model,  year,  owner,  km,  price,  description,  carID,  userID,  relevant);
+                        Car car = new Car(category, manufacturer, model, year, owner, km, price, description, carID, userID, relevant);
                         carList.add(car);
                     }
-                    carAdapter = new CarAdapter(PersonalPage.this,0,0,carList);
+                    carAdapter = new CarAdapter(PersonalPage.this, 0, 0, carList);
                     listView_Personal.setAdapter(carAdapter);
-                }
-                else
-                {
+                } else {
                     Toast.makeText(PersonalPage.this, "Failed to read data", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -123,11 +114,10 @@ public class PersonalPage extends BaseActivity implements AdapterView.OnItemClic
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-    {
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Car c = carAdapter.getItem(position);
         Intent intent = new Intent(this, EditAd.class);
-        intent.putExtra("carID",c.getCarID());
+        intent.putExtra("carID", c.getCarID());
         intent.putExtra("userID", c.getUserID());
         intent.putExtra("category", c.getCategory());
         intent.putExtra("description", c.getDescription());
@@ -137,8 +127,8 @@ public class PersonalPage extends BaseActivity implements AdapterView.OnItemClic
         intent.putExtra("price", c.getPrice());
         intent.putExtra("owner", c.getOwner());
         intent.putExtra("year", c.getYear());
-        intent.putExtra("relevant",c.isRelevant());
-        intent.putExtra("num",carList.size());
+        intent.putExtra("relevant", c.isRelevant());
+        intent.putExtra("num", carList.size());
         startActivity(intent);
 //        view.setBackgroundColor(0x0000FF00);
 //        carAdapter.notifyDataSetChanged();
@@ -167,8 +157,7 @@ public class PersonalPage extends BaseActivity implements AdapterView.OnItemClic
 //        });
 //    }
 
-    protected void bottomNavigation ( )
-    {
+    protected void bottomNavigation() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         ArrayList<Car> carArrayList = new ArrayList<Car>();
         String email = FirebaseAuth.getInstance().getCurrentUser().getEmail().toString();
@@ -176,8 +165,7 @@ public class PersonalPage extends BaseActivity implements AdapterView.OnItemClic
         db2.collection("Cars").whereEqualTo("userEmail", email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful())
-                {
+                if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d("TAG2", document.getId() + " => " + document.getData());
                         String carID = document.get("carID").toString();
@@ -191,13 +179,11 @@ public class PersonalPage extends BaseActivity implements AdapterView.OnItemClic
                         boolean relevant = (boolean) document.get("relevant");
                         String userID = document.get("userEmail").toString();
                         String year = document.get("year").toString();
-                        Car car = new Car( category,  manufacturer,  model,  year,  owner,  km,  price,  description,  carID,  userID,  relevant);
+                        Car car = new Car(category, manufacturer, model, year, owner, km, price, description, carID, userID, relevant);
                         carArrayList.add(car);
                     }
 
-                }
-                else
-                {
+                } else {
                     Toast.makeText(getApplicationContext(), "Failed to read data", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -208,8 +194,8 @@ public class PersonalPage extends BaseActivity implements AdapterView.OnItemClic
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.NewAD:
-                        Intent intent = new Intent(getApplicationContext() , NewAdActivity.class);
-                        intent.putExtra("num",carArrayList.size());
+                        Intent intent = new Intent(getApplicationContext(), NewAdActivity.class);
+                        intent.putExtra("num", carArrayList.size());
                         startActivity(intent);
                         return true;
                     case R.id.AllAD:
@@ -219,8 +205,8 @@ public class PersonalPage extends BaseActivity implements AdapterView.OnItemClic
                         startActivity(new Intent(getApplicationContext(), PersonalPage.class));
                         return true;
                     case R.id.View_Profile:
-                        Intent intent2 = new Intent(getApplicationContext() , ViewYourProfile.class);
-                        intent2.putExtra("num",carArrayList.size());
+                        Intent intent2 = new Intent(getApplicationContext(), ViewYourProfile.class);
+                        intent2.putExtra("num", carArrayList.size());
                         startActivity(intent2);
                         return true;
                 }
@@ -228,8 +214,6 @@ public class PersonalPage extends BaseActivity implements AdapterView.OnItemClic
             }
         });
     }
-
-
 
 
 }

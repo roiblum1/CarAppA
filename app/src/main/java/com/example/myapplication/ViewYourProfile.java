@@ -1,9 +1,5 @@
 package com.example.myapplication;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -19,6 +15,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -39,9 +39,9 @@ import java.util.ArrayList;
 public class ViewYourProfile extends BaseActivity implements View.OnClickListener {
     public TextView title, text_location;
     public ImageView imageView;
-    public Button buttonBack,buttonEdit;
-    public EditText etName,etUserEmail,etPhone,et_numOfCars;
-    public double latitude,longitude;
+    public Button buttonBack, buttonEdit;
+    public EditText etName, etUserEmail, etPhone, et_numOfCars;
+    public double latitude, longitude;
     public int AdNum;
     FirebaseUser CurrentUser;
     FirebaseFirestore db;
@@ -52,6 +52,7 @@ public class ViewYourProfile extends BaseActivity implements View.OnClickListene
     private static final String Read_External = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final String Internet = Manifest.permission.INTERNET;
     AlertDialog.Builder builder;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +71,7 @@ public class ViewYourProfile extends BaseActivity implements View.OnClickListene
         etUserEmail = (EditText) findViewById(R.id.et_userEmail);
         etPhone = (EditText) findViewById(R.id.et_phone);
         buttonEdit = (Button) findViewById(R.id.buttonEdit);
-        et_numOfCars= findViewById(R.id.et_numOfCars);
+        et_numOfCars = findViewById(R.id.et_numOfCars);
         text_location = findViewById(R.id.text_location);
         text_location.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -87,8 +88,8 @@ public class ViewYourProfile extends BaseActivity implements View.OnClickListene
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Intent intent = new Intent(ViewYourProfile.this, ViewLocation.class);
-                            intent.putExtra("longitude",Double.toString(longitude));
-                            intent.putExtra("latitude",Double.toString(latitude));
+                            intent.putExtra("longitude", Double.toString(longitude));
+                            intent.putExtra("latitude", Double.toString(latitude));
                             startActivity(intent);
                         }
                     });
@@ -112,12 +113,12 @@ public class ViewYourProfile extends BaseActivity implements View.OnClickListene
 
         retrieveMember();
         Intent intent = getIntent();
-        num = intent.getIntExtra("num",0);
-        et_numOfCars.setText("" +num);
+        num = intent.getIntExtra("num", 0);
+        et_numOfCars.setText("" + num);
 
-        checkPermission(WRIte_External,REQUEST_CODE_ASK_PERMISSIONS);
-        checkPermission(Read_External,REQUEST_CODE_ASK_PERMISSIONS);
-        checkPermission(Internet,REQUEST_CODE_ASK_PERMISSIONS);
+        checkPermission(WRIte_External, REQUEST_CODE_ASK_PERMISSIONS);
+        checkPermission(Read_External, REQUEST_CODE_ASK_PERMISSIONS);
+        checkPermission(Internet, REQUEST_CODE_ASK_PERMISSIONS);
         downloadImage(imageView);
 
         getPostedCar();
@@ -128,25 +129,20 @@ public class ViewYourProfile extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        if (v == buttonBack)
-        {
-            startActivity(new Intent(this , PersonalPage.class));
-        }
-        else if ( v == buttonEdit)
-        {
-            startActivity(new Intent(this , EditProfileUser.class));
+        if (v == buttonBack) {
+            startActivity(new Intent(this, PersonalPage.class));
+        } else if (v == buttonEdit) {
+            startActivity(new Intent(this, EditProfileUser.class));
         }
     }
 
 
-    private void retrieveMember()
-    {
+    private void retrieveMember() {
         String email = CurrentUser.getEmail();
         db.collection("user").whereEqualTo("Email", email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task)
-            {
-                if (task.isSuccessful()){
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
 
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d(TAG, document.getId() + " => " + document.getData());
@@ -163,18 +159,16 @@ public class ViewYourProfile extends BaseActivity implements View.OnClickListene
                         ViewYourProfile.this.etPhone.setText(Phone);
                         //ViewYourProfile.this.et_numOfCars.setText(adPOsed);
                     }
-                }
-                else
-                {
+                } else {
 
-                    Toast.makeText(ViewYourProfile.this,"Failed To Read Data",Toast.LENGTH_LONG).show();
+                    Toast.makeText(ViewYourProfile.this, "Failed To Read Data", Toast.LENGTH_LONG).show();
 
                 }
             }
         });
     }
 
-    public void downloadImage (ImageView imageView) {
+    public void downloadImage(ImageView imageView) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl("gs://yad2v-202a2.appspot.com/images/Avatars/");
         storageRef.child(CurrentUser.getUid().toString()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -192,18 +186,16 @@ public class ViewYourProfile extends BaseActivity implements View.OnClickListene
         });
     }
 
-    public void checkPermission(String permission, int requestCode)
-    {
+    public void checkPermission(String permission, int requestCode) {
         // Checking if permission is not granted
         if (ContextCompat.checkSelfPermission(ViewYourProfile.this, permission) == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(ViewYourProfile.this, new String[] { permission }, requestCode);
-        }
-        else {
+            ActivityCompat.requestPermissions(ViewYourProfile.this, new String[]{permission}, requestCode);
+        } else {
             //Toast.makeText(viewAd.this, "Permission already granted", Toast.LENGTH_SHORT).show();
         }
     }
-    protected void bottomNavigation ( )
-    {
+
+    protected void bottomNavigation() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         ArrayList<Car> carArrayList = new ArrayList<Car>();
         String email = FirebaseAuth.getInstance().getCurrentUser().getEmail().toString();
@@ -211,8 +203,7 @@ public class ViewYourProfile extends BaseActivity implements View.OnClickListene
         db2.collection("Cars").whereEqualTo("userEmail", email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful())
-                {
+                if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d("TAG2", document.getId() + " => " + document.getData());
                         String carID = document.get("carID").toString();
@@ -226,13 +217,11 @@ public class ViewYourProfile extends BaseActivity implements View.OnClickListene
                         boolean relevant = (boolean) document.get("relevant");
                         String userID = document.get("userEmail").toString();
                         String year = document.get("year").toString();
-                        Car car = new Car( category,  manufacturer,  model,  year,  owner,  km,  price,  description,  carID,  userID,  relevant);
+                        Car car = new Car(category, manufacturer, model, year, owner, km, price, description, carID, userID, relevant);
                         carArrayList.add(car);
                     }
 
-                }
-                else
-                {
+                } else {
                     Toast.makeText(getApplicationContext(), "Faild TO fa", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -243,8 +232,8 @@ public class ViewYourProfile extends BaseActivity implements View.OnClickListene
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.NewAD:
-                        Intent intent = new Intent(getApplicationContext() , NewAdActivity.class);
-                        intent.putExtra("num",carArrayList.size());
+                        Intent intent = new Intent(getApplicationContext(), NewAdActivity.class);
+                        intent.putExtra("num", carArrayList.size());
                         startActivity(intent);
                         return true;
                     case R.id.AllAD:
@@ -254,8 +243,8 @@ public class ViewYourProfile extends BaseActivity implements View.OnClickListene
                         startActivity(new Intent(getApplicationContext(), PersonalPage.class));
                         return true;
                     case R.id.View_Profile:
-                        Intent intent2 = new Intent(getApplicationContext() , ViewYourProfile.class);
-                        intent2.putExtra("num",carArrayList.size());
+                        Intent intent2 = new Intent(getApplicationContext(), ViewYourProfile.class);
+                        intent2.putExtra("num", carArrayList.size());
                         startActivity(intent2);
                         return true;
                 }
@@ -264,26 +253,23 @@ public class ViewYourProfile extends BaseActivity implements View.OnClickListene
         });
     }
 
-    public void getPostedCar ()
-    {
+    public void getPostedCar() {
         FirebaseFirestore db2 = FirebaseFirestore.getInstance();
         AdNum = 0;
-        db2.collection("Cars").whereEqualTo("userEmail",FirebaseAuth.getInstance().getCurrentUser().getEmail().toString()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db2.collection("Cars").whereEqualTo("userEmail", FirebaseAuth.getInstance().getCurrentUser().getEmail().toString()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                for (QueryDocumentSnapshot document : task.getResult())
-                {
-                    Log.d("Hey",document.getData().toString());
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Log.d("Hey", document.getData().toString());
                     AdNum++;
                 }
                 et_numOfCars.setText(Integer.toString(AdNum));
             }
         });
-        Log.d("Hey",Integer.toString(AdNum));
+        Log.d("Hey", Integer.toString(AdNum));
     }
 
-    private void openLocationInMaps(double latitude, double longitude)
-    {
+    private void openLocationInMaps(double latitude, double longitude) {
         // Create a URI with the coordinates
         String uri = String.format("geo:%f,%f", latitude, longitude);
 

@@ -1,10 +1,5 @@
 package com.example.myapplication;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +7,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,13 +24,15 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 //TODO add title for each category and add search option
-public class AllAdActivity extends BaseActivity implements AdapterView.OnItemClickListener{
+public class AllAdActivity extends BaseActivity implements AdapterView.OnItemClickListener {
     String Favorite;
     ArrayList<Car> carList;
     CarAdapter carAdapter;
     ListView lv_all;
     FirebaseFirestore db;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,12 +41,12 @@ public class AllAdActivity extends BaseActivity implements AdapterView.OnItemCli
         lv_all = findViewById(R.id.lv_all);
         lv_all.setOnItemClickListener(this);
         bottomNavigation();
-        String[] CarsLogo = {"Favorites","Nissan", "Mustang", "Toyota", "Volvo", "BMW", "Honda", "Mercedes", "Jeep", "Infinity", "Subaru"};
+        String[] CarsLogo = {"Favorites", "Nissan", "Mustang", "Toyota", "Volvo", "BMW", "Honda", "Mercedes", "Jeep", "Infinity", "Subaru"};
         List<String> stringList = Arrays.asList(CarsLogo);
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
-        TopNavigationAdapter adapter2= new TopNavigationAdapter(stringList);
+        TopNavigationAdapter adapter2 = new TopNavigationAdapter(stringList);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -52,32 +54,31 @@ public class AllAdActivity extends BaseActivity implements AdapterView.OnItemCli
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter2);
         recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(AllAdActivity.this, recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
+                new RecyclerItemClickListener(AllAdActivity.this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
                         String str = adapter2.getName(position);
 
                         getFavorite();
-                       ArrayList<Car> cars2 = new ArrayList<Car>();
+                        ArrayList<Car> cars2 = new ArrayList<Car>();
                         for (int i = 0; i < carList.size(); i++) {
-                            if (Favorite!=null && str == "Favorites")
-                            {
+                            if (Favorite != null && str == "Favorites") {
                                 //showToast(Favorite);
-                                if (isInString(carList.get(i).getCarID().toString(),Favorite))
+                                if (isInString(carList.get(i).getCarID().toString(), Favorite))
                                     cars2.add(carList.get(i));
-                            }
-                            else
-                            {
+                            } else {
                                 if (carList.get(i).getManufacturer().toString().equals(str)) {
                                     cars2.add(carList.get(i));
                                 }
                             }
                         }
-                        carAdapter = new CarAdapter(AllAdActivity.this,0,0,cars2);
+                        carAdapter = new CarAdapter(AllAdActivity.this, 0, 0, cars2);
 
                         lv_all.setAdapter(carAdapter);
                     }
 
-                    @Override public void onLongItemClick(View view, int position) {
+                    @Override
+                    public void onLongItemClick(View view, int position) {
                         // do whatever
                     }
                 })
@@ -87,16 +88,12 @@ public class AllAdActivity extends BaseActivity implements AdapterView.OnItemCli
     }
 
 
-    private void retrieveAllCar()
-    {
-        db.collection("Cars").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
-        {
+    private void retrieveAllCar() {
+        db.collection("Cars").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task)
-            {
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 carList = new ArrayList<>();
-                for (QueryDocumentSnapshot document : task.getResult())
-                {
+                for (QueryDocumentSnapshot document : task.getResult()) {
                     String carID = document.get("carID").toString();
                     String category = document.get("category").toString();
                     String description = document.get("description").toString();
@@ -108,38 +105,35 @@ public class AllAdActivity extends BaseActivity implements AdapterView.OnItemCli
                     boolean relevant = (boolean) document.get("relevant");
                     String userID = document.get("userEmail").toString();
                     String year = document.get("year").toString();
-                    Car car = new Car( category,  manufacturer,  model,  year,  owner,  km,  price,  description,  carID,  userID,  relevant);
+                    Car car = new Car(category, manufacturer, model, year, owner, km, price, description, carID, userID, relevant);
                     carList.add(car);
                 }
-                carAdapter = new CarAdapter(AllAdActivity.this,0,0,carList);
+                carAdapter = new CarAdapter(AllAdActivity.this, 0, 0, carList);
                 lv_all.setAdapter(carAdapter);
             }
         });
     }
 
 
-
-    public void getFavorite ()
-    {
+    public void getFavorite() {
         db.collection("user").whereEqualTo("Email", FirebaseAuth.getInstance().getCurrentUser().getEmail().toString()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful())
-                {
-                    for(QueryDocumentSnapshot document : task.getResult())
-                    {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
                         Favorite = document.get("Favorites").toString();
                     }
                 }
             }
         });
     }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Car c = carAdapter.getItem(position);
         view.setBackgroundColor(0x0000FF00);
         Intent intent = new Intent(this, viewAd.class);
-        intent.putExtra("carID",c.getCarID());
+        intent.putExtra("carID", c.getCarID());
         intent.putExtra("userID", c.getUserID());
         intent.putExtra("category", c.getCategory());
         intent.putExtra("description", c.getDescription());
@@ -149,7 +143,7 @@ public class AllAdActivity extends BaseActivity implements AdapterView.OnItemCli
         intent.putExtra("price", c.getPrice());
         intent.putExtra("owner", c.getOwner());
         intent.putExtra("year", c.getYear());
-        intent.putExtra("relevant",c.isRelevant());
+        intent.putExtra("relevant", c.isRelevant());
         startActivity(intent);
     }
 
@@ -166,8 +160,7 @@ public class AllAdActivity extends BaseActivity implements AdapterView.OnItemCli
         return false;
     }
 
-    protected void bottomNavigation ( )
-    {
+    protected void bottomNavigation() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         ArrayList<Car> carArrayList = new ArrayList<Car>();
         String email = FirebaseAuth.getInstance().getCurrentUser().getEmail().toString();
@@ -175,8 +168,7 @@ public class AllAdActivity extends BaseActivity implements AdapterView.OnItemCli
         db2.collection("Cars").whereEqualTo("userEmail", email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful())
-                {
+                if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d("TAG2", document.getId() + " => " + document.getData());
                         String carID = document.get("carID").toString();
@@ -190,13 +182,11 @@ public class AllAdActivity extends BaseActivity implements AdapterView.OnItemCli
                         boolean relevant = (boolean) document.get("relevant");
                         String userID = document.get("userEmail").toString();
                         String year = document.get("year").toString();
-                        Car car = new Car( category,  manufacturer,  model,  year,  owner,  km,  price,  description,  carID,  userID,  relevant);
+                        Car car = new Car(category, manufacturer, model, year, owner, km, price, description, carID, userID, relevant);
                         carArrayList.add(car);
                     }
 
-                }
-                else
-                {
+                } else {
                     showToast("Failed to read data");
                 }
             }
@@ -207,8 +197,8 @@ public class AllAdActivity extends BaseActivity implements AdapterView.OnItemCli
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.NewAD:
-                        Intent intent = new Intent(getApplicationContext() , NewAdActivity.class);
-                        intent.putExtra("num",carArrayList.size());
+                        Intent intent = new Intent(getApplicationContext(), NewAdActivity.class);
+                        intent.putExtra("num", carArrayList.size());
                         startActivity(intent);
                         return true;
                     case R.id.AllAD:
@@ -218,8 +208,8 @@ public class AllAdActivity extends BaseActivity implements AdapterView.OnItemCli
                         startActivity(new Intent(getApplicationContext(), PersonalPage.class));
                         return true;
                     case R.id.View_Profile:
-                        Intent intent2 = new Intent(getApplicationContext() , ViewYourProfile.class);
-                        intent2.putExtra("num",carArrayList.size());
+                        Intent intent2 = new Intent(getApplicationContext(), ViewYourProfile.class);
+                        intent2.putExtra("num", carArrayList.size());
                         startActivity(intent2);
                         return true;
                 }
@@ -227,7 +217,6 @@ public class AllAdActivity extends BaseActivity implements AdapterView.OnItemCli
             }
         });
     }
-
 
 
 }

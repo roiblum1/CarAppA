@@ -1,52 +1,26 @@
 package com.example.myapplication;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.webkit.WebView;
-import android.widget.FrameLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.common.util.MapUtils;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.model.PlaceLikelihood;
-import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
-import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 
 public class ViewLocation extends BaseActivity implements OnMapReadyCallback {
@@ -85,14 +59,16 @@ public class ViewLocation extends BaseActivity implements OnMapReadyCallback {
     private LatLng[] likelyPlaceLatLngs;
 
     // [START maps_current_place_on_create]
-    Double latitude,longitude;
+    Double latitude, longitude;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_location);
         Places.initialize(getApplicationContext(), BuildConfig.MAPS_API_KEY);
         placesClient = Places.createClient(this);
-        latitude=0.0;longitude=0.0;
+        latitude = 0.0;
+        longitude = 0.0;
         Intent intent = getIntent();
         longitude = Double.parseDouble(intent.getStringExtra("longitude"));
         latitude = Double.parseDouble(intent.getStringExtra("latitude"));
@@ -112,10 +88,10 @@ public class ViewLocation extends BaseActivity implements OnMapReadyCallback {
         float zoomLevel = 17.0f;
         googleMap.addMarker(new MarkerOptions()
                 .position(sydney)
-                .title("latitude : "+Double.toString(latitude) +" , " + "longitude : "+Double.toString(longitude)));
+                .title("latitude : " + Double.toString(latitude) + " , " + "longitude : " + Double.toString(longitude)));
         // [START_EXCLUDE silent]
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, zoomLevel));
-        googleMap.setMinZoomPreference(googleMap.getMinZoomLevel()*800);
+        googleMap.setMinZoomPreference(googleMap.getMinZoomLevel() * 800);
 
         updateLocationUI(googleMap);
         // [END_EXCLUDE]
@@ -136,13 +112,12 @@ public class ViewLocation extends BaseActivity implements OnMapReadyCallback {
                 lastKnownLocation = null;
                 getLocationPermission();
             }
-        } catch (SecurityException e)  {
+        } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
         }
     }
 
-    private void getLocationPermission()
-    {
+    private void getLocationPermission() {
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {

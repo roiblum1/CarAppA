@@ -5,18 +5,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -30,7 +27,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -87,13 +83,12 @@ public class Register extends BaseActivity {
         this.phone = obj;
         if (v == this.tv_login) {
             startActivity(new Intent(this, MainActivity.class));
-        }
-        else if (v == this.btn_signup && validateInput(this.name, this.pass, this.mail, obj)) {
+        } else if (v == this.btn_signup && validateInput(this.name, this.pass, this.mail, obj)) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
                     if (location != null) {
-                         latitude = location.getLatitude();
-                         longitude = location.getLongitude();
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
                         // Do something with the latitude and longitude values
                     }
                 });
@@ -110,7 +105,7 @@ public class Register extends BaseActivity {
                     Toast.makeText(Register.this, "Sign Up Successful", Toast.LENGTH_SHORT).show();
                     Register.this.createMember();
                     Register.this.finish();
-                    startActivity(new Intent(Register.this,MainActivity.class));
+                    startActivity(new Intent(Register.this, MainActivity.class));
                     return;
                 }
                 Toast.makeText(Register.this, "Sign Up failed.", Toast.LENGTH_SHORT).show();
@@ -126,8 +121,8 @@ public class Register extends BaseActivity {
         user.put("latitude", Double.toString(this.latitude));
         user.put("longitude", Double.toString(this.longitude));
         user.put("UID", this.mAuth.getCurrentUser().getUid());
-        user.put("Favorites","");
-        user.put("AdPosted",0);
+        user.put("Favorites", "");
+        user.put("AdPosted", 0);
         this.db.collection("user").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             public void onSuccess(DocumentReference documentReference) {
                 Toast.makeText(Register.this, "Successful", Toast.LENGTH_SHORT).show();
@@ -138,7 +133,6 @@ public class Register extends BaseActivity {
             }
         });
     }
-
 
 
     public void Premission() {

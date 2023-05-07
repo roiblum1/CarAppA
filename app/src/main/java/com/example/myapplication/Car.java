@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
-public class Car
-{
+public class Car {
     String carID;
     String category;
     String description;
@@ -27,8 +26,8 @@ public class Car
         this.userID = userID;
         this.relevant = relevant;
     }
-    public Car()
-    {
+
+    public Car() {
         this.category = "";
         this.manufacturer = "";
         this.model = "";
@@ -127,8 +126,7 @@ public class Car
         return this.relevant;
     }
 
-    public void setRelevant(boolean relevant)
-    {
+    public void setRelevant(boolean relevant) {
         this.relevant = relevant;
     }
 
