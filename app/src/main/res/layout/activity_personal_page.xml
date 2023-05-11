@@ -2,22 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/l1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/l1"
     android:background="@drawable/profile_bk"
-    android:focusableInTouchMode="true"
-    >
+    android:focusableInTouchMode="true">
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:shadowColor="@color/accent_material_dark"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
         android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:shadowColor="@color/accent_material_dark"
         android:text="My Personal Page"
         android:textColor="@color/white"
         android:textSize="40sp" />
@@ -38,8 +37,8 @@
         android:id="@+id/lv_personal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_SecondTitle"
         android:layout_above="@id/bottom_navigation"
+        android:layout_below="@id/tv_SecondTitle"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginStart="10dp"
@@ -51,8 +50,8 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="10dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
         app:menu="@menu/bottom_navigation_menu" />
 
 </RelativeLayout>

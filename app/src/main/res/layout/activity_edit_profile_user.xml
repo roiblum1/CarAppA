@@ -1,112 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:background="@drawable/profile_bk" android:layout_width="match_parent" android:layout_height="match_parent">
-    <LinearLayout android:gravity="top" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_margin="10dp">
-        <TextView android:textSize="40sp" android:textStyle="bold" android:textColor="@color/white" android:layout_gravity="center" android:id="@+id/textView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="15dp" android:text="Profile Page" />
-        <ImageView android:layout_gravity="center" android:id="@+id/imageView" android:layout_width="150dp" android:layout_height="150dp" android:layout_marginBottom="15dp" android:src="@mipmap/ic_launcher" />
-        <Button android:layout_gravity="center" android:id="@+id/btnChangeAvatar" android:background="@drawable/profile_back_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Change Avatar" android:backgroundTint="@color/profileBackground"/>
-        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_name" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="User Name :" android:textSize="18sp" android:ems="10" android:inputType="textMultiLine"/>
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_userEmail" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="User Email :" android:textSize="18sp" android:ems="10" android:inputType="textMultiLine"/>
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_phone" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="User Phone :" android:textSize="18sp" android:ems="10" android:inputType="textMultiLine"/>
-        </com.google.android.material.textfield.TextInputLayout>
-<!--        <Button android:layout_gravity="center" android:id="@+id/btn_location" android:background="@drawable/profile_back_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="5dp" android:layout_marginTop="20dp" android:text="Update Location" android:backgroundTint="@color/profileBackground"/>-->
-<!--        <Button android:layout_gravity="center" android:id="@+id/buttonBack" android:background="@drawable/profile_back_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:layout_marginBottom="5dp" android:text="Save" android:backgroundTint="@color/profileBackground" />-->
-<!--        <Button android:layout_gravity="center" android:id="@+id/btnDelete" android:background="@drawable/profile_back_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="5dp" android:text="Delete Profile" android:backgroundTint="@color/profileBackground"/>-->
-        <LinearLayout
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/profile_bk">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:gravity="top"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="15dp"
+            android:text="Profile Page"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="15dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <Button
+            android:id="@+id/btnChangeAvatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/profile_back_button"
+            android:backgroundTint="@color/profileBackground"
+            android:text="Change Avatar" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:layout_gravity="center"
+            android:textColorHint="#A5A2A2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:ems="10"
+                android:hint="User Name :"
+                android:inputType="textMultiLine"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="#A5A2A2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_userEmail"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:ems="10"
+                android:hint="User Email :"
+                android:inputType="textMultiLine"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="#A5A2A2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:ems="10"
+                android:hint="User Phone :"
+                android:inputType="textMultiLine"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <!--        <Button android:layout_gravity="center" android:id="@+id/btn_location" android:background="@drawable/profile_back_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="5dp" android:layout_marginTop="20dp" android:text="Update Location" android:backgroundTint="@color/profileBackground"/>-->
+        <!--        <Button android:layout_gravity="center" android:id="@+id/buttonBack" android:background="@drawable/profile_back_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:layout_marginBottom="5dp" android:text="Save" android:backgroundTint="@color/profileBackground" />-->
+        <!--        <Button android:layout_gravity="center" android:id="@+id/btnDelete" android:background="@drawable/profile_back_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="5dp" android:text="Delete Profile" android:backgroundTint="@color/profileBackground"/>-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:orientation="horizontal"
-            >
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
 
             <Button
+                android:id="@+id/btnDelete"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
-                android:layout_weight="1"
-                android:id="@+id/btnDelete"
-                android:background="@drawable/white_rounded_shape"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/white_rounded_shape"
                 android:text="Delete Profile"
-                android:textColor="#ffffffff"
-                />
+                android:textColor="#ffffffff" />
 
             <Button
-                android:textColor="#ffffffff"
+                android:id="@+id/buttonBack"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
-                android:layout_weight="1"
-                android:id="@+id/buttonBack"
-                android:background="@drawable/white_rounded_shape"
-                android:layout_marginTop="20dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/white_rounded_shape"
                 android:text="Save Changes"
-                />
+                android:textColor="#ffffffff" />
 
 
             <Button
+                android:id="@+id/btn_location"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
-                android:layout_weight="1"
-                android:id="@+id/btn_location"
-                android:background="@drawable/white_rounded_shape"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/white_rounded_shape"
                 android:text="Update Location"
-                android:textColor="#ffffffff"
-                />
+                android:textColor="#ffffffff" />
 
         </LinearLayout>
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_margin="10dp"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:orientation="horizontal"-->
-<!--            >-->
-<!--            <Button-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="60dp"-->
-<!--                android:layout_weight="1"-->
-<!--                android:id="@+id/btnDelete"-->
-<!--                android:background="@drawable/white_rounded_shape"-->
-<!--                android:layout_marginTop="20dp"-->
-<!--                android:layout_marginBottom="5dp"-->
-<!--                android:text="Delete Profile"-->
-<!--                />-->
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_margin="10dp"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:layout_alignParentBottom="true"-->
+        <!--            android:orientation="horizontal"-->
+        <!--            >-->
+        <!--            <Button-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="60dp"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:id="@+id/btnDelete"-->
+        <!--                android:background="@drawable/white_rounded_shape"-->
+        <!--                android:layout_marginTop="20dp"-->
+        <!--                android:layout_marginBottom="5dp"-->
+        <!--                android:text="Delete Profile"-->
+        <!--                />-->
 
-<!--            <Button-->
-<!--                android:id="@+id/buttonBack"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="60dp"-->
-<!--                android:layout_marginLeft="10dp"-->
-<!--                android:layout_marginTop="20dp"-->
-<!--                android:layout_marginRight="10dp"-->
-<!--                android:layout_marginBottom="5dp"-->
-<!--                android:layout_weight="1"-->
-<!--                android:background="@drawable/white_rounded_shape"-->
-<!--                android:text="Save" />-->
+        <!--            <Button-->
+        <!--                android:id="@+id/buttonBack"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="60dp"-->
+        <!--                android:layout_marginLeft="10dp"-->
+        <!--                android:layout_marginTop="20dp"-->
+        <!--                android:layout_marginRight="10dp"-->
+        <!--                android:layout_marginBottom="5dp"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:background="@drawable/white_rounded_shape"-->
+        <!--                android:text="Save" />-->
 
-<!--            <Button-->
-<!--                android:id="@+id/btn_location"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="60dp"-->
-<!--                android:layout_weight="1"-->
-<!--                android:background="@drawable/white_rounded_shape"-->
-<!--                android:layout_marginTop="20dp"-->
-<!--                android:layout_marginBottom="5dp"-->
-<!--                android:text="Update Location"-->
-<!--                />-->
-<!--        </LinearLayout>-->
-        <TextView android:textColor="@color/white" android:layout_gravity="center" android:id="@+id/textView2" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="10dp" android:layout_marginTop="100dp" android:layout_marginBottom="20dp" android:text="The location will be update to the current location if the button will be clicked" android:textAlignment="center"/>
+        <!--            <Button-->
+        <!--                android:id="@+id/btn_location"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="60dp"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:background="@drawable/white_rounded_shape"-->
+        <!--                android:layout_marginTop="20dp"-->
+        <!--                android:layout_marginBottom="5dp"-->
+        <!--                android:text="Update Location"-->
+        <!--                />-->
+        <!--        </LinearLayout>-->
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="20dp"
+            android:text="The location will be update to the current location if the button will be clicked"
+            android:textAlignment="center"
+            android:textColor="@color/white" />
     </LinearLayout>
 </ScrollView>

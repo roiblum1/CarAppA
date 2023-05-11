@@ -1,99 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:background="@drawable/profile_bk" android:layout_width="match_parent" android:layout_height="match_parent">
-    <LinearLayout android:gravity="top|center_vertical|center_horizontal|center" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
-        <TextView android:textSize="40sp" android:layout_gravity="center" android:id="@+id/tv_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Add New Ad " android:textColor="@color/white"/>
-        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_cat" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="Category" android:textSize="18sp" />
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/profile_bk">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top|center_vertical|center_horizontal|center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Add New Ad "
+            android:textColor="@color/white"
+            android:textSize="40sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="#A5A2A2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_cat"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Category"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <Spinner
+            android:id="@+id/spinner"
             style="@style/SpinnerTextStyle"
             android:layout_width="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_gravity="left"
-            android:textColorHint="#A5A2A2"
             android:layout_height="55dp"
-            android:spinnerMode="dialog"
+            android:layout_gravity="left"
+            android:layout_margin="10dp"
             android:background="@color/white"
-            android:id="@+id/spinner" >
+            android:spinnerMode="dialog"
+            android:textColorHint="#A5A2A2">
 
         </Spinner>
-        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_mod" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="Model" android:textSize="18sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="#A5A2A2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_mod"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Model"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_year" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="Year" android:textSize="18sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="#A5A2A2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_year"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Year"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_km" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="Kilometer" android:textSize="18sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="#A5A2A2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_km"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Kilometer"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_yad" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="Hand" android:textSize="18sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="#A5A2A2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_yad"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Hand"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_price" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="Price" android:textSize="18sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="#A5A2A2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_price"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Price"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_des" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="wrap_content" android:minHeight="55dp" android:hint="Description" android:textSize="18sp" android:ems="10" android:inputType="textMultiLine"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="#A5A2A2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_des"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Description"
+                android:inputType="textMultiLine"
+                android:minHeight="55dp"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
-        <ImageView android:id="@+id/imagev" android:layout_width="120dp" android:layout_height="120dp" android:layout_marginTop="15dp" android:layout_marginBottom="10dp" android:src="@mipmap/ic_launcher"/>
-<!--        <LinearLayout android:gravity="center" android:layout_gravity="center" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">-->
-<!--            <Button android:textColor="#ffffffff" android:id="@+id/btn_back" android:background="@drawable/buttonshape" android:layout_width="120dp" android:layout_height="60dp" android:layout_margin="5dp" android:text="Back" android:onClick="deleteAD"/>-->
-<!--            <Button android:textColor="#ffffffff" android:id="@+id/btn_addImage" android:background="@drawable/buttonshape" android:layout_width="120dp" android:layout_height="60dp" android:layout_margin="5dp" android:text="Add Image" android:onClick="addImage"/>-->
-<!--            <Button android:textColor="#ffffffff" android:id="@+id/btn_share" android:background="@drawable/buttonshape" android:layout_width="120dp" android:layout_height="60dp" android:layout_margin="5dp" android:text="Save" android:onClick="Share"/>-->
-<!--        </LinearLayout>-->
+
+        <ImageView
+            android:id="@+id/imagev"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:src="@mipmap/ic_launcher" />
+        <!--        <LinearLayout android:gravity="center" android:layout_gravity="center" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">-->
+        <!--            <Button android:textColor="#ffffffff" android:id="@+id/btn_back" android:background="@drawable/buttonshape" android:layout_width="120dp" android:layout_height="60dp" android:layout_margin="5dp" android:text="Back" android:onClick="deleteAD"/>-->
+        <!--            <Button android:textColor="#ffffffff" android:id="@+id/btn_addImage" android:background="@drawable/buttonshape" android:layout_width="120dp" android:layout_height="60dp" android:layout_margin="5dp" android:text="Add Image" android:onClick="addImage"/>-->
+        <!--            <Button android:textColor="#ffffffff" android:id="@+id/btn_share" android:background="@drawable/buttonshape" android:layout_width="120dp" android:layout_height="60dp" android:layout_margin="5dp" android:text="Save" android:onClick="Share"/>-->
+        <!--        </LinearLayout>-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:layout_alignParentBottom="true"
-            android:orientation="horizontal"
-            >
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
 
             <Button
+                android:id="@+id/btn_share"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:id="@+id/btn_share"
                 android:background="@drawable/white_rounded_shape"
                 android:drawableTop="@drawable/save_24"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="5dp"
                 android:onClick="Share"
                 android:text="Save"
-                android:textColor="#ffffffff"
-                />
+                android:textColor="#ffffffff" />
 
             <Button
-                android:textColor="#ffffffff"
+                android:id="@+id/btn_addImage"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/btn_addImage"
-                android:background="@drawable/white_rounded_shape"
-                android:drawableTop="@drawable/image"
-                android:layout_marginTop="20dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/white_rounded_shape"
+                android:drawableTop="@drawable/image"
                 android:onClick="addImage"
                 android:text="Add"
-                />
+                android:textColor="#ffffffff" />
 
 
             <Button
+                android:id="@+id/btn_back"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/btn_back"
-                android:background="@drawable/white_rounded_shape"
-                android:drawableTop="@drawable/baseline_arrow_back_24"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/white_rounded_shape"
+                android:drawableTop="@drawable/baseline_arrow_back_24"
                 android:onClick="deleteAD"
                 android:text="Back"
-                android:textColor="#ffffffff"
-                />
+                android:textColor="#ffffffff" />
 
         </LinearLayout>
 
@@ -102,8 +218,8 @@
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="10dp"
             android:layout_alignParentBottom="true"
+            android:layout_marginTop="10dp"
             app:menu="@menu/bottom_navigation_menu" />
     </LinearLayout>
 </ScrollView>

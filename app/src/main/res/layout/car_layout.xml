@@ -1,12 +1,13 @@
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:alpha="0.85"
+    android:animateLayoutChanges="true"
     app:cardCornerRadius="4dp"
     app:cardElevation="4dp"
     app:cardUseCompatPadding="true"
-    android:id="@+id/cv"
-    android:alpha="0.85"
-    android:animateLayoutChanges="true"
     app:contentPadding="16dp">
 
     <LinearLayout
@@ -33,6 +34,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/Star"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
@@ -40,7 +42,6 @@
                 android:fontFamily="@font/calibri"
                 android:padding="6dp"
                 android:text="Save"
-                android:id="@+id/Star"
                 android:textAlignment="center"
                 android:textColor="#ffc32d"
                 android:textSize="14sp"
@@ -112,11 +113,11 @@
         <!--        </LinearLayout>-->
 
         <ImageView
-            android:layout_width="160dp"
             android:id="@+id/iv_car"
+            android:layout_width="160dp"
             android:layout_height="160dp"
-            android:layout_marginBottom="3dp"
             android:layout_gravity="center"
+            android:layout_marginBottom="3dp"
             android:src="@drawable/nopic" />
 
         <RelativeLayout

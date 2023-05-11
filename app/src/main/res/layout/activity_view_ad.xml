@@ -1,69 +1,227 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:background="@drawable/profile_bk" android:layout_width="match_parent" android:layout_height="match_parent">
-    <LinearLayout android:gravity="top|left|center_vertical|center_horizontal|center" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
-        <TextView android:textSize="40sp" android:layout_gravity="center" android:id="@+id/tv_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Ad " android:textColor="@color/white"/>
-        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_cat" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="Category" android:textSize="18sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_man" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="Manufacture" android:textSize="18sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_mod" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="Model" android:textSize="18sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_year" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="Year" android:textSize="18sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_km" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="Kilometer" android:textSize="18sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_yad" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="Hand" android:textSize="18sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_price" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="Price" android:textSize="18sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_userEmail" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="User Email" android:textSize="18sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_relevant" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="55dp" android:hint="Relevant" android:textSize="18sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" android:layout_width="match_parent" android:layout_margin="10dp" android:textColorHint="#A5A2A2" android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/et_des" android:layout_width="match_parent" android:textColor="@color/white" android:layout_height="wrap_content" android:minHeight="55dp" android:hint="Description" android:textSize="18sp" android:ems="10" android:inputType="textMultiLine"/>
-        </com.google.android.material.textfield.TextInputLayout>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/profile_bk">
 
-        <ImageView android:layout_gravity="center" android:id="@+id/image2" android:layout_margin="10dp" android:layout_width="180dp" android:layout_height="180dp" android:src="@mipmap/ic_launcher"/>
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top|left|center_vertical|center_horizontal|center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Ad "
+            android:textColor="@color/white"
+            android:textSize="40sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:textColorHint="#A5A2A2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_cat"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Category"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="#A5A2A2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_man"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Manufacture"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="#A5A2A2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_mod"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Model"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="#A5A2A2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_year"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Year"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="#A5A2A2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_km"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Kilometer"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="#A5A2A2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_yad"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Hand"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="#A5A2A2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_price"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Price"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="#A5A2A2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_userEmail"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="User Email"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="#A5A2A2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_relevant"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Relevant"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="#A5A2A2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_des"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Description"
+                android:inputType="textMultiLine"
+                android:minHeight="55dp"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/image2"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:orientation="horizontal"
-            >
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
             <Button
+                android:id="@+id/btn_viewUserProfile"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/btn_viewUserProfile"
-                android:background="@drawable/white_rounded_shape"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="5dp"
-                android:text="Seller Profile"
-                />
+                android:layout_weight="1"
+                android:background="@drawable/white_rounded_shape"
+                android:text="Seller Profile" />
+
             <Button
                 android:id="@+id/cont"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/white_rounded_shape"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="5dp"
-                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/white_rounded_shape"
                 android:text="Add to Contacts"
 
                 />
         </LinearLayout>
-<!--        <Button android:layout_gravity="center" android:id="@+id/btn_back" android:background="@drawable/buttonshape" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:layout_marginBottom="15dp" android:text="Back"/>-->
+        <!--        <Button android:layout_gravity="center" android:id="@+id/btn_back" android:background="@drawable/buttonshape" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:layout_marginBottom="15dp" android:text="Back"/>-->
     </LinearLayout>
 </ScrollView>

@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/LoginPage" android:title="Login"/>
-    <item android:id="@+id/Register" android:title="Register"/>
-    <item android:id="@+id/AllAD" android:title="All Ad"/>
-    <item android:id="@+id/personal_page" android:title="Personal Page"/>
-    <item android:id="@+id/View_Profile" android:title="View Profile"/>
-    <item android:id="@+id/SrartMusic" android:title="Start Music"/>
-    <item android:id="@+id/StopMusic" android:title="Stop Music"/>
-    <item android:id="@+id/About_Us" android:title="About_Us"/>
-    <item android:id="@+id/Logout" android:title="Logout"/>
+    <item
+        android:id="@+id/LoginPage"
+        android:title="Login" />
+    <item
+        android:id="@+id/Register"
+        android:title="Register" />
+    <item
+        android:id="@+id/AllAD"
+        android:title="All Ad" />
+    <item
+        android:id="@+id/personal_page"
+        android:title="Personal Page" />
+    <item
+        android:id="@+id/View_Profile"
+        android:title="View Profile" />
+    <item
+        android:id="@+id/SrartMusic"
+        android:title="Start Music" />
+    <item
+        android:id="@+id/StopMusic"
+        android:title="Stop Music" />
+    <item
+        android:id="@+id/About_Us"
+        android:title="About_Us" />
+    <item
+        android:id="@+id/Logout"
+        android:title="Logout" />
 </menu>

@@ -3,33 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_gravity="center"
+    android:orientation="vertical"
     tools:context=".SelectFragment">
 
     <!--TextView and Button displayed in First Fragment -->
     <TextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/title"
         android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
         android:text="Members"
         android:textColor="@color/white"
-        android:textStyle="bold"
         android:textSize="20dp"
-        android:layout_margin="10dp"
-        />
+        android:textStyle="bold" />
+
     <ListView
-        android:layout_below="@id/title"
         android:id="@+id/lv"
-        android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:foregroundGravity="center"
+        android:layout_below="@id/title"
+        android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        android:padding="10dp"
-        />
-
+        android:foregroundGravity="center"
+        android:padding="10dp" />
 
 
 </RelativeLayout>
