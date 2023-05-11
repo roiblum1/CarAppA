@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,6 +45,8 @@ public class ProfileAdapter extends ArrayAdapter<Member> {
         tv_Name.setText(member.getMemberName());
         tvEmail.setText(member.getMemberEmail());
         downloadImage(member.getUserUID(), ivUser);
+
+        cv.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in));
         return view;
     }
 
