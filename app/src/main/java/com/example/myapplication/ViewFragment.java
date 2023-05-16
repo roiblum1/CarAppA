@@ -51,6 +51,8 @@ public class ViewFragment extends Fragment {
         etPhone = (TextInputEditText) view.findViewById(R.id.et_phone);
         buttonDelete = (Button) view.findViewById(R.id.buttonDelete);
         buttonEdit = (Button) view.findViewById(R.id.buttonEdit);
+        buttonEdit.setVisibility(View.INVISIBLE);
+        buttonEdit.setEnabled(false);
 
         Bundle bundle = getArguments();
         assert bundle != null;
@@ -84,6 +86,11 @@ public class ViewFragment extends Fragment {
                 deleteImage(UID);
                 deleteUser(Email);
                 deleteUserCars(Email);
+                etName.setText("");
+                etUserEmail.setText("");
+                etPhone.setText("");
+                imageView.setImageResource(R.drawable.profilepaf);
+                Toast.makeText(getContext(), "Pls choose another User", Toast.LENGTH_SHORT).show();
             }
         });
 

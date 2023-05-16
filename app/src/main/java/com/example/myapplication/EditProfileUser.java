@@ -128,7 +128,6 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
             deleteUser();
             deleteUserCars();
             deleteUserAuth();
-            startActivity(new Intent(EditProfileUser.this, MainActivity.class));
         } else if (buttonSave == v) {
             changeData("Phone", etPhone.getText().toString(), db);
             changeData("Email", etUserEmail.getText().toString(), db);
@@ -228,6 +227,7 @@ public class EditProfileUser extends BaseActivity implements View.OnClickListene
     public void deleteUserAuth() {
         CurrentUser.delete();
         FirebaseAuth.getInstance().getCurrentUser().delete();
+        startActivity(new Intent(EditProfileUser.this, MainActivity.class));
     }
 
 
