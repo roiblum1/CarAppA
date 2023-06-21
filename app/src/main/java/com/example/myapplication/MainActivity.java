@@ -154,7 +154,7 @@ public class MainActivity extends BaseActivity {
                     .setColor(Color.BLUE)
                     .setContentIntent(contentIntent)
                     .setAutoCancel(true)
-                    .addAction(R.drawable.logo4, "Start / Stop", actionIntent)
+                    .addAction(R.drawable.logo4, "Stop", actionIntent)
                     .build();
 
             manager.notify(1, notification);
